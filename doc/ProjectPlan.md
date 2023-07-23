@@ -3,7 +3,7 @@
 
 ## Team
 
-Project Manager: [Wsun](https://github.com/stoneskin)
+Project Manager: [Wsun](https://github.com/wsun4ipipeline)
 UI Designer: [Annabelle S](https://github.com/sunflower111)
 Developer: [Leo S](https://github.com/lsun0547)
 
