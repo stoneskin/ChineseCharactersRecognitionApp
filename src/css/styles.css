@@ -441,8 +441,9 @@
   min-height: 500px;
 }
 .main>.side-bar{
-background-color: #cde398;
+
 /* height: 500px; */
+justify-content: center;
 
 vertical-align: middle;
 }
@@ -450,7 +451,7 @@ vertical-align: middle;
   padding: 70px 0;
 }
 .main>.center-board>.label{
-  font-size: 10vw;
+  font-size: 155px;
   text-align: center;
   width: 250px;
   margin-left: auto;
@@ -465,8 +466,26 @@ vertical-align: middle;
   height: 100%;
   max-height:500px;
   margin-left: auto;
-  margin-right: auto
-  
+  margin-right: auto;
+  justify-content: center;
+  cursor: pointer;
+  background-color: #f2f2f2;
+}
+.side-bar>.label:hover{
+  background-color: #edf6d9d1;
+}
+.time-block{
+  text-align: center;
+  vertical-align: middle;
+  padding: 5px;
+  border-style: solid;
+  border-width: 1px;
+  border-color: #d2d1d1;
+  width: 150px;
+  height:35px;
+  margin-right: 50px;
+  margin-left: auto;
+
 }
 @media only screen and (max-width: 1000px) {
   /* body {
@@ -476,7 +495,9 @@ vertical-align: middle;
 
     font-size:6vw;
 }
-
+.main>.center-board>.label{
+  font-size: 125px;
+}
 .two-column-frame>.row>.frame {
     /* background-color: #c3b627; */
     
@@ -502,21 +523,15 @@ vertical-align: middle;
   position: relative;
 }
 }
-@media only screen and (max-width: 500px) {
-  /* body {
-    background-color: lightblue;
-  } */
 
- 
-.textbox-frame {  
-    margin-top: -35px;
-    margin-left: 25px;
-}
-}
 
-@media only screen and (max-width:769px) {
+@media only screen and (max-width:767.5px) {
+  .main>.center-board>.label{
+    font-size: 120px;
+    margin-top: 10px;
+  }
   .main>.side-bar>{
-    background-color: #cde398;
+    background-color: #f2f2f2;
     height: 100px;
     vertical-align: middle;
   }   
@@ -524,10 +539,32 @@ vertical-align: middle;
   .main>.side-bar>.label{
     font-size: 50px;
     text-align: center;
-    width: 100px;
+    width: 50%;
     height: 100px;
     margin-left: auto;
     margin-right: auto
     
   }
+
+}
+
+@media only screen and (max-width: 500px) {
+  /* body {
+    background-color: lightblue;
+  } */
+
+  .main>.center-board>.label{
+    font-size: 90px;
+    margin-top: 1px;
+  }
+.textbox-frame {  
+    margin-top: -35px;
+    margin-left: 25px;
+}
+.button-tall {
+  height: 80px;
+  border-radius: 20px;
+  font-size: 30px;
+  width: 150px;
+}
 }
