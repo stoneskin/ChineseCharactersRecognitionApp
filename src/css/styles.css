@@ -448,12 +448,12 @@ justify-content: center;
 vertical-align: middle;
 }
 .main>.center-board{
-  padding: 70px 0;
+  padding: 25px 0;
 }
 .main>.center-board>.label{
   font-size: 155px;
   text-align: center;
-  width: 250px;
+  width: auto;
   margin-left: auto;
   margin-right: auto;
   margin-top: 10%;
@@ -475,6 +475,10 @@ vertical-align: middle;
   background-color: #edf6d9d1;
 }
 .time-block{
+  display:flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
   text-align: center;
   vertical-align: middle;
   padding: 5px;
@@ -483,9 +487,13 @@ vertical-align: middle;
   border-color: #d2d1d1;
   width: 150px;
   height:35px;
-  margin-right: 50px;
+  margin-right: auto;
   margin-left: auto;
 
+}
+.test-word{
+  text-align: center;
+  width: 100%;
 }
 @media only screen and (max-width: 1000px) {
   /* body {
