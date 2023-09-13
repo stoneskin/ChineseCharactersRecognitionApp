@@ -33,9 +33,13 @@
          
             <div class="frame-main col-md-12 col-sm-12">
                
-                    <div class="label wrap">Welcome to Level <#>! In this level, the students will identify <#> Chinese characters,
-                        If the student identifies the character correctly, press the green button, if they are incorrect, press the red button. 
-                        Each character will be displayed for <#> seconds, if the time runs out, it will be considered incorrect.
+                    <div class="label wrap">Student: [Name]
+                    </div>
+                    <div class="label wrap">Level: [level]
+                    </div>
+                    <div class="label wrap">Score: [x/y]
+                    </div>
+                    <div class="label wrap">Time used: [total time used]
                     </div>
               
           
@@ -43,8 +47,8 @@
    
                 <div class="frame-botton">
                     <div class="frame-botton2">
-                        <div class="button button-tall" onclick="(()=>{window.location.assign('testBoard.html')})()">
-                            <div class="submit">Start</div>
+                        <div class="button button-tall" onclick="(()=>{window.location.assign('studentInfo.html')})()">
+                            <div class="submit">Next Test</div>
                         </div>
                     </div>
                 </div>

@@ -7,6 +7,7 @@
 Project Manager: [Wsun](https://github.com/wsun4ipipeline)
 UI Designer: [Annabelle S](https://github.com/sunflower111)
 Developer: [Leo S](https://github.com/lsun0547)
+Developer: [Ethan G](https://github.com/magicArc)
 
 ## Overview
 
@@ -63,10 +64,12 @@ More features
 - July 9
   - UI, Main page
   - Coding, PHP Load characters from DB and display in UI, with the next button
-- July 16
-- July 23
-- July 30
-- Aug 6
-- Aug 13
-- Aug 20
-- Aug 27
+
+- Sept 8
+  - completed the demo html
+
+### Phase2: Main feature implementation
+
+- Sept 10
+ - Stat User sign up page
+ - Ethan G join team
