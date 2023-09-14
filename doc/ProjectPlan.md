@@ -9,16 +9,18 @@ UI Designer: [Annabelle S](https://github.com/sunflower111)
 Developer: [Leo S](https://github.com/lsun0547)
 Developer: [Ethan G](https://github.com/magicArc)
 
+
 ## Overview
 
 The Team will Build a Character recognition App solution for MLCCC (Main Line Chinese Culture Center)
-The Team will meet weekly at 7:30 PM Friday or 10 AM Saturday Morning to discuss the design and tasks.
+The Team will meet weekly at 7:30 PM Friday or 11 AM Sunday Morning to discuss the design and tasks.
 
 ## Goal
 
 1. The App could be run on a computer’s browser or mobile devices.
 2. The Phase 1 delivery date is targeted at Sep 1, 2023
 3. The Phase 2 delivery date will be Feb 1, 2024
+4. The Phase 3 delivery date will be Tbd
 
 ## Technical Info
 
@@ -26,29 +28,34 @@ The Team will meet weekly at 7:30 PM Friday or 10 AM Saturday Morning to discuss
 - The App will host on https://mlccc.herokuapp.com/
 Mile Stone
 
-## Phase 1: Demo
+## Phase 1: Graphic Design and Demo
 
-Due Sep 1, 2023, Build a Demo app have main functions
+Due Sep 1, 2023, Build a Demo app show the design and main functions
 
 - The App UI and graphic design completed
-- Completed the Database design 
-- Completed the UI page development
-- The judge can start a new event and complete the event.
-- The event results could be saved to the database.
+- Initial the Database design
+- Initial the UI page Html
 
-## Phase 2: Main Features
+## Phase 2, Main Feature
 
 Due Feb 1, 2024, Complete the final app for MLCCC character recognition competition.
 
-- Deploy to herokuapp platform
+- Judges and students could
+- The judge could sign in with username and pwd
+- The parent/guest could sign in with access key
+- The judge can start a new Test event for one student and complete the event.
+- The event results could be saved to the database.
+- Deploy app to herokuapp platform initial the database
+
+## Phase 3: Admin and Report
+
 - Improve the UI for a better user experience
 - User management and integration with MLCCC exist students 
 - Add Admin page for configuration
 - Add Admin page for report
 
-## Phase 3: Additional Improvement
 
-More features
+## More features
 
 - Improve the UI and support both English and Chinese.
 - Build to mobile app
@@ -56,7 +63,7 @@ More features
 
 ## Schedule/Tasks
 
-### Phase1: Demo
+### Phase1: Design Demo 
 
 - July 2 First review and plan
   - UI: login page
@@ -71,5 +78,9 @@ More features
 ### Phase2: Main feature implementation
 
 - Sept 10
- - Stat User sign up page
- - Ethan G join team
+  - project planning
+
+- Setp 17
+  - kick up meeting
+  - Stat User sign up page
+  
