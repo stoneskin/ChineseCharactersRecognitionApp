@@ -40,9 +40,12 @@
 - The new DB scripts will be stored in the db_scripts folder for you to initial the database or update the database of your local dev environment.
 - Work on your project. To prevent you from losing your work in some unexpected situation, please use git commit to check your code daily. Remember to sync to the remote GitHub server.
 - Completed the code change and test it in your local environment. Make sure it works as expected.
--  `Create a pull request` from your working branch to the `dev` branch. (You could use the git VsCode extension or this page in GitHub: [pull request](https://github.com/stoneskin/ChineseCharactersRecognitionApp/pulls) )
+- `Create a pull request` from your working branch to the `dev` branch. (You could use the git VsCode extension or this page in GitHub: [pull request](https://github.com/stoneskin/ChineseCharactersRecognitionApp/pulls) )
 - waiting for the review and feedback from the project owner
-![](gihubbranch.drawio.png)
+  - ![github branch](git-branches-flow.drawio.png)
+
+- VSCode to Create new Branch name as `{userId}-task-{issue#}`
+  - ![create new branch](./vscode-create-new-branch.png)
 
 ### 2.3 Code standard
 
@@ -50,3 +53,4 @@
 - Don't submit your test code or code that is not related to the tasks
 - Try your best to reuse the code; Try not to copy and paste code more than twice without any changes
 - Formate your code before submitting a pull request
+
