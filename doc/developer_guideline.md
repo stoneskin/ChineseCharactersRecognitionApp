@@ -24,9 +24,9 @@
 
 - Install [git](https://git-scm.com/)
 - Install [VSCode](https://code.visualstudio.com)
-  - Install Git/GitHub extensions
-  - Install PHP (all in one) extensions
-  - Install Html CSS Support extensions
+  - Install Git/GitHub extensions: [GitLens](https://marketplace.visualstudio.com/items?itemName=eamodio.gitlens) [Git Graph](https://marketplace.visualstudio.com/items?itemName=mhutchie.git-graph)
+  - Install PHP (all in one) extensions [PHP](https://marketplace.visualstudio.com/items?itemName=DEVSENSE.phptools-vscode)
+  - Install Html CSS Support extensions: [HTML CSS Support](https://marketplace.visualstudio.com/items?itemName=ecmel.vscode-html-css) 
   - Install any other extensions you like
 - Install [XAMPP](https://www.apachefriends.org)
 
