@@ -1,0 +1,1 @@
+I want to join this team because I want to help create a useful and efficient app to help kids learn. I think I can contribute problem solving and teamwork skills while learning how to create an app at the same time.
