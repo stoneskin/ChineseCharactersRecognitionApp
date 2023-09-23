@@ -1,0 +1,1 @@
+I would like to join this team to help create on an impactful project that can help other students. Working on this project will also help me to improve my skills in coding and to learn how to build a website. I can help this team by working on tasks, reviewing code, and working with others.
