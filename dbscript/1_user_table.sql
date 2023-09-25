@@ -1,4 +1,4 @@
-CREATE TABLE `user`.`user` (
+CREATE TABLE IF NOT EXISTS `ccrApp`.`user` (
     `ID` INT(32) NOT NULL AUTO_INCREMENT,
     `Email` TINYTEXT NOT NULL,
     `Password` VARCHAR(100) NOT NULL,
