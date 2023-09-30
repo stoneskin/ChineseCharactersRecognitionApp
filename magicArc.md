@@ -1,1 +1,1 @@
-I want to join this team because I want to help create a useful and efficient app to help kids learn. I think I can contribute problem solving and teamwork skills while learning how to create an app at the same time.
+I want to join this team because I want to help create a useful and efficient app to help kids learn while gaining experience working in a team and learning how to create an app. I have skills in java and python as well as a bit of javascript but I can also learn new languages quickly. I can contribute problem solving and teamwork skills to the project.
