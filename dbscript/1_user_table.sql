@@ -6,3 +6,6 @@ CREATE TABLE IF NOT EXISTS `ccrApp`.`user` (
     `LastVisit` DATETIME on update CURRENT_TIMESTAMP NOT NULL,
     PRIMARY KEY (`ID`), UNIQUE (`Email`)
     ); 
+
+INSERT INTO `user` (`ID`, `Email`, `Password`, `CreateDate`, `LastVisit`)
+    VALUES (NULL, 'test@test.com', 'abc', CURRENT_TIME(), CURRENT_DATE());
