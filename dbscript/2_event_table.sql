@@ -25,4 +25,4 @@ INSERT INTO `ccrApp`, `event` (
     '2023-10-10', 
     current_timestamp(), 
     current_timestamp()
-) 
+) ;
