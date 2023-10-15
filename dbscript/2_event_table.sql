@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS `ccrApp`.`event` (
     PRIMARY KEY (`ID`)
 ); 
 
-INSERT INTO `ccrApp`, `event` (
+INSERT INTO `ccrApp`. `event` (
     `ID`, 
     `EventName`, 
     `AccessKey`, 
