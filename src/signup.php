@@ -1,4 +1,4 @@
-<?php include "header.php" ?>
+<?php require "_header.php" ?>
         <div class="two-column-frame container">
             <div class="row">
          
@@ -58,4 +58,4 @@
             </div>
         </div>
    
-<?php include "footer.php" ?>
+<?php require "_footer.php" ?>
