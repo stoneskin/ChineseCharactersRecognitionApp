@@ -27,8 +27,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <div class="row">
          
             <div class="frame col-md-5 col-sm-8">
-            <form action="login.php" method="post">
-                <div class="form-title">Login</div>
+                <form action="login.php" method="post">
+                    <div class="form-title">Login</div>
                     <div class="input-component">
                         <div class="label-frame">
                             <div class="label">Email</div>
