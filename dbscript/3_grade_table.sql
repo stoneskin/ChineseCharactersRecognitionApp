@@ -1,0 +1,7 @@
+CREATE TABLE IF NOT EXISTS `ccrApp`.`grade` (
+    `Grade` TINYINT NOT NULL,
+    `SizeOfTest` INT(32) NOT NULL,
+    `CreateDate` DATETIME on update CURRENT_TIMESTAMP NOT NULL default CURRENT_TIMESTAMP,
+    `LastVisit` DATETIME on update CURRENT_TIMESTAMP NOT NULL default CURRENT_TIMESTAMP,
+    PRIMARY KEY (`Grade`)
+    );
