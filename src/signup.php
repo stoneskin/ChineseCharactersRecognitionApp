@@ -1,6 +1,5 @@
 <?php
 require "connect.php";
-$message = '';
 $error = '';
 $email = '';
 $password = '';
@@ -40,9 +39,9 @@ if (isset($_POST['submit'])) {
             }
 
             $conn->query($sql);
-           // $conn->close();
-            $message = 'Registration successful.';
-            //header("Location: login.html");
+            $conn->close();
+
+            header("Location: login.php?email=" . urlencode($email));
         }
         catch (Exception $e) {
             $error = "Invalid email or password";
@@ -75,10 +74,10 @@ if (isset($_POST['submit'])) {
                     </div>
                     <div class="input-component">
                         <div class="label-frame">
-                            <div class="label">Email</div>
+                            <div class="label">Email/Username</div>
                         </div>
                         <div >
-                            <input type="email" class="textbox-frame form-control" id="txtEmail" name="email" aria-describedby="emailHelp" placeholder="Enter email">
+                            <input class="textbox-frame form-control" id="txtEmail" name="email" aria-describedby="emailHelp" placeholder="Enter email">
                         </div>
                     </div>
                     <!--
@@ -117,11 +116,6 @@ if (isset($_POST['submit'])) {
                         </div>
                     
                     </div>
-                    <?php 
-                        if ($message !== '') {
-                            echo "<div class='text-info'>$message</div>"; 
-                        }
-                    ?>
                 </div>
            
 
