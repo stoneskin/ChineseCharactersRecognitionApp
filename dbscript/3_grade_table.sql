@@ -6,7 +6,7 @@ CREATE TABLE IF NOT EXISTS `ccrApp`.`grade` (
     PRIMARY KEY (`Grade`)
     );
 
-INSERT INTO 'ccrApp'.'grade' ('Grade', 'SizeOfTest', 'CreateDate', 'lastModified')
+INSERT INTO `ccrApp`.`grade` (`Grade`, `SizeOfTest`, `CreateDate`, `lastModified`)
     VALUES
     (1, 50, current_timestamp(), current_timestamp()),
     (2, 50, current_timestamp(), current_timestamp()),
