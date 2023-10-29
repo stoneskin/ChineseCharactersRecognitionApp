@@ -11,6 +11,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $result = $conn->query($sql);
 
         if ($result->num_rows === 1) {
+            session_start();
+            $_SESSION["SID"] = session_id();
+               
+            
             header("Location: studentInfo.php");
             exit();        
         } else {
@@ -31,7 +35,7 @@ if (isset($_GET['email'])) {
         <div class="two-column-frame container">
             <div class="row">
             <?php
-		if ($email !=='')
+                if ($email !=='')
                     echo "<div style='color: red;' class='label'>$email Registration successful!</div>";
              ?>
             <div class="frame col-md-5 col-sm-8">
