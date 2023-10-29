@@ -20,21 +20,31 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     }
 }
+
+$email = '';
+if (isset($_GET['email'])) {
+    $email = $_GET['email']; 
+}
 ?>
 
 <?php require "_header.php" ?>
         <div class="two-column-frame container">
             <div class="row">
-         
+            <?php
+		if ($email !=='')
+                    echo "<div style='color: red;' class='label'>$email Registration successful!</div>";
+             ?>
             <div class="frame col-md-5 col-sm-8">
                 <form action="login.php" method="post">
                     <div class="form-title">Login</div>
+
                     <div class="input-component">
                         <div class="label-frame">
                             <div class="label">Email</div>
                         </div>
                         <div >
-                            <input type="email" name="email" class="textbox-frame form-control" id="txtEmail" aria-describedby="emailHelp" placeholder="Enter email" />
+                            <input type="email" name="email" class="textbox-frame form-control" id="txtEmail" aria-describedby="emailHelp" placeholder="Enter email" 
+                                value=" <?php echo $email ?>" />
                         </div>
                     </div>
                     <div class="input-component">
