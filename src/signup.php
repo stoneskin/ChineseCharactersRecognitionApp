@@ -1,4 +1,5 @@
 <?php
+require_once 'htmlpurifier-4.15.0-lite/library/HTMLPurifier.auto.php';
 require "connect.php";
 $error = '';
 $email = '';
@@ -7,14 +8,14 @@ $password = '';
 if (isset($_POST['submit'])) {
     $ok = true;
     if (!isset($_POST['email']) || $_POST['email'] === '') {
-      $ok = false;
+        $ok = false;
     } else {
-      $email = $_POST['email'];
+        $email = $_POST['email'];
     };
     if (!isset($_POST['password']) || $_POST['password'] === '') {
-      $ok = false;
+        $ok = false;
     } else {
-      $password = $_POST['password'];
+        $password = $_POST['password'];
     };
 
     if ($ok) {
@@ -41,7 +42,7 @@ if (isset($_POST['submit'])) {
             $conn->query($sql);
             $conn->close();
 
-            header("Location: login.php?email=" . urlencode($email));
+            header("Location: login.php?email=" . urlencode(sanitizeHTML($email)));
         }
         catch (Exception $e) {
             $error = "Invalid email or password";
@@ -51,7 +52,7 @@ if (isset($_POST['submit'])) {
     {
         $error = "Invalid email or password";
     }
-  }
+}
 ?>
 
 <?php require "_header.php" ?>
@@ -74,10 +75,10 @@ if (isset($_POST['submit'])) {
                     </div>
                     <div class="input-component">
                         <div class="label-frame">
-                            <div class="label">Email/Username</div>
+                            <div class="label">Email/UserName</div>
                         </div>
                         <div >
-                            <input class="textbox-frame form-control" id="txtEmail" name="email" aria-describedby="emailHelp" placeholder="Enter email">
+                            <input class="textbox-frame form-control" id="txtEmail" name="email" aria-describedby="emailHelp" placeholder="Enter email or username">
                         </div>
                     </div>
                     <!--
