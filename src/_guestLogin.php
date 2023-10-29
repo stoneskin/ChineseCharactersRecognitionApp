@@ -1,8 +1,11 @@
+<?php
+require_once '_incFunctions.php';
+?>
 <div class="form-title">Guest Judge Login</div>
 <form action="guestLoginProcess.php" method="post">
     <div class="input-component">
         <div class="label-frame">
-            <div class="label">UserName</div>
+            <div class="label">GuestName</div>
         </div>
         <div>
             <input name="username" class="textbox-frame form-control" id="txtUserName" placeholder="">
@@ -19,7 +22,7 @@
     </div>
     <?php
         if (!empty($_GET['guestError'])) {
-            $error = $_GET['guestError'];
+            $error =sanitizeHTML($_GET['guestError']);
             echo "<p style='color: red;'>$error</p>";
         }
     ?>

@@ -74,10 +74,10 @@ if (isset($_POST['submit'])) {
                     </div>
                     <div class="input-component">
                         <div class="label-frame">
-                            <div class="label">Email/Username</div>
+                            <div class="label">Email/UserName</div>
                         </div>
                         <div >
-                            <input class="textbox-frame form-control" id="txtEmail" name="email" aria-describedby="emailHelp" placeholder="Enter email">
+                            <input class="textbox-frame form-control" id="txtEmail" name="email" aria-describedby="emailHelp" placeholder="Enter email or username">
                         </div>
                     </div>
                     <!--

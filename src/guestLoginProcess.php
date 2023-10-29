@@ -1,8 +1,9 @@
 <?php
     include "connect.php";
+
     $guestError="";
-    $username=$_POST["username"];;
-    $accessKey=$_POST["accessKey"];
+    $username=trim($_POST["username"]);;
+    $accessKey=trim($_POST["accessKey"]);
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         
         if (empty($username)) {
@@ -16,8 +17,9 @@
             header("Location: login.php?guestError=" . urlencode($guestError));
             exit();
         }
+            
+        $sql = sprintf("SELECT id FROM event WHERE AccessKey = '%s'",$conn->real_escape_string($accessKey));
         
-        $sql = "SELECT id FROM event WHERE AccessKey = '$accessKey'";
         $result = $conn->query($sql);
         
         if ($result->num_rows === 1) {
