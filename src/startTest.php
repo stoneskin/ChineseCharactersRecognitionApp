@@ -1,3 +1,41 @@
+<?php
+require_once 'htmlpurifier-4.15.0-lite/library/HTMLPurifier.auto.php';
+require "connect.php";
+$error = '';
+$studentName = '';
+$grade = '';
+$numberOfWords = 0;
+$timeLimit = 0;
+
+    try {
+        if (isset($_GET['studentName'])) {
+            $studentName = $_GET['studentName'];
+        };
+        if (isset($_GET['grade'])) {
+            $grade = $_GET['grade'];
+
+            $sql = sprintf(
+                "SELECT NumberOfWords, TimeLimit FROM grade WHERE grade = %s",
+                $conn->real_escape_string($grade));
+
+            $result = $conn->query($sql);
+            $row = $result->fetch_object();
+
+            if ($row != null) {
+                $numberOfWords = $row->NumberOfWords;
+                $timeLimit = $row->TimeLimit;
+            } else {
+                $error = 'Invalid grade.';
+            }
+            $conn->close();
+        };
+    }
+    catch (Exception $e) {
+        $error = "Invalid grade";
+    }
+?>
+
+
 <html>
 <head>
     <title> MLCCC 识字比赛
@@ -21,8 +59,8 @@
                 </div>
                 <div class="mlccc-words-test">MLCCC Words Test</div>
                 <ul class="nav navbar-nav navbar-right">
-                <li><span> StudentName </span> </li>
-                <li><span> Level 3 </span> </li>
+                <li><span> <?php echo "$studentName" ?> </span> </li>
+                <li><span> Level <?php echo "$grade" ?> </span> </li>
                 <li> <a href="login.html"> Logout</a></li>
               </ul>
             </div>
@@ -33,9 +71,9 @@
          
             <div class="frame-main col-md-12 col-sm-12">
                
-                    <div class="label wrap">Welcome to Level <#>! In this level, the students will identify <#> Chinese characters,
+                    <div class="label wrap">Welcome to Level <?php echo "$grade" ?>! In this level, the students will identify <?php echo "$numberOfWords" ?> Chinese characters,
                         If the student identifies the character correctly, press the green button, if they are incorrect, press the red button. 
-                        Each character will be displayed for <#> seconds, if the time runs out, it will be considered incorrect.
+                        Each character will be displayed for <?php echo "$timeLimit" ?> seconds, if the time runs out, it will be considered incorrect.
                     </div>
               
           
