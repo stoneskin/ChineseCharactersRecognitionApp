@@ -5,7 +5,7 @@ $sql = "SELECT Grade FROM grade";
 $result = $conn->query($sql);
 ?>
 
-<?php require "_header.php" ?>
+<?php require "_sessionHeader.php" ?>
         <div class="two-column-frame container">
             <div class="row">
          
@@ -55,4 +55,4 @@ $result = $conn->query($sql);
             </div>
         </div>
    
-<?php require "_footer.php" ?>
+        <?php require "_footer.php" ?>

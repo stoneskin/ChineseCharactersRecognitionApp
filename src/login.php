@@ -12,6 +12,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $result = $conn->query($sql);
 
         if ($result->num_rows === 1) {
+            session_start();
+            $_SESSION["SID"] = session_id();
+               
+            
             header("Location: studentInfo.php");
             exit();        
         } 
