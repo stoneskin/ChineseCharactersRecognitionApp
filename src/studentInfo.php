@@ -1,8 +1,20 @@
 <?php
 require_once '_incFunctions.php';
 include "connect.php";
+
 $sql = "SELECT Grade FROM grade";
 $result = $conn->query($sql);
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {  
+    if (isset($_POST["student"]) && isset($_POST["grade"])) {
+        $student = $conn->real_escape_string(trim($_POST["student"]));
+        $grade = $conn->real_escape_string(trim($_POST["grade"]));
+        $_SESSION["student"] = $student;
+        $_SESSION["grade"] = $grade;
+        header("Location: startTest.php".'?studentname='.$student.'&grade='.$grade);
+        exit();
+    }
+}
 ?>
 
 <?php require "_sessionHeader.php" ?>
@@ -18,8 +30,7 @@ $result = $conn->query($sql);
                             <div class="label">Student</div>
                         </div>
                         <div >
-                            <input type="email" class="textbox-frame form-control" id="txtUserName"  placeholder="Enter Student Name">
-                            
+                            <input type="text" name="student" class="textbox-frame form-control" id="txtUserName"  placeholder="Enter Student Name">
                         </div>
                     </div>
                     <div class="input-component">
@@ -41,9 +52,7 @@ $result = $conn->query($sql);
                     </div>
                     <div class="frame-botton">
                         <div class="frame-botton2">
-                            <div class="button" onclick="(()=>{window.location.assign('startTest.php')})()">
-                                <div class="submit">Enter</div>
-                            </div>
+                            <button class="button submit" type="submit">Enter</button>
                         </div>
                     </div>
                 </form>
