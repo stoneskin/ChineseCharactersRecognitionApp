@@ -1,9 +1,5 @@
 <?php
-session_start();
-if (!isset($_SESSION["SID"])) {
-    header("Location:login.php");
-}
-
+require "_needSession.php";
 ?>
 
 <html>

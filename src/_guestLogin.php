@@ -1,5 +1,6 @@
 <?php
 require_once '_incFunctions.php';
+require "connect.php";
 ?>
 <div class="form-title">Guest Judge Login</div>
 <form action="guestLoginProcess.php" method="post">

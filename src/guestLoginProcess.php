@@ -23,8 +23,12 @@
         $result = $conn->query($sql);
         
         if ($result->num_rows === 1) {
+            session_start();
+            $_SESSION["SID"] = session_id();
+            $_SESSION["loginUser"] = $username;
+            $_SESSION["userType"]= "guest";
             header("Location: studentInfo.php");
-            exit();        
+            exit();  
         } else {
             $guestError = "Invalid access key";
             header("Location: login.php?guestError=" . urlencode($guestError));
