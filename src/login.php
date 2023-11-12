@@ -14,8 +14,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if ($result->num_rows === 1) {
             session_start();
             $_SESSION["SID"] = session_id();
-               
-            
+            $_SESSION["loginUser"] = $myemail;
+            $_SESSION["usertype"]= "parent";
             header("Location: studentInfo.php");
             exit();        
         } 
@@ -24,6 +24,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $result = $conn->query($sql);
 
         if ($result->num_rows === 1) {
+            session_start();
+            $_SESSION["SID"] = session_id();
+            $_SESSION["loginUser"] = $myemail;
+            $_SESSION["usertype"]= "student";
             header("Location: studentInfo.php?type=student");
             exit();        
         } 
