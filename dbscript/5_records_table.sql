@@ -4,7 +4,7 @@ CREATE TABLE `ccrapp`.`records` (
     `WordID` INT NOT NULL,
     `Passed` BOOLEAN NOT NULL,
     `TimeElapsed` INT NOT NULL,
-    PRIMARY KEY (`RecordID`)
-    FOREIGN KEY (ActivityID) REFERENCES Activities(ActivityID)
+    PRIMARY KEY (`RecordID`),
+    FOREIGN KEY (ActivityID) REFERENCES Activities(ActivityID),
     FOREIGN KEY (WordID) REFERENCES WordsLibrary(ID)
     ) ENGINE = InnoDB; 
