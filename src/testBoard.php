@@ -12,7 +12,16 @@
    <script>
     // var studentName="studentName"
     // var testLevel="3"
-    var testList=["中国","测试","新年好","花好月圆"];
+   // var testList=["中国","测试","新年好","花好月圆"];
+
+   var testList = [];
+   <?php 
+        $data = unserialize($_COOKIE['wordlist']);
+        foreach ($data as $item) : 
+   ?>
+        testList.push(['<?php echo $item['Words']?>']);
+   <?php endforeach; ?>
+
     var current=0;
     var remain=10;
     var totalTime=0;
@@ -30,7 +39,7 @@
             current+=1;
             setTestWord();
         }else{            
-            window.location.assign('endTest.html')
+            window.location.assign('endTest.php')
 
         }
     }
