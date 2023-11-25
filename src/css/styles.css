@@ -106,10 +106,13 @@
   font-size: 30px;
 }
 .frame-main>.label{
-  text-wrap: wrap;
-  font-size: 2.5vw;
+  text-wrap: balance; 
+  word-wrap: normal;
+  font-size: 1.8vw;
   margin: 50px;
 }
+
+
 
 .form-title {
   color: var(--main-text-color, #707070);
@@ -500,6 +503,23 @@ vertical-align: middle;
   text-align: center;
   width: 100%;
 }
+
+@media only screen and (max-width: 1800px) {
+.frame-main>.label{
+  text-wrap: balance; 
+  word-wrap: normal;
+  font-size: 2vw;
+  margin: 50px;
+}
+}
+@media only screen and (max-width: 1400px) {
+  .frame-main>.label{
+    text-wrap: balance; 
+    word-wrap: normal;
+    font-size: 2.3vw;
+    margin: 50px;
+  }
+}
 @media only screen and (max-width: 1000px) {
   /* body {
     background-color: lightblue;
@@ -513,8 +533,8 @@ vertical-align: middle;
 }
 .frame-main>.label{
   text-wrap: wrap;
-  font-size: 4vw;
-  margin: 50px;
+  font-size: 2.1vw;
+  margin: 25px;
 }
 .two-column-frame>.row>.frame {
     /* background-color: #c3b627; */

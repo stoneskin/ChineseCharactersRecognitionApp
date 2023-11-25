@@ -71,17 +71,26 @@ $timeLimit = 0;
          
             <div class="frame-main col-md-12 col-sm-12">
                
-                    <div class="label wrap">Welcome to Level <?php echo "$grade" ?>! In this level, the students will identify <?php echo "$numberOfWords" ?> Chinese characters,
-                        If the student identifies the character correctly, press the green button, if they are incorrect, press the red button. 
-                        Each character will be displayed for <?php echo "$timeLimit" ?> seconds, if the time runs out, it will be considered incorrect.
+                
+                <div class="label" style="margin-bottom:10px;">Welcome to  Level &nbsp <b><?php echo "$grade" ?></b>&nbsp! 
+                </div>
+                <div class="label"  style="margin-top:10px;margin-bottom:10px;">In this level, the students will identify &nbsp <b><?php echo "$numberOfWords" ?></b> &nbsp Chinese characters,
+                </div>
+                <div class="label"  style="margin-top:10px;margin-bottom:10px;">
+                    If the student identifies the character correctly, press the green button, if they are incorrect, press the red button. 
                     </div>
-              
-          
+                <div class="label"  style="margin-top:10px;;margin-bottom:10px;">
+                    Each character will be displayed for &nbsp <b> <?php echo "$timeLimit" ?> </b>&nbsp seconds,
+                    </div>
+                <div class="label"  style="margin-top:10px;">
+                    if the time runs out, it will be considered incorrect.
+                </div>
+                
               
    
                 <div class="frame-botton">
                     <div class="frame-botton2">
-                        <div class="button button-tall" onclick="(()=>{window.location.assign('testBoard.html')})()">
+                        <div class="button button-tall" onclick="(()=>{window.location.assign('testBoard.php')})()">
                             <div class="submit">Start</div>
                         </div>
                     </div>
