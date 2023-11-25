@@ -15,11 +15,17 @@
    // var testList=["中国","测试","新年好","花好月圆"];
 
    var testList = [];
+    var wordItem;
    <?php 
-        $data = unserialize($_COOKIE['wordlist']);
-        foreach ($data as $item) : 
+   $list = unserialize($_COOKIE['wordlist']);
+   foreach ($list as $item) : 
    ?>
-        testList.push(['<?php echo $item['Words']?>']);
+    wordItem = {
+        "id": "<?php echo $item['ID']?>",
+        "word": "<?php echo $item['Words']?>"
+        };
+
+    testList.push(wordItem);
    <?php endforeach; ?>
 
     var current=0;
@@ -44,7 +50,7 @@
         }
     }
     function setTestWord(){
-        document.getElementById("boxTestword").innerHTML=testList[current];
+        document.getElementById("boxTestword").innerHTML=testList[current].word;
         document.getElementById("boxCounter").innerHTML= (current+1)+"/"+(testList.length);
         remain=10;
         if(timer){

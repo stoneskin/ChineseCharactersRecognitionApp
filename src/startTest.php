@@ -27,7 +27,7 @@ $timeLimit = 0;
 
                 //continue to get word list from database based on grade and NumberOfWords
                 $sql_words = sprintf(
-                    "SELECT Words FROM wordslibrary WHERE Level = %s limit %s",
+                    "SELECT ID, Words FROM wordslibrary WHERE Level = %s  ORDER BY RAND() limit %s",
                     $conn->real_escape_string($grade),
                     $conn->real_escape_string($numberOfWords));
 
