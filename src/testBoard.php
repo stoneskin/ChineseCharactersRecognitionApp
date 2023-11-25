@@ -30,7 +30,7 @@
             current+=1;
             setTestWord();
         }else{            
-            window.location.assign('endTest.html')
+            window.location.assign('endTest.php')
 
         }
     }
