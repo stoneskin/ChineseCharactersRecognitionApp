@@ -440,8 +440,10 @@
 
 
 .errorMessage{
-  font-size: 10px;
+  font-size: 1.5vw;
   color: red;
+  line-height: 15px;
+  margin-bottom: 25px;
 }
 .main{
   margin-top: 5%;

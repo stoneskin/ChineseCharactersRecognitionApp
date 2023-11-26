@@ -95,11 +95,11 @@ if (isset($_GET['email'])) {
                     </div>
                 </div>
             </div>
-           
+
             <div class="frame col-md-5 col-sm-8">
                 <?php require "_guestLogin.php" ?>
             </div>
             
         </div>
-   
+
 <?php require "_footer.php" ?>
