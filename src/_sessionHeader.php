@@ -26,8 +26,18 @@ require "_needSession.php";
                 <div class="mlccc-words-test">MLCCC Words Test</div>
 
                 <ul class="nav navbar-nav navbar-right">
-                     <li> <a href="logout.php"> Logout</a></li>
-              </ul>
-            </div>
+                    <li><span> <?php
+                    if (isset($_SESSION["student"])){
+                        echo $_SESSION["student"];
+                    }                    
+                    ?> </span> </li>
+                    <li><span>   <?php 
+                    if (isset($_SESSION["grade"])){
+                        echo "[Grade".$_SESSION["grade"]."]";
+                    }                    
+                    ?> </span> </li>
+                    <li> <a href="logout.php"> Logout</a></li>
+                </ul>
+        </div>
         </div>
     
