@@ -36,18 +36,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             $stmt->bind_param("s", $student);
     
-            // Execute the query
             $stmt->execute();
-            // Fetch the first row
             $studentResult = $stmt->get_result();
-            $row = $result->fetch_assoc();
-            $studentID = $row[`StudentID`];
+            $row = $studentResult->fetch_assoc();
 
-            $activitySql = "INSERT INTO `ccrApp`.`activities` (`ActivityID`, `EventID`, `StudentName`, `StudentID`, `JudgeName`, `Level`) VALUES (NULL, 1, $student, $studentID, 'JUDGE', $grade);";
-            $conn->query($activitySql);
+            if ($row) {
+                $studentID = $row["StudentID"];
+                $activitySql = "INSERT INTO `ccrApp`.`activities` (`EventID`, `StudentName`, `StudentID`, `JudgeName`, `Level`) VALUES (?, ?, ?, ?, ?);";
+                
+                $stmt = $conn->prepare($activitySql);
+                $eventID = 1;
+                $judge = 'JUDGE';
+                $stmt->bind_param("isisi", $eventID, $student, $studentID, $judge, $grade);
+                $stmt->execute();
 
-            header("Location: startTest.php".'?studentname='.$student.'&grade='.$grade);
-           // exit();
+                header("Location: startTest.php".'?studentname='.$student.'&grade='.$grade);
+            } else {
+                $errorStudent = "Student \"".$student."\" not found";
+            }
         }
 
     }
