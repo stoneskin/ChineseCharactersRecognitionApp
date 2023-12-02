@@ -2,7 +2,22 @@
 <script>
     // var studentName="studentName"
     // var testLevel="3"
-    var testList=["中国","测试","新年好","花好月圆"];
+   // var testList=["中国","测试","新年好","花好月圆"];
+
+   var testList = [];
+    var wordItem;
+   <?php 
+   $list = unserialize($_COOKIE['wordlist']);
+   foreach ($list as $item) : 
+   ?>
+    wordItem = {
+        "id": "<?php echo $item['ID']?>",
+        "word": "<?php echo $item['Words']?>"
+        };
+
+    testList.push(wordItem);
+   <?php endforeach; ?>
+
     var current=0;
     var remain=10;
     var totalTime=0;
@@ -25,7 +40,7 @@
         }
     }
     function setTestWord(){
-        document.getElementById("boxTestword").innerHTML=testList[current];
+        document.getElementById("boxTestword").innerHTML=testList[current].word;
         document.getElementById("boxCounter").innerHTML= (current+1)+"/"+(testList.length);
         remain=10;
         if(timer){

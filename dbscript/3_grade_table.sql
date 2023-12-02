@@ -12,6 +12,6 @@ CREATE TABLE IF NOT EXISTS `ccrApp`.`grade` (
 
 INSERT INTO `ccrApp`.`grade` (`Grade`, `SizeOfTest`,  `NumberOfWords`,`TimeLimit`, `CreateDate`, `lastModified`)
     VALUES
-    (1, 50, 100, 300,  current_timestamp(), current_timestamp()),
-    (2, 50, 150, 400, current_timestamp(), current_timestamp()),
-    (3, 50, 200, 500, current_timestamp(), current_timestamp());
+    (1, 50, 10, 8,  current_timestamp(), current_timestamp()),
+    (2, 50, 2, 9, current_timestamp(), current_timestamp()),
+    (3, 50, 3, 10, current_timestamp(), current_timestamp());

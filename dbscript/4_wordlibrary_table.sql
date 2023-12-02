@@ -1,3 +1,5 @@
+DROP TABLE IF EXISTS  `ccrApp`.`wordslibrary`;
+
 CREATE TABLE `ccrapp`.`wordslibrary` (
     `ID` INT NOT NULL AUTO_INCREMENT,
     `Words` TEXT NOT NULL,
