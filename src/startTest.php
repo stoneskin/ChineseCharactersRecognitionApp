@@ -34,6 +34,7 @@ $timeLimit = 0;
                 $result = $conn->query($sql_words);       
                 $rows = $result->fetch_all(MYSQLI_ASSOC);
                 setcookie('wordlist', serialize($rows), time()+3600);
+                setcookie('timeLimit', $timeLimit, time()+3600);
 
 
             } else {
