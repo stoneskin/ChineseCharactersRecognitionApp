@@ -5,7 +5,7 @@ CREATE TABLE IF NOT EXISTS `ccrApp`.`grade` (
     `SizeOfTest` INT(32) NOT NULL,
     `NumberOfWords` INT(32) NOT NULL,
     `TimeLimit` INT(32) NOT NULL,
-    `CreateDate` DATETIME on update CURRENT_TIMESTAMP NOT NULL default CURRENT_TIMESTAMP,
+    `CreateDate` DATETIME NOT NULL default CURRENT_TIMESTAMP,
     `lastModified` DATETIME on update CURRENT_TIMESTAMP NOT NULL default CURRENT_TIMESTAMP,
     PRIMARY KEY (`Grade`)
     );
