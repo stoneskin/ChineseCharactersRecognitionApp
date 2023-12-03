@@ -103,14 +103,7 @@
             
             </div>
         </div>
-        <div class="footer">
-            <div class="c-mlccc-2023">
-                <div class="mlccc-2023">© Mlccc 2023</div>
-            </div>
-        </div>
-    </div>
-</body>
+        <?php require "_footer.php" ?>
 <script>
     setTestWord();
 </script>
-</html>
