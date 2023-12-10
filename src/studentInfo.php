@@ -30,30 +30,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if($errorStudent=='' && $errorGrade==''){
             $_SESSION["student"] = $student;
             $_SESSION["grade"] = $grade;
+            $username = $_SESSION["loginUser"];
+            $findStudentSql = "SELECT StudentID FROM student WHERE Email = $username";
+            $studentID = $conn->query($sql);
 
-            $findStudentSql = "SELECT StudentID FROM student WHERE Email = ?";
-            $stmt = $conn->prepare($findStudentSql);
 
-            $stmt->bind_param("s", $student);
-    
+            $activitySql = "INSERT INTO `ccrApp`.`activities` (`EventID`, `StudentName`, `StudentID`, `JudgeName`, `Level`) VALUES (?, ?, ?, ?, ?);";
+            
+            $stmt = $conn->prepare($activitySql);
+            $eventID = 1;
+            $judge = 'JUDGE';
+            $stmt->bind_param("isisi", $eventID, $_SESSION["loginUser"], $studentID, $judge, $grade);
             $stmt->execute();
-            $studentResult = $stmt->get_result();
-            $row = $studentResult->fetch_assoc();
 
-            if ($row) {
-                $studentID = $row["StudentID"];
-                $activitySql = "INSERT INTO `ccrApp`.`activities` (`EventID`, `StudentName`, `StudentID`, `JudgeName`, `Level`) VALUES (?, ?, ?, ?, ?);";
-                
-                $stmt = $conn->prepare($activitySql);
-                $eventID = 1;
-                $judge = 'JUDGE';
-                $stmt->bind_param("isisi", $eventID, $student, $studentID, $judge, $grade);
-                $stmt->execute();
-
-                header("Location: startTest.php".'?studentname='.$student.'&grade='.$grade);
-            } else {
-                $errorStudent = "Student \"".$student."\" not found";
-            }
+            header("Location: startTest.php".'?studentname='.$student.'&grade='.$grade);
         }
 
     }

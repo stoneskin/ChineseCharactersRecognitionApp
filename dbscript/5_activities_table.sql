@@ -1,5 +1,3 @@
-DROP TABLE IF EXISTS  `ccrApp`.`activities`;
-
 CREATE TABLE `ccrapp`.`activities` (
     `ActivityID` INT NOT NULL AUTO_INCREMENT,
     `EventID` INT NOT NULL,
