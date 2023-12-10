@@ -8,14 +8,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $myemail = $conn->real_escape_string(trim($_POST["email"]));
         $mypassword = $conn->real_escape_string(trim($_POST["password"])); 
 
-        $sql = "SELECT id FROM user WHERE Email = '$myemail' and Password = '$mypassword'";
+        $sql = "SELECT id, isAdmin FROM user WHERE Email = '$myemail' and Password = '$mypassword'";
         $result = $conn->query($sql);
 
         if ($result->num_rows === 1) {
+            $row = $result->fetch_assoc();
             session_start();
             $_SESSION["SID"] = session_id();
             $_SESSION["loginUser"] = $myemail;
             $_SESSION["usertype"]= "parent";
+            $_SESSION["isAdmin"]= $row["IsAdmin"];
             header("Location: studentInfo.php");
             exit();        
         } 
