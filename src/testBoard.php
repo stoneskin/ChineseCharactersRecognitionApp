@@ -1,4 +1,7 @@
-<?php require "_sessionHeader.php" ?>
+<?php require "_sessionHeader.php" ;
+require_once '_incFunctions.php';
+?>
+
 <script>
     // var studentName="studentName"
     // var testLevel="3"
@@ -7,8 +10,8 @@
    var testList = [];
    var wordItem;
    <?php 
-   $list = unserialize($_COOKIE['wordlist']);
-   $timeLimit=$_COOKIE['timeLimit'];
+   $list = unserialize(sanitizeHTML($_COOKIE['wordlist']));
+   $timeLimit=sanitizeHTML($_COOKIE['timeLimit']);
    foreach ($list as $item) : 
    ?>
     wordItem = {
