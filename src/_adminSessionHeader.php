@@ -1,6 +1,5 @@
-<?php
-require "_needSession.php";
-?>
+<?php require "_needSession.php";?>
+
 
 <html>
 <head>
@@ -16,7 +15,6 @@ require "_needSession.php";
 </head>
 
 <body>
-
     <div class="responsive">
         <div class="header">
             <div class="header2">
@@ -40,4 +38,12 @@ require "_needSession.php";
                 </ul>
         </div>
         </div>
+        <?php
+        if (!$_SESSION["IsAdmin"]=='1') {
+            $error = "Only admins can access this page.";
+            header("Location: error.php?error=" . urlencode($error));
+        } else {
+            echo "Welcome, admin.";
+        }
+        ?>
     
