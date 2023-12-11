@@ -16,8 +16,8 @@ $result = $conn->query($sql);
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {  
     if (isset($_POST["student"]) && isset($_POST["grade"]) ) {
-        $student = $conn->real_escape_string(trim($_POST["student"]));
-        $grade = $conn->real_escape_string(trim($_POST["grade"]));
+        $student = $conn->real_escape_string(trim(sanitizeHTML($_POST["student"])));
+        $grade = $conn->real_escape_string(trim(sanitizeHTML($_POST["grade"])));
     
         if($student==''){
             $errorStudent="Please Input Student Name!";
