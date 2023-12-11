@@ -1,5 +1,6 @@
 <?php
 require_once 'htmlpurifier-4.15.0-lite/library/HTMLPurifier.auto.php';
+require_once '_incFunctions.php';
 require "connect.php";
 $error = '';
 $studentName = '';
@@ -9,10 +10,10 @@ $timeLimit = 0;
 
     try {
         if (isset($_GET['studentName'])) {
-            $studentName = $conn->real_escape_string($_GET['studentName']);
+            $studentName = $conn->real_escape_string(sanitizeHTML($_GET['studentName']));
         };
         if (isset($_GET['grade'])) {
-            $grade = $conn->real_escape_string($_GET['grade']);
+            $grade = $conn->real_escape_string(sanitizeHTML($_GET['grade']));
 
             $sql = sprintf(
                 "SELECT NumberOfWords, TimeLimit FROM grade WHERE grade = %s",
