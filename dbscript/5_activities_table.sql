@@ -1,5 +1,7 @@
-DROP TABLE IF EXISTS  `ccrApp`.`records`;
-DROP TABLE IF EXISTS  `ccrApp`.`activities`;
+
+--DROP TABLE IF EXISTS  `ccrApp`.`records`;
+--DROP TABLE IF EXISTS  `ccrApp`.`activities`;
+
 
 CREATE TABLE `ccrapp`.`activities` (
     `ActivityID` INT NOT NULL AUTO_INCREMENT,
