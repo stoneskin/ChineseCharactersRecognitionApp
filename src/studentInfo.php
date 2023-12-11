@@ -21,16 +21,29 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     
         if($student==''){
             $errorStudent="Please Input Student Name!";
-            
         }
+
         if($grade==''){
             $errorGrade="Please Select grade!";
         }
+
         if($errorStudent=='' && $errorGrade==''){
             $_SESSION["student"] = $student;
             $_SESSION["grade"] = $grade;
+            $username = $_SESSION["loginUser"];
+            $findStudentSql = "SELECT StudentID FROM student WHERE Email = $username";
+            $studentID = $conn->query($sql);
+
+
+            $activitySql = "INSERT INTO `ccrApp`.`activities` (`EventID`, `StudentName`, `StudentID`, `JudgeName`, `Level`) VALUES (?, ?, ?, ?, ?);";
+            
+            $stmt = $conn->prepare($activitySql);
+            $eventID = 1;
+            $judge = 'JUDGE';
+            $stmt->bind_param("isisi", $eventID, $_SESSION["loginUser"], $studentID, $judge, $grade);
+            $stmt->execute();
+
             header("Location: startTest.php".'?studentname='.$student.'&grade='.$grade);
-           // exit();
         }
 
     }
