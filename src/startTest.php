@@ -9,14 +9,14 @@ $timeLimit = 0;
 
     try {
         if (isset($_GET['studentName'])) {
-            $studentName = $_GET['studentName'];
+            $studentName = $conn->real_escape_string($_GET['studentName']);
         };
         if (isset($_GET['grade'])) {
-            $grade = $_GET['grade'];
+            $grade = $conn->real_escape_string($_GET['grade']);
 
             $sql = sprintf(
                 "SELECT NumberOfWords, TimeLimit FROM grade WHERE grade = %s",
-                $conn->real_escape_string($grade));
+                $grade);
 
             $result = $conn->query($sql);
             $row = $result->fetch_object();
@@ -28,7 +28,7 @@ $timeLimit = 0;
                 //continue to get word list from database based on grade and NumberOfWords
                 $sql_words = sprintf(
                     "SELECT ID, Words FROM wordslibrary WHERE Level = %s  ORDER BY RAND() limit %s",
-                    $conn->real_escape_string($grade),
+                    $grade,
                     $conn->real_escape_string($numberOfWords));
 
                 $result = $conn->query($sql_words);       

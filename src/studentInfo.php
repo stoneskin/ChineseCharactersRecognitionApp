@@ -7,8 +7,8 @@ require "connect.php";
 $errorStudent = '';
 $errorGrade = '';
 
-$student= isset($_SESSION["student"]) ? $_SESSION["student"] : "";
-$grade=isset($_SESSION["grade"]) ? $_SESSION["grade"] : "";
+$student= isset($_SESSION["student"]) ? sanitizeHTML($_SESSION["student"]) : "";
+$grade=isset($_SESSION["grade"]) ? sanitizeHTML($_SESSION["grade"]) : "";
 
 // load Grade
 $sql = "SELECT Grade FROM grade";
