@@ -43,6 +43,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $stmt->bind_param("isisi", $eventID, $_SESSION["loginUser"], $studentID, $judge, $grade);
             $stmt->execute();
 
+            $_SESSION["activityid"] =  mysqli_insert_id( $conn);
+
             header("Location: startTest.php".'?studentname='.$student.'&grade='.$grade);
         }
 
