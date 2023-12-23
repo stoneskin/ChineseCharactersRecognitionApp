@@ -1,12 +1,42 @@
-<?php require "_sessionHeader.php" ;
+<?php require "_sessionHeader.php" ?>
+<?php
+require_once 'htmlpurifier-4.15.0-lite/library/HTMLPurifier.auto.php';
 require_once '_incFunctions.php';
+require "connect.php";
+
+$activityidFromSession = $_SESSION["activityid"];
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $resultlist = json_decode($_POST['data'], TRUE);
+    echo $_POST['data'];
+
+    //save to records table
+    $DataArr = array();
+    foreach($resultlist as $row){
+        $WordID = $row['id'];
+        $Passed = $row['passed']? 1:0;
+        $TimeElapsed =$row['timeElapsed'];    
+        $DataArr[] = "($activityidFromSession, $WordID, $Passed, $TimeElapsed)";
+    }
+    $sql = "INSERT INTO `ccrApp`.`records` (`ActivityID`, `WordID`, `Passed`, `TimeElapsed`) VALUES  ";
+    $sql .= implode(',', $DataArr);
+    mysqli_query($conn, $sql); 
+
+    //update activity table
+    $sqlUpdateActivity = "UPDATE `ccrApp`.`activities` SET CompletedTime = CURRENT_TIMESTAMP WHERE ActivityID = ? ";
+    $stmt = $conn->prepare($sqlUpdateActivity);
+    $stmt->bind_param("i", $activityidFromSession);
+    $stmt->execute();
+
+    //header("Location: endTest.php");
+}
 ?>
 
 <script>
     // var studentName="studentName"
     // var testLevel="3"
    // var testList=["中国","测试","新年好","花好月圆"];
-
+  
    var testList = [];
    var wordItem;
    <?php 
@@ -15,20 +45,22 @@ require_once '_incFunctions.php';
    foreach ($list as $item) : 
    ?>
     wordItem = {
-        "id": "<?php echo $item['ID']?>",
-        "word": "<?php echo $item['Words']?>",
-        "passed":null,
-        "timeElapsed":null
+        id: <?php echo $item['ID']?>,
+        word: "<?php echo $item['Words']?>",
+        passed:null,
+        timeElapsed:null
         };
 
     testList.push(wordItem);
    <?php endforeach; ?>
+
 
     var current=0;
     var remain=-1; 
     var timeElapsed=0;
     var totalTime=0;
     var timer;
+
     function previousItem(){
         if(current>0){
             current-=1; 
@@ -42,10 +74,19 @@ require_once '_incFunctions.php';
         if((current+1)<testList.length){
             current+=1;
             setTestWord();
-        }else{            
-            window.location.assign('endTest.php')
+        }else{  
+            if(timer){
+                clearTimeout(timer);
+            }
+            $.post('testBoard.php', {
+                data: JSON.stringify(testList)
+            }, function(response) {
+                //console.log(response);
+                window.location.assign('endTest.php')
+            });
         }
     }
+
     function setTestWord(){
         document.getElementById("boxTestword").innerHTML=testList[current].word;
         document.getElementById("boxCounter").innerHTML= (current+1)+"/"+(testList.length);
