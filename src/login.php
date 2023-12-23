@@ -1,6 +1,8 @@
 <?php
 require_once '_incFunctions.php';
-include "connect.php";
+require_once "connect.php";
+require_once ".\modules\MySessionHandler.php";
+$session = new MySessionHandler($conn);
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {  
     // username and password sent from form 
@@ -12,7 +14,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $result = $conn->query($sql);
         $row = $result->fetch_object();
         if ($row != null) {
-            session_start();
+            
             $_SESSION["SID"] = session_id();
             $_SESSION["loginUser"] = $myemail;
             $_SESSION["usertype"]= "parent";
@@ -26,7 +28,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $result = $conn->query($sql);
 
         if ($result->num_rows === 1) {
-            session_start();
+        
             $_SESSION["SID"] = session_id();
             $_SESSION["loginUser"] = $myemail;
             $_SESSION["usertype"]= "student";
