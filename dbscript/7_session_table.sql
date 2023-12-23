@@ -1,0 +1,8 @@
+DROP TABLE IF EXISTS  `ccrApp`.`sessions`;
+
+CREATE TABLE  IF NOT EXISTS `ccrApp`.`sessions` (
+  id VARCHAR(32) NOT NULL,
+  data TEXT NOT NULL,
+  `LastVisit` DATETIME on update CURRENT_TIMESTAMP NOT NULL default CURRENT_TIMESTAMP,
+  PRIMARY KEY (id)
+);

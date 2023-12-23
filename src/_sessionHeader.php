@@ -1,5 +1,5 @@
 <?php
-require "_needSession.php";
+require_once "_needSession.php";
 ?>
 
 <html>
