@@ -2,46 +2,16 @@
 <?php
 require_once 'htmlpurifier-4.15.0-lite/library/HTMLPurifier.auto.php';
 require_once '_incFunctions.php';
-require "connect.php";
 
-$activityidFromSession = $_SESSION["activityid"];
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $resultlist = json_decode($_POST['data'], TRUE);
-    echo $_POST['data'];
-    $questionsCorrect = 0;
-    //save to records table
-    $DataArr = array();
-    foreach($resultlist as $row){
-        $WordID = $row['id'];
-        $Passed = $row['passed']? 1:0;
-        $TimeElapsed =$row['timeElapsed'];    
-        $DataArr[] = "($activityidFromSession, $WordID, $Passed, $TimeElapsed)";
-
-        if($Passed == 1){
-            $questionsCorrect+=1;
-        }
-    }
-    $totalPercent = (int)round($questionsCorrect / count($DataArr) * 100);
-    $sql = "INSERT INTO `ccrApp`.`records` (`ActivityID`, `WordID`, `Passed`, `TimeElapsed`) VALUES  ";
-    $sql .= implode(',', $DataArr);
-    mysqli_query($conn, $sql); 
-
-    //update activity table
-    $sqlUpdateActivity = "UPDATE `ccrApp`.`activities` SET CompletedTime = CURRENT_TIMESTAMP, FinalScore = ? WHERE ActivityID = ? ";
-    $stmt = $conn->prepare($sqlUpdateActivity);
-    $stmt->bind_param("ii", $totalPercent, $activityidFromSession);
-    $stmt->execute();
-
-    //header("Location: endTest.php");
-}
 ?>
+
 
 <script>
     // var studentName="studentName"
     // var testLevel="3"
    // var testList=["中国","测试","新年好","花好月圆"];
-  
+
    var testList = [];
    var wordItem;
    <?php 
@@ -83,11 +53,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             if(timer){
                 clearTimeout(timer);
             }
-            $.post('testBoard.php', {
+            $.post('updateActivities.php', {
                 data: JSON.stringify(testList)
             }, function(response) {
-                //console.log(response);
-                window.location.assign('endTest.php')
+                console.log(response);
+                if(response.includes("OK!")){
+                    window.location.assign('endTest.php') 
+                }else{
+                    alert(response);
+                }
+                
             });
         }
     }
