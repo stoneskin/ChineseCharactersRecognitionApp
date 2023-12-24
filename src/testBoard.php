@@ -9,7 +9,7 @@ $activityidFromSession = $_SESSION["activityid"];
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $resultlist = json_decode($_POST['data'], TRUE);
     echo $_POST['data'];
-
+    $questionsCorrect = 0;
     //save to records table
     $DataArr = array();
     foreach($resultlist as $row){
@@ -17,15 +17,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $Passed = $row['passed']? 1:0;
         $TimeElapsed =$row['timeElapsed'];    
         $DataArr[] = "($activityidFromSession, $WordID, $Passed, $TimeElapsed)";
+
+        if($Passed == 1){
+            $questionsCorrect+=1;
+        }
     }
+    $totalPercent = (int)round($questionsCorrect / count($DataArr) * 100);
     $sql = "INSERT INTO `ccrApp`.`records` (`ActivityID`, `WordID`, `Passed`, `TimeElapsed`) VALUES  ";
     $sql .= implode(',', $DataArr);
     mysqli_query($conn, $sql); 
 
     //update activity table
-    $sqlUpdateActivity = "UPDATE `ccrApp`.`activities` SET CompletedTime = CURRENT_TIMESTAMP WHERE ActivityID = ? ";
+    $sqlUpdateActivity = "UPDATE `ccrApp`.`activities` SET CompletedTime = CURRENT_TIMESTAMP, FinalScore = ? WHERE ActivityID = ? ";
     $stmt = $conn->prepare($sqlUpdateActivity);
-    $stmt->bind_param("i", $activityidFromSession);
+    $stmt->bind_param("ii", $totalPercent, $activityidFromSession);
     $stmt->execute();
 
     //header("Location: endTest.php");
