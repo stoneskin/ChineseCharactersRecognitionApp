@@ -13,7 +13,7 @@ CREATE TABLE `ccrapp`.`activities` (
     `FinalScore` INT NOT NULL,
     `StartTime` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     `CompletedTime` DATETIME  NULL,
-    `TimeSpent` TIME,
+    `TimeSpent` INT,
     PRIMARY KEY (`ActivityID`)
     ) ENGINE = InnoDB; 
 
