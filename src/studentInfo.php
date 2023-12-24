@@ -52,8 +52,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $errorEvent=='') {
             
             $stmt = $conn->prepare($activitySql);
 
-            $judge = 'JUDGE';
-            $stmt->bind_param("isisi", $eventID, $_SESSION["loginUser"], $studentID, $judge, $grade);
+            $judge = $username;
+            $stmt->bind_param("isisi", $eventID, $student, $studentID, $judge, $grade);
             $stmt->execute();
 
             $_SESSION["activityid"] =  mysqli_insert_id( $conn);

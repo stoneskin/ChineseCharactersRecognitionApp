@@ -18,7 +18,7 @@
    
                 <div class="frame-botton">
                     <div class="frame-botton2">
-                        <div class="button button-tall" onclick="(()=>{window.location.assign('studentInfo.html')})()">
+                        <div class="button button-tall" onclick="(()=>{window.location.assign('studentInfo.php')})()">
                             <div class="submit">Next Test</div>
                         </div>
                     </div>
