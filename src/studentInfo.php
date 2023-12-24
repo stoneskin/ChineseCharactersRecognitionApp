@@ -52,7 +52,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $errorEvent=='') {
             
             $stmt = $conn->prepare($activitySql);
 
-            $judge = 'JUDGE';
+            $judge = $username;
             $stmt->bind_param("isisi", $eventID, $_SESSION["loginUser"], $studentID, $judge, $grade);
             $stmt->execute();
 
