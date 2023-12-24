@@ -16,9 +16,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     //save to records table
     $DataArr = array();
     foreach($resultlist as $row){
-        $WordID = $row['id'];
+        $WordID = $conn->real_escape_string($row['id']);
         $Passed = $row['passed']? 1:0;
-        $TimeElapsed =$row['timeElapsed'];    
+        $TimeElapsed =$conn->real_escape_string($row['timeElapsed']);    
         $DataArr[] = "($activityidFromSession, $WordID, $Passed, $TimeElapsed)";
         $totalTime+= (int)$TimeElapsed;
 
