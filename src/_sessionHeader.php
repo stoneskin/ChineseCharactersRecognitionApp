@@ -36,6 +36,7 @@ require_once "_needSession.php";
                         echo "[Grade".$_SESSION["grade"]."]";
                     }                    
                     ?> </span> </li>
+                    <li> <a href="personalaccount.php"> Account</a></li>
                     <li> <a href="logout.php"> Logout</a></li>
                 </ul>
         </div>
