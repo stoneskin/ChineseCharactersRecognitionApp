@@ -3,7 +3,7 @@
 --DROP TABLE IF EXISTS  `ccrApp`.`activities`;
 
 
-CREATE TABLE `ccrapp`.`activities` (
+CREATE TABLE `activities` (
     `ActivityID` INT NOT NULL AUTO_INCREMENT,
     `EventID` INT NOT NULL,
     `StudentName` TEXT NOT NULL,
@@ -15,9 +15,6 @@ CREATE TABLE `ccrapp`.`activities` (
     `CompletedTime` DATETIME  NULL,
     `TimeSpent` INT,
     PRIMARY KEY (`ActivityID`)
-    ) ENGINE = InnoDB; 
+    ) 
 
 
--- if we don't want drop the records or activities we could use below command to modify the table
-ALTER TABLE `ccrapp`.`activities`
-MODIFY COLUMN `CompletedTime` DATETIME  NULL;
