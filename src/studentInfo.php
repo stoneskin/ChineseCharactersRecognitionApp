@@ -48,13 +48,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $errorEvent=='') {
             $studentID = $conn->query($sql);
 
 
-            $activitySql = "INSERT INTO `ccrApp`.`activities` (`EventID`, `StudentName`, `StudentID`, `JudgeName`, `Level`) VALUES (?, ?, ?, ?, ?);";
+            $activitySql = "INSERT INTO `activities` (`EventID`, `StudentName`, `StudentID`, `JudgeName`, `Level`) VALUES (?, ?, ?, ?, ?);";
             
-            $stmt = $conn->prepare($activitySql);
+            if($stmt = $conn->prepare($activitySql)){
+                $judge = $username;
+                $stmt->bind_param("isisi", $eventID, $student, $studentID, $judge, $grade);
+                $stmt->execute();
+            }else{
+                die("Errormessage: ". $conn->error);
+            }
 
-            $judge = $username;
-            $stmt->bind_param("isisi", $eventID, $student, $studentID, $judge, $grade);
-            $stmt->execute();
+          
 
             $_SESSION["activityid"] =  mysqli_insert_id( $conn);
 
