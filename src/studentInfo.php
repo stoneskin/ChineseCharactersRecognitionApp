@@ -1,11 +1,11 @@
 <?php require "_sessionHeader.php" ?>
 <?php
-require_once 'htmlpurifier-4.15.0-lite/library/HTMLPurifier.auto.php';
 require_once '_incFunctions.php';
-require "connect.php";
+require_once "connect.php";
 
 $errorStudent = '';
 $errorGrade = '';
+$errorEvent='';
 
 $student= isset($_SESSION["student"]) ? sanitizeHTML($_SESSION["student"]) : "";
 $grade=isset($_SESSION["grade"]) ? sanitizeHTML($_SESSION["grade"]) : "";
@@ -13,8 +13,20 @@ $grade=isset($_SESSION["grade"]) ? sanitizeHTML($_SESSION["grade"]) : "";
 // load Grade
 $sql = "SELECT Grade FROM grade";
 $result = $conn->query($sql);
+$sqlEvent="SELECT Id FROM `event` WHERE ExpiredDate> CURRENT_DATE() and ActiveDate<=CURRENT_DATE() ORDER by Id DESC";
+$resultEvent = $conn->query($sqlEvent);
+$rowEvent = $resultEvent->fetch_object();
+if ($rowEvent!=null) {
+    $eventID = $rowEvent->Id;
+    $_SESSION["EventId"]= $eventID;
+    
+}else{
+    $errorEvent="No Active Event Available.";
+}
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {  
+
+
+if ($_SERVER["REQUEST_METHOD"] == "POST" && $errorEvent=='') {  
     if (isset($_POST["student"]) && isset($_POST["grade"]) ) {
         $student = $conn->real_escape_string(trim(sanitizeHTML($_POST["student"])));
         $grade = $conn->real_escape_string(trim(sanitizeHTML($_POST["grade"])));
@@ -35,13 +47,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $studentID = $conn->query($sql);
 
 
-            $activitySql = "INSERT INTO `ccrApp`.`activities` (`EventID`, `StudentName`, `StudentID`, `JudgeName`, `Level`) VALUES (?, ?, ?, ?, ?);";
+            $activitySql = "INSERT INTO `activities` (`EventID`, `StudentName`, `StudentID`, `JudgeName`, `Level`) VALUES (?, ?, ?, ?, ?);";
             
-            $stmt = $conn->prepare($activitySql);
-            $eventID = 1;
-            $judge = 'JUDGE';
-            $stmt->bind_param("isisi", $eventID, $_SESSION["loginUser"], $studentID, $judge, $grade);
-            $stmt->execute();
+            if($stmt = $conn->prepare($activitySql)){
+                $judge = $username;
+                $stmt->bind_param("isisi", $eventID, $student, $studentID, $judge, $grade);
+                $stmt->execute();
+            }else{
+                die("Errormessage: ". $conn->error);
+            }
+
+          
+
+            $_SESSION["activityid"] =  mysqli_insert_id( $conn);
 
             header("Location: startTest.php".'?studentname='.$student.'&grade='.$grade);
         }
@@ -99,6 +117,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             if ($errorGrade!='') {
                                 echo "<div class='errorMessage'>$errorGrade</div>";
                             }
+
+                            if ($errorEvent!='') {
+                                echo "<div class='errorMessage'>$errorEvent</div>";
+                            }
+
                         ?>
              
                     <div class="frame-botton">

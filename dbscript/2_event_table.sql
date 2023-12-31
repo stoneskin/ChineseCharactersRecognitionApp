@@ -1,5 +1,5 @@
-DROP TABLE IF EXISTS  `ccrApp`.`event`;
-CREATE TABLE IF NOT EXISTS `ccrApp`.`event` (
+DROP TABLE IF EXISTS  `event`;
+CREATE TABLE IF NOT EXISTS `event` (
     `ID` INT(32) NOT NULL AUTO_INCREMENT,
     `EventName` VARCHAR(100) NOT NULL,
     `AccessKey` VARCHAR(100) NOT NULL,
@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS `ccrApp`.`event` (
     PRIMARY KEY (`ID`)
 ); 
 
-INSERT INTO `ccrApp`. `event` (
+INSERT INTO `event` (
     `ID`, 
     `EventName`, 
     `AccessKey`, 

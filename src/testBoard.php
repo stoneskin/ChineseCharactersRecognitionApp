@@ -1,6 +1,10 @@
-<?php require "_sessionHeader.php" ;
+<?php require "_sessionHeader.php" ?>
+<?php
 require_once '_incFunctions.php';
+
+
 ?>
+
 
 <script>
     // var studentName="studentName"
@@ -15,20 +19,22 @@ require_once '_incFunctions.php';
    foreach ($list as $item) : 
    ?>
     wordItem = {
-        "id": "<?php echo $item['ID']?>",
-        "word": "<?php echo $item['Words']?>",
-        "passed":null,
-        "timeElapsed":null
+        id: <?php echo $item['ID']?>,
+        word: "<?php echo $item['Words']?>",
+        passed:null,
+        timeElapsed:null
         };
 
     testList.push(wordItem);
    <?php endforeach; ?>
+
 
     var current=0;
     var remain=-1; 
     var timeElapsed=0;
     var totalTime=0;
     var timer;
+
     function previousItem(){
         if(current>0){
             current-=1; 
@@ -42,10 +48,24 @@ require_once '_incFunctions.php';
         if((current+1)<testList.length){
             current+=1;
             setTestWord();
-        }else{            
-            window.location.assign('endTest.php')
+        }else{  
+            if(timer){
+                clearTimeout(timer);
+            }
+            $.post('updateActivities.php', {
+                data: JSON.stringify(testList)
+            }, function(response) {
+                console.log(response);
+                if(response.includes("OK!")){
+                    window.location.assign('endTest.php') 
+                }else{
+                    alert(response);
+                }
+                
+            });
         }
     }
+
     function setTestWord(){
         document.getElementById("boxTestword").innerHTML=testList[current].word;
         document.getElementById("boxCounter").innerHTML= (current+1)+"/"+(testList.length);

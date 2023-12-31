@@ -1,5 +1,5 @@
 <?php
-require "_needSession.php";
+require_once "_needSession.php";
 ?>
 
 <html>
@@ -16,7 +16,9 @@ require "_needSession.php";
 </head>
 
 <body>
-
+<?php
+echo "[userType=".$_SESSION["userType"]."]";
+?>
     <div class="responsive">
         <div class="header">
             <div class="header2">
@@ -36,6 +38,13 @@ require "_needSession.php";
                         echo "[Grade".$_SESSION["grade"]."]";
                     }                    
                     ?> </span> </li>
+                    <?php
+                        if (isset($_SESSION["userType"]) && $_SESSION["userType"]!= "guest"){
+                            echo `<li> <a href="personalaccount.php"> Account</a></li>`;
+                        }
+                    ?>
+                    
+
                     <li> <a href="logout.php"> Logout</a></li>
                 </ul>
         </div>
