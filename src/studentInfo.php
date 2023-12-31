@@ -6,7 +6,7 @@ require_once "connect.php";
 $errorStudent = '';
 $errorGrade = '';
 $errorEvent='';
-
+$_SESSION["activityid"]=null;
 $student= isset($_SESSION["student"]) ? sanitizeHTML($_SESSION["student"]) : "";
 $grade=isset($_SESSION["grade"]) ? sanitizeHTML($_SESSION["grade"]) : "";
 
