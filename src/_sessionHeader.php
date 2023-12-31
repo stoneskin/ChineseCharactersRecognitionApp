@@ -38,7 +38,7 @@ require_once "_needSession.php";
                     ?> </span> </li>
                     <?php
                         if (isset($_SESSION["userType"]) && $_SESSION["userType"]!= "guest"){
-                            echo "<li> <a href='personalaccount.php'> Account</a></li>";
+                            echo "<li> <a href='personalAccount.php'> Account</a></li>";
                         }
                     ?>   
                     

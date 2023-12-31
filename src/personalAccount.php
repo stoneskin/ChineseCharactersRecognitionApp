@@ -1,9 +1,18 @@
 <?php require "_sessionHeader.php" ?>
 <?php require_once '_incFunctions.php';
 $myemail = $_SESSION["loginUser"];
+$userType =$_SESSION["userType"];
+
+
+
 $studentSql = "SELECT StudentID, GradeID FROM student WHERE Email = '$myemail'";
 $result = $conn->query($studentSql);
 $row = $result->fetch_object();
+if($row==null)
+    {
+        echo "acct not found..";
+        die()
+    }
 $studentID = $row->StudentID;
 $grade = "N/A";
 if ($row != null && $row->GradeID != null) {
