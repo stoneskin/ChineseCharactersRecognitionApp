@@ -1,4 +1,4 @@
-
+0
 <?php
 require_once "_needSession.php";
 require_once '_incFunctions.php';
