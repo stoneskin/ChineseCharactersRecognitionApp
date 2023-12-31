@@ -48,7 +48,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 $email = '';
 if (isset($_GET['email'])) {
-    $email = sanitizeHTML($_GET['email']); 
+    $email = sanitizeHTML(trim($_GET['email'])); 
 }
 ?>
 
@@ -69,7 +69,7 @@ if (isset($_GET['email'])) {
                         </div>
                         <div >
                             <input type="text" name="email" class="textbox-frame form-control" id="txtEmail" aria-describedby="emailHelp" placeholder="Enter Email or UserName" 
-                                value=" <?php echo $email ?>" />
+                                value="<?php echo $email ?>" />
                         </div>
                     </div>
                     <div class="input-component">
