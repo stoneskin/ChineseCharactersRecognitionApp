@@ -62,9 +62,9 @@ class MySessionHandler implements SessionHandlerInterface{
     return $result;
   }
 
-  public function gc ($maxlifetime) {
+  public function gc (int $max_lifetime) {
     // delete the expired session data from the session table
-    $sql = "DELETE FROM sessions WHERE UNIX_TIMESTAMP() - data > $maxlifetime";
+    $sql = "DELETE FROM sessions WHERE UNIX_TIMESTAMP() - data > $max_lifetime";
     $result = $this->db->query ($sql);
     // return true if successful, false otherwise
     return $result;
