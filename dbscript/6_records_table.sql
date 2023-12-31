@@ -8,5 +8,5 @@ CREATE TABLE `records` (
     `TimeElapsed` INT NOT NULL,
     PRIMARY KEY (`RecordID`),
     FOREIGN KEY (`ActivityID`) REFERENCES activities(ActivityID),
-    FOREIGN KEY (`WordID`) REFERENCES wordsLibrary(ID)
+    FOREIGN KEY (`WordID`) REFERENCES wordslibrary(ID)
     ) 

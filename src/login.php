@@ -1,7 +1,7 @@
 <?php
 require_once '_incFunctions.php';
 require_once "connect.php";
-require_once ".\modules\MySessionHandler.php";
+require_once "modules/MySessionHandler.php";
 $session = new MySessionHandler($conn);
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {  

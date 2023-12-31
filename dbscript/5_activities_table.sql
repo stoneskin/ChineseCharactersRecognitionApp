@@ -10,7 +10,7 @@ CREATE TABLE `activities` (
     `StudentID` INT NULL,
     `JudgeName` TEXT NOT NULL,
     `Level` INT NOT NULL,
-    `FinalScore` INT NOT NULL,
+    `FinalScore` INT NULL,
     `StartTime` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     `CompletedTime` DATETIME  NULL,
     `TimeSpent` INT,
