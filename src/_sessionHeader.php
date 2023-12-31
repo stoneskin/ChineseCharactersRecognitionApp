@@ -16,9 +16,7 @@ require_once "_needSession.php";
 </head>
 
 <body>
-<?php
-echo "[userType=".$_SESSION["userType"]."]";
-?>
+
     <div class="responsive">
         <div class="header">
             <div class="header2">
@@ -40,9 +38,9 @@ echo "[userType=".$_SESSION["userType"]."]";
                     ?> </span> </li>
                     <?php
                         if (isset($_SESSION["userType"]) && $_SESSION["userType"]!= "guest"){
-                            echo `<li> <a href="personalaccount.php"> Account</a></li>`;
+                            echo "<li> <a href='personalaccount.php'> Account</a></li>";
                         }
-                    ?>
+                    ?>   
                     
 
                     <li> <a href="logout.php"> Logout</a></li>
