@@ -29,12 +29,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if(count($DataArr)>0) {
     
         $totalPercent = (int)round($questionsCorrect / count($DataArr) * 100);
-        $sql = "INSERT INTO `ccrApp`.`records` (`ActivityID`, `WordID`, `Passed`, `TimeElapsed`) VALUES  ";
+        $sql = "INSERT INTO `records` (`ActivityID`, `WordID`, `Passed`, `TimeElapsed`) VALUES  ";
         $sql .= implode(',', $DataArr);
         mysqli_query($conn, $sql); 
 
         //update activity table
-        $sqlUpdateActivity = "UPDATE `ccrApp`.`activities` SET CompletedTime = CURRENT_TIMESTAMP, FinalScore = ?,TimeSpent = ? WHERE ActivityID = ? ";
+        $sqlUpdateActivity = "UPDATE `activities` SET CompletedTime = CURRENT_TIMESTAMP, FinalScore = ?,TimeSpent = ? WHERE ActivityID = ? ";
         if($stmt = $conn->prepare($sqlUpdateActivity)){
             $stmt->bind_param("iii", $totalPercent,$totalTime, $activityidFromSession);
             $stmt->execute();
