@@ -10,8 +10,8 @@ $result = $conn->query($studentSql);
 $row = $result->fetch_object();
 if($row==null)
     {
-        echo "acct not found..";
-        die()
+        $error = "User $myemail is not a student. ";
+        header("Location: error.php?error=" . urlencode($error));
     }
 $studentID = $row->StudentID;
 $grade = "N/A";
