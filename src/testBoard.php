@@ -1,6 +1,5 @@
 <?php require "_sessionHeader.php" ?>
 <?php
-require_once 'htmlpurifier-4.15.0-lite/library/HTMLPurifier.auto.php';
 require_once '_incFunctions.php';
 
 
