@@ -17,7 +17,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             
             $_SESSION["SID"] = session_id();
             $_SESSION["loginUser"] = $myemail;
-            $_SESSION["usertype"]= "parent";
+            $_SESSION["userType"]= "parent";
             $_SESSION["IsAdmin"]= $row->isAdmin;
             $_SESSION["Id"]= $row->id;
             header("Location: studentInfo.php");
@@ -31,7 +31,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         
             $_SESSION["SID"] = session_id();
             $_SESSION["loginUser"] = $myemail;
-            $_SESSION["usertype"]= "student";
+            $_SESSION["userType"]= "student";
             header("Location: studentInfo.php?type=student");
             exit();        
         } 
