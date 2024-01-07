@@ -64,6 +64,9 @@
   align-items: center;
   justify-content: flex-start;
 }
+.editable{
+  display:none;
+}
 .two-column-frame {
   padding: 50px 0px 50px 0px;
   display: flex;
@@ -609,4 +612,5 @@ vertical-align: middle;
   font-size: 30px;
   width: 150px;
 }
+
 }

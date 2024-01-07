@@ -1,5 +1,5 @@
 <?php
-require "_needSession.php";
+require_once "_needSession.php";
 ?>
 
 <html>
@@ -36,6 +36,12 @@ require "_needSession.php";
                         echo "[Grade".$_SESSION["grade"]."]";
                     }                    
                     ?> </span> </li>
+                    <li><span> <?php
+                    if (isset($_SESSION["IsAdmin"])){
+                        echo "<li> <a href='admin.php'>Admin</a></li>";
+                    }                    
+                    ?> </span> </li>               
+                  
                     <li> <a href="logout.php"> Logout</a></li>
                 </ul>
         </div>
