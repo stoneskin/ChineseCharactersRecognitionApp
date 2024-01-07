@@ -39,13 +39,16 @@ if (isset($_POST['submit'])) {
                     $conn->real_escape_string($password));    
             }
 
-            $conn->query($sql);
+            if (!$conn->query($sql)) {
+                $error = $conn->error;
+            }
             $conn->close();
-
-            header("Location: login.php?email=" . urlencode(sanitizeHTML($email)));
+            if($error == '') {
+                header("Location: login.php?email=" . urlencode(sanitizeHTML($email)));
+            }
         }
         catch (Exception $e) {
-            $error = "Invalid email or password";
+            $error = $e->getMessage();
         }
     }
     else
