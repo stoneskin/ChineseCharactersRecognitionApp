@@ -16,10 +16,10 @@
     <div class="responsive">
         <div class="header">
             <div class="header2">
-                <div class="logo">
-                    <img class="logo2" src="images/logo.png" />
+                <div class="logo" style="cursor:pointer">
+                    <img alt="logo" class="logo2" src="images/logo.png" onclick="(()=>{window.location.assign('studentInfo.php')})()" />
                 </div>
-                <div class="mlccc-words-test">MLCCC Words Test</div>
+                <div class="mlccc-words-test"  style="cursor:pointer" onclick="(()=>{window.location.assign('studentInfo.php')})()">MLCCC Words Test</div>
             </div>
         </div>
     
