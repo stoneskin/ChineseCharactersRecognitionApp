@@ -36,12 +36,19 @@ require_once "_needSession.php";
                         echo "[Grade".$_SESSION["grade"]."]";
                     }                    
                     ?> </span> </li>
+
+                     <?php
+                    if (isset($_SESSION["IsAdmin"])){
+                        echo "<li> <a href='admin.php'>Admin</a></li>";
+                    }                    
+                    ?>  
                     <?php
                         if (isset($_SESSION["userType"]) && $_SESSION["userType"]!= "guest"){
                             echo "<li> <a href='personalAccount.php'> Account</a></li>";
                         }
                     ?>   
                     
+
 
                     <li> <a href="logout.php"> Logout</a></li>
                 </ul>
