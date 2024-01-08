@@ -1,8 +1,7 @@
-DROP TABLE IF EXISTS  `ccrApp`.`grade`;
+DROP TABLE IF EXISTS  `grade`;
 
-CREATE TABLE IF NOT EXISTS `ccrApp`.`grade` (
+CREATE TABLE IF NOT EXISTS `grade` (
     `Grade` TINYINT NOT NULL,
-    `SizeOfTest` INT(32) NOT NULL,
     `NumberOfWords` INT(32) NOT NULL,
     `TimeLimit` INT(32) NOT NULL,
     `CreateDate` DATETIME NOT NULL default CURRENT_TIMESTAMP,
@@ -10,8 +9,14 @@ CREATE TABLE IF NOT EXISTS `ccrApp`.`grade` (
     PRIMARY KEY (`Grade`)
     );
 
-INSERT INTO `ccrApp`.`grade` (`Grade`, `SizeOfTest`,  `NumberOfWords`,`TimeLimit`, `CreateDate`, `lastModified`)
+INSERT INTO `grade` (`Grade`,  `NumberOfWords`,`TimeLimit`, `CreateDate`, `lastModified`)
     VALUES
-    (1, 50, 10, 8,  current_timestamp(), current_timestamp()),
-    (2, 50, 2, 9, current_timestamp(), current_timestamp()),
-    (3, 50, 3, 10, current_timestamp(), current_timestamp());
+    (1, 10, 8,  current_timestamp(), current_timestamp()),
+    (2, 10, 9, current_timestamp(), current_timestamp()),
+    (3, 15, 10, current_timestamp(), current_timestamp()),
+    (4, 15, 10, current_timestamp(), current_timestamp()),
+    (5, 15, 10, current_timestamp(), current_timestamp()),
+    (6, 15, 10, current_timestamp(), current_timestamp()),
+    (7, 20, 10, current_timestamp(), current_timestamp()),
+    (8, 20, 10, current_timestamp(), current_timestamp()),
+    (9, 20, 10, current_timestamp(), current_timestamp());

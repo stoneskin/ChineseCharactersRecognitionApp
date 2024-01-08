@@ -1,6 +1,8 @@
 <?php
 require_once '_incFunctions.php';
-include "connect.php";
+require_once "connect.php";
+require_once "modules/MySessionHandler.php";
+$session = new MySessionHandler($conn);
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {  
     // username and password sent from form 
@@ -12,10 +14,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $result = $conn->query($sql);
         $row = $result->fetch_object();
         if ($row != null) {
-            session_start();
+            
             $_SESSION["SID"] = session_id();
             $_SESSION["loginUser"] = $myemail;
-            $_SESSION["usertype"]= "parent";
+            $_SESSION["userType"]= "parent";
             $_SESSION["IsAdmin"]= $row->isAdmin;
             $_SESSION["Id"]= $row->id;
             header("Location: studentInfo.php");
@@ -26,10 +28,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $result = $conn->query($sql);
 
         if ($result->num_rows === 1) {
-            session_start();
+        
             $_SESSION["SID"] = session_id();
             $_SESSION["loginUser"] = $myemail;
-            $_SESSION["usertype"]= "student";
+            $_SESSION["userType"]= "student";
             header("Location: studentInfo.php?type=student");
             exit();        
         } 
@@ -46,7 +48,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 $email = '';
 if (isset($_GET['email'])) {
-    $email = sanitizeHTML($_GET['email']); 
+    $email = sanitizeHTML(trim($_GET['email'])); 
 }
 ?>
 
@@ -67,7 +69,7 @@ if (isset($_GET['email'])) {
                         </div>
                         <div >
                             <input type="text" name="email" class="textbox-frame form-control" id="txtEmail" aria-describedby="emailHelp" placeholder="Enter Email or UserName" 
-                                value=" <?php echo $email ?>" />
+                                value="<?php echo $email ?>" />
                         </div>
                     </div>
                     <div class="input-component">

@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS `ccrApp`.`student` (
+CREATE TABLE IF NOT EXISTS `student` (
     `StudentID` INT(32) NOT NULL AUTO_INCREMENT,
     `Email` TINYTEXT NOT NULL,
     `Password` VARCHAR(100) NOT NULL,

@@ -1,5 +1,7 @@
 <?php
-    include "connect.php";
+  require_once "connect.php";
+  require_once "modules/MySessionHandler.php";
+  $session = new MySessionHandler($conn);
 
     $guestError="";
     $username=trim($_POST["username"]);;
@@ -18,15 +20,17 @@
             exit();
         }
             
-        $sql = sprintf("SELECT id FROM event WHERE AccessKey = '%s'",$conn->real_escape_string($accessKey));
+        $sql = sprintf("SELECT Id FROM event WHERE AccessKey = '%s' and ExpiredDate> CURRENT_DATE() and ActiveDate<=CURRENT_DATE() order by Id desc",$conn->real_escape_string($accessKey));
         
         $result = $conn->query($sql);
-        
-        if ($result->num_rows === 1) {
-            session_start();
+        $row = $result->fetch_object();
+
+        if ($row != null) {
+          
             $_SESSION["SID"] = session_id();
             $_SESSION["loginUser"] = $username;
             $_SESSION["userType"]= "guest";
+           // $_SESSION["EventId"]= $row->Id;
             header("Location: studentInfo.php");
             exit();  
         } else {
