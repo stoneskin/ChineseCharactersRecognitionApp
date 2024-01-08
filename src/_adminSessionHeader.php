@@ -18,22 +18,22 @@
     <div class="responsive">
         <div class="header">
             <div class="header2">
-                <div class="logo">
+                <div class="logo" style="cursor:pointer" onclick="(()=>{window.location.assign('studentInfo.php')})()">
                     <img class="logo2" src="images/logo.png" />
                 </div>
-                <div class="mlccc-words-test">MLCCC Words Test</div>
+                <div class="mlccc-words-test" style="cursor:pointer" onclick="(()=>{window.location.assign('studentInfo.php')})()">MLCCC Words Test</div>
 
                 <ul class="nav navbar-nav navbar-right">
-                    <li><span> <?php
-                    if (isset($_SESSION["student"])){
-                        echo $_SESSION["student"];
+                <?php
+                    if (isset($_SESSION["IsAdmin"])){
+                        echo "<li> <a href='admin.php'>Admin</a></li>";
                     }                    
-                    ?> </span> </li>
-                    <li><span>   <?php 
-                    if (isset($_SESSION["grade"])){
-                        echo "[Grade".$_SESSION["grade"]."]";
-                    }                    
-                    ?> </span> </li>
+                    ?>  
+                    <?php
+                        if (isset($_SESSION["userType"]) && $_SESSION["userType"]!= "guest"){
+                            echo "<li> <a href='personalAccount.php'> Account</a></li>";
+                        }
+                    ?>   
                     <li> <a href="logout.php"> Logout</a></li>
                 </ul>
         </div>

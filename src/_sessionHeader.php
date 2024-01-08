@@ -21,9 +21,9 @@ require_once "_needSession.php";
         <div class="header">
             <div class="header2">
                 <div class="logo">
-                    <img class="logo2" src="images/logo.png" />
+                    <img class="logo2" src="images/logo.png" style="cursor:pointer" onclick="(()=>{window.location.assign('studentInfo.php')})()" />
                 </div>
-                <div class="mlccc-words-test">MLCCC Words Test</div>
+                <div class="mlccc-words-test" style="cursor:pointer" onclick="(()=>{window.location.assign('studentInfo.php')})()" >MLCCC Words Test</div>
 
                 <ul class="nav navbar-nav navbar-right">
                     <li><span> <?php
