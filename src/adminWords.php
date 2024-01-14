@@ -1,0 +1,100 @@
+<?php require "_adminSessionHeader.php" ?>
+<?php
+require_once 'htmlpurifier-4.15.0-lite/library/HTMLPurifier.auto.php';
+require_once '_incFunctions.php';
+require "connect.php";
+
+
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {  
+    if (isset($_POST["grade"])) {
+        $grade = $conn->real_escape_string(trim(sanitizeHTML($_POST["grade"])));
+    }
+    else
+    {
+        echo "Grade is required.";
+        exit;
+    }
+
+
+    if ($_FILES['wordListFile']['error'] == UPLOAD_ERR_OK         //checks for errors
+      && is_uploaded_file($_FILES['wordListFile']['tmp_name'])) { //checks that file is uploaded
+        $wordlist =  file_get_contents($_FILES['wordListFile']['tmp_name']); 
+
+        $wordlist = str_replace("，", ",", $wordlist); //replace Chinese comma with English comma
+        $words = preg_split("/[',']+/", $wordlist); 
+ 
+        foreach($words as $word){
+            $word = ltrim($word, " ");
+            $word = rtrim($word, " ");
+            if (empty($word))
+            {
+                continue;
+            }
+            $sql = "INSERT INTO `wordslibrary` (`Words`, `Level`) SELECT * FROM  (SELECT ? as Words, ? as Level) AS tmp ";
+            $sql = $sql." WHERE NOT EXISTS (Select `Words` From `wordslibrary` WHERE `Level` = ? and `Words` = ?) LIMIT 1;";
+
+            if($stmt = $conn->prepare($sql)){
+                $stmt->bind_param("siis", $word, $grade, $grade, $word);
+                $stmt->execute();     
+            }
+        }
+        echo ("Words have been imported successfully for Grade " . $grade . ".");
+    }
+    else
+    {
+        echo "File upload failed.";
+    }
+}
+?>
+<script>
+
+</script>
+
+
+<div class="container py-3">
+    <h2 class="border-bottom border-dark">Import Words</h2>
+ 
+    <div class="row">
+       <form action="adminWords.php" method="post" enctype="multipart/form-data">
+
+            <div class="input-component">
+                <div class="label-frame">
+                    <div class="label">Grade:</div>
+                </div>
+                <div>
+                            <?php
+                            $options = "<option  value=''>Select Grade</option>";
+                            $sql = "SELECT Grade FROM grade";
+                            $result = $conn->query($sql);
+                            while ($row = $result->fetch_assoc()) {
+                                $optionValue = $row["Grade"];
+                                $Selected="";
+
+                                $options .= "<option value=\"$optionValue\">Grade $optionValue</option>";
+                            }
+                            echo '<select name="grade" required class="form-select form-select-lg mb-3 textbox-frame form-control" aria-label=".form-select-lg example">';
+                            echo $options;
+                            echo '</select>';
+                            ?>
+                </div>
+            </div>
+            <div class="input-component">
+                <div class="label-frame">
+                    <div class="label">Word list file:</div>
+                </div>
+                <div>
+                <input type="hidden" name="MAX_FILE_SIZE" value="30000" />
+                <input type="file" id="wordListFile" name="wordListFile" required accept=".txt" />
+                </div>
+            </div>
+            <div class="frame-botton">
+                <div class="frame-botton2">
+                    <button class="button submit" type="submit">Upload File</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+</div>
+<?php require "_footer.php" ?>
