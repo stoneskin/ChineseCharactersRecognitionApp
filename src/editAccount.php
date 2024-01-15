@@ -34,7 +34,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         
         if ($row != null) {
             if ($myNewPassword == $myNewPasswordRetyped) {
-                if ($_SESSION[!"IsAdmin"]) {
+                if (!$_SESSION["IsAdmin"]) {
                     if ($myNewPassword != null) {
                         $sql = "UPDATE student SET Password = '$myNewPassword' WHERE Email = '$myemail'";
                         $conn->query($sql);
