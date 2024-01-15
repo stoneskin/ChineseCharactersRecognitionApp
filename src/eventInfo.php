@@ -4,12 +4,11 @@ $eventID = $_GET['event'];
 $eventSql = "SELECT EventName FROM event WHERE ID = $eventID";
 $result = $conn->query($eventSql);
 $row = $result->fetch_object();
-if ($row==null)
-    {
-        $eventName = "No event found";
-    }
+if ($row==null) {
+    $tableTitle = "No event found";
+}
 if ($row != null && $row->EventName != null) {
-    $eventName = $row->EventName;
+    $tableTitle = $row->EventName . " Activity List";
 }
 
 $activitySql = "SELECT StudentName, StudentID, ActivityID, Level, FinalScore, TimeSpent FROM activities WHERE EventID = $eventID ORDER BY ActivityID DESC";
@@ -20,7 +19,7 @@ $activities = $conn->query($activitySql);
     <div class="row">
         <div class="frame-main col-md-12 col-sm-12">
 
-        <h2 class="border-bottom border-dark"><?php echo $eventName." Activity List" ?></h2>
+        <h2 class="border-bottom border-dark"><?php echo $tableTitle?></h2>
             <div class="col-md-12 col-sm-12">
                 <table>
                     <tr>
