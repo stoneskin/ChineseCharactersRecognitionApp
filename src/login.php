@@ -10,29 +10,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $myemail = $conn->real_escape_string(trim($_POST["email"]));
         $mypassword = $conn->real_escape_string(trim($_POST["password"])); 
 
-        $sql = "SELECT id, isAdmin FROM user WHERE Email = '$myemail' and Password = '$mypassword'";
+        $sql = "SELECT id, isAdmin, UserType FROM user WHERE Email = '$myemail' and Password = '$mypassword'";
         $result = $conn->query($sql);
         $row = $result->fetch_object();
         if ($row != null) {
             
             $_SESSION["SID"] = session_id();
             $_SESSION["loginUser"] = $myemail;
-            $_SESSION["userType"]= "parent";
+            $_SESSION["userType"]= $row->UserType;
             $_SESSION["IsAdmin"]= $row->isAdmin;
             $_SESSION["Id"]= $row->id;
             header("Location: studentInfo.php");
-            exit();        
-        } 
-
-        $sql = "SELECT StudentId FROM student WHERE Email = '$myemail' and Password = '$mypassword'";
-        $result = $conn->query($sql);
-
-        if ($result->num_rows === 1) {
-        
-            $_SESSION["SID"] = session_id();
-            $_SESSION["loginUser"] = $myemail;
-            $_SESSION["userType"]= "student";
-            header("Location: studentInfo.php?type=student");
             exit();        
         } 
         
@@ -52,7 +40,7 @@ if (isset($_GET['email'])) {
 }
 ?>
 
-<?php require "_header.php" ?>
+<?php require "_header.php"?>
         <div class="two-column-frame container">
             <div class="row">
             <?php

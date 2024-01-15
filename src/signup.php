@@ -23,21 +23,12 @@ if (isset($_POST['submit'])) {
       //$password = password_hash($password, PASSWORD_DEFAULT);
 
         try {
-
-            if ($_POST['userOptions'] === 'student')
-            {
-                $sql = sprintf(
-                    "INSERT INTO student (email, password) VALUES ('%s', '%s')",
-                    $conn->real_escape_string($email),
-                    $conn->real_escape_string($password));
-            }
-            else
-            {
-                $sql = sprintf(
-                    "INSERT INTO user (email, password) VALUES ('%s', '%s')",
-                    $conn->real_escape_string($email),
-                    $conn->real_escape_string($password));    
-            }
+            $sql = sprintf(
+                "INSERT INTO user (Email, Password, UserType) VALUES ('%s', '%s', '%s')",
+                $conn->real_escape_string($email),
+                $conn->real_escape_string($password),
+                ($_POST['userOptions'] === 'student') ? 'student' : 'parent'
+            );
 
             if (!$conn->query($sql)) {
                 $error = $conn->error;
