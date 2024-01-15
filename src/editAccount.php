@@ -1,15 +1,17 @@
 <?php require "_sessionHeader.php" ?>
 <?php require_once '_incFunctions.php';
-$options = "<option  value=''>Select Grade</option>";
-$sql = "SELECT Grade FROM grade";
-$result = $conn->query($sql);
-$grade=isset($_SESSION["grade"]) ? sanitizeHTML($_SESSION["grade"]) : "";
-while ($row = $result->fetch_assoc()) {
-    $optionValue = $row["Grade"];
-    $Selected="";
-    if($optionValue==$grade)
-        $Selected="selected";
-    $options .= "<option value=\"$optionValue\" ".$Selected.">Grade $optionValue</option>";
+if (!$_SESSION["IsAdmin"]) {
+    $options = "<option  value=''>Select Grade</option>";
+    $sql = "SELECT Grade FROM grade";
+    $result = $conn->query($sql);
+    $grade=isset($_SESSION["grade"]) ? sanitizeHTML($_SESSION["grade"]) : "";
+    while ($row = $result->fetch_assoc()) {
+        $optionValue = $row["Grade"];
+        $Selected="";
+        if($optionValue==$grade)
+            $Selected="selected";
+        $options .= "<option value=\"$optionValue\" ".$Selected.">Grade $optionValue</option>";
+    }
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {  
@@ -20,19 +22,32 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $myNewPassword = $conn->real_escape_string(trim(sanitizeHTML($_POST["newPassword"]))); 
         $myNewPasswordRetyped = $conn->real_escape_string(trim(sanitizeHTML($_POST["newPasswordRetyped"])));
         $myemail = $_SESSION["loginUser"];
-        $sql = "SELECT ID FROM user WHERE Email = '$myemail' and Password = '$myOldPassword'";
-        $result = $conn->query($sql);
-        $row = $result->fetch_object();
+        if (!$_SESSION["IsAdmin"]) {
+            $sql = "SELECT StudentId FROM student WHERE Email = '$myemail' and Password = '$myOldPassword'";
+            $result = $conn->query($sql);
+            $row = $result->fetch_object();
+        } else {
+            $sql = "SELECT ID FROM user WHERE Email = '$myemail' and Password = '$myOldPassword'";
+            $result = $conn->query($sql);
+            $row = $result->fetch_object();
+        }
         
         if ($row != null) {
             if ($myNewPassword == $myNewPasswordRetyped) {
-                if ($myNewPassword != null) {
-                    $sql = "UPDATE user SET Password = '$myNewPassword' WHERE Email = '$myemail'";
-                    $conn->query($sql);
-                }
-                if ($grade != null) {
-                    $sql = "UPDATE user SET GradeID = '$grade' WHERE Email = '$myemail'";
-                    $conn->query($sql);
+                if (!$_SESSION["IsAdmin"]) {
+                    if ($myNewPassword != null) {
+                        $sql = "UPDATE student SET Password = '$myNewPassword' WHERE Email = '$myemail'";
+                        $conn->query($sql);
+                    }
+                    if ($grade != null) {
+                        $sql = "UPDATE student SET GradeID = '$grade' WHERE Email = '$myemail'";
+                        $conn->query($sql);
+                    }
+                } else {
+                    if ($myNewPassword != null) {
+                        $sql = "UPDATE user SET Password = '$myNewPassword' WHERE Email = '$myemail'";
+                        $conn->query($sql);
+                    }
                 }
                 $error = "Account successfully updated";
             } else if ($myNewPassword != $myNewPasswordRetyped) {
@@ -79,6 +94,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </div>
             </div>
 
+            <?php
+                if (!$_SESSION["IsAdmin"]):
+            ?>
             <div class="input-component">
                 <div class="label-frame">
                     <div class="label">Grade</div>
@@ -91,6 +109,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     ?>
                 </div>
             </div>
+            <?php
+                endif
+            ?>
 
             <?php
                 if (isset($_GET['error'])) {

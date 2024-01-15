@@ -1,9 +1,5 @@
-<?php require "_adminSessionHeader.php" ?>
-<?php
-require_once 'htmlpurifier-4.15.0-lite/library/HTMLPurifier.auto.php';
-require_once '_incFunctions.php';
-require "connect.php";
-?>
+<?php require "_sessionHeader.php" // connect is included ?>
+<?php require_once '_incFunctions.php' // htmlpurifier-4.15.0-lite/library/HTMLPurifier.auto.php is included ?>
 <script>
 $(function() {
         // Create New Row
@@ -102,9 +98,32 @@ window.cancel_button = function(_this) {
 }
 </script>
 
+<div class="container">
+    <div class="row">
+        <div class="frame-main col-md-3 col-sm-3">
+            <div class="form-title">Admin Account Info</div>
+            <div class="row">
+                <div class="col-md-3 col-sm-3">
+                    <div class="label">UserName:</div>
+                </div>
+                <div class="col-md-3 col-sm-3">
+                    <div class="label">
+                        <?php echo $_SESSION["loginUser"] ?>
+                    </div>
+                </div>
+            </div>
 
-<div class="container py-3">
-    <h2 class="border-bottom border-dark">Event List</h2>
+            <div class="row">
+                <div class="col-md-3 col-sm-3">
+                    <div class="label">
+                        <a href="editAccount.php">Edit Account</a>
+                    </div>
+                </div>
+            </div>
+        </div> 
+    </div>
+
+    <h2>Event List</h2>
  
     <div class="row">
 
@@ -112,7 +131,7 @@ window.cancel_button = function(_this) {
             <!-- Table Form start -->
             <form action="" id="form-data">
                 <input type="hidden" name="id" value="">
-                <table class='table table-hovered table-stripped table-bordered' id="form-tbl">
+                <table id="form-tbl">
                     <colgroup>
                         <col width="20%">
                         <col width="20%">
@@ -135,7 +154,11 @@ window.cancel_button = function(_this) {
                     while($row = $query->fetch_assoc()):
                     ?>
                     <tr data-id='<?php echo $row['ID'] ?>'>
-                        <td name="eventName"><?php echo $row['EventName'] ?></td>
+                        <?php
+                            $eventName = $row['EventName']; 
+                            $eventID = $row['ID'];
+                        ?>
+                        <td name="eventName"><?php echo "<a href=eventInfo.php?event=".$eventID.">".$eventName."</a>" ?></td>
                         <td name="accessKey"><?php echo $row['AccessKey'] ?></td>
                         <td name="activeDate"><?php echo (new DateTime($row['ActiveDate']))->format('Y-m-d') ?></td>
                         <td name="expiredDate"><?php echo (new DateTime($row['ExpiredDate']))->format('Y-m-d') ?></td>
