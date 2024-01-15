@@ -43,8 +43,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $errorEvent=='') {
             $_SESSION["student"] = $student;
             $_SESSION["grade"] = $grade;
             $username = $_SESSION["loginUser"];
-            $findStudentSql = "SELECT StudentID FROM student WHERE Email = $username";
-            $studentID = $conn->query($sql);
+            $findStudentSql = "SELECT ID FROM user WHERE Email = '$username'";
+            $row = $conn->query($findStudentSql);
+            
 
 
             $activitySql = "INSERT INTO `activities` (`EventID`, `StudentName`, `StudentID`, `JudgeName`, `Level`) VALUES (?, ?, ?, ?, ?);";

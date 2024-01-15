@@ -20,18 +20,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $myNewPassword = $conn->real_escape_string(trim(sanitizeHTML($_POST["newPassword"]))); 
         $myNewPasswordRetyped = $conn->real_escape_string(trim(sanitizeHTML($_POST["newPasswordRetyped"])));
         $myemail = $_SESSION["loginUser"];
-        $sql = "SELECT StudentId FROM student WHERE Email = '$myemail' and Password = '$myOldPassword'";
+        $sql = "SELECT ID FROM user WHERE Email = '$myemail' and Password = '$myOldPassword'";
         $result = $conn->query($sql);
         $row = $result->fetch_object();
         
         if ($row != null) {
             if ($myNewPassword == $myNewPasswordRetyped) {
                 if ($myNewPassword != null) {
-                    $sql = "UPDATE student SET Password = '$myNewPassword' WHERE Email = '$myemail'";
+                    $sql = "UPDATE user SET Password = '$myNewPassword' WHERE Email = '$myemail'";
                     $conn->query($sql);
                 }
                 if ($grade != null) {
-                    $sql = "UPDATE student SET GradeID = '$grade' WHERE Email = '$myemail'";
+                    $sql = "UPDATE user SET GradeID = '$grade' WHERE Email = '$myemail'";
                     $conn->query($sql);
                 }
                 $error = "Account successfully updated";
