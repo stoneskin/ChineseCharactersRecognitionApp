@@ -16,7 +16,7 @@ $timeLimit = 0;
             $grade = $conn->real_escape_string(sanitizeHTML($_GET['grade']));
 
             $sql = sprintf(
-                "SELECT NumberOfWords, TimeLimit FROM grade WHERE grade = %s",
+                "SELECT NumberOfWords, TimeLimit FROM grade WHERE GradeId = %s",
                 $grade);
 
             $result = $conn->query($sql);

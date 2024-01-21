@@ -39,7 +39,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $stmt->execute();     
             }
         }
-        echo ("Words have been imported successfully for Grade " . $grade . ".");
+        echo ("Words have been imported successfully.");
     }
     else
     {
@@ -65,13 +65,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <div>
                             <?php
                             $options = "<option  value=''>Select Grade</option>";
-                            $sql = "SELECT Grade FROM grade";
+                            $sql = "SELECT GradeId, GradeName FROM grade";
                             $result = $conn->query($sql);
                             while ($row = $result->fetch_assoc()) {
-                                $optionValue = $row["Grade"];
+                                $optionValue = $row["GradeId"];
+                                $optionName = $row["GradeName"];
                                 $Selected="";
 
-                                $options .= "<option value=\"$optionValue\">Grade $optionValue</option>";
+                                $options .= "<option value=\"$optionValue\">Grade $optionName</option>";
                             }
                             echo '<select name="grade" required class="form-select form-select-lg mb-3 textbox-frame form-control" aria-label=".form-select-lg example">';
                             echo $options;
