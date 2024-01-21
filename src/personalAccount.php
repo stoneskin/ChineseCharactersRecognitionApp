@@ -1,25 +1,23 @@
 <?php require "_sessionHeader.php" ?>
 <?php require_once '_incFunctions.php';
 $myemail = $_SESSION["loginUser"];
-$userType =$_SESSION["userType"];
+$userType = $_SESSION["userType"];
 
-
-
-$studentSql = "SELECT StudentID, GradeID FROM student WHERE Email = '$myemail'";
-$result = $conn->query($studentSql);
+$sql = "SELECT ID, GradeID FROM user WHERE Email = '$myemail'";
+$result = $conn->query($sql);
 $row = $result->fetch_object();
-if($row==null)
+if ($row==null)
     {
-        $error = "User $myemail is not a student. ";
+        $error = "There are no users with the email $myemail. ";
         header("Location: error.php?error=" . urlencode($error));
     }
-$studentID = $row->StudentID;
-$grade = "N/A";
+$ID = $row->ID;
+$grade = "0";
 if ($row != null && $row->GradeID != null) {
     $grade = $row->GradeID;
 }
 
-$activitySql = "SELECT ActivityID, Level, FinalScore, TimeSpent FROM activities WHERE StudentID = $studentID ORDER BY ActivityID DESC";
+$activitySql = "SELECT ActivityID, Level, FinalScore, TimeSpent FROM activities WHERE StudentID = $ID ORDER BY ActivityID DESC";
 $activities = $conn->query($activitySql);
 ?>
 
@@ -62,10 +60,10 @@ $activities = $conn->query($activitySql);
                     <div class="label">Previous Tests:</div>
                     <table>
                         <tr>
-                            <th>Test #</th>
-                            <th>Grade Level</th>
-                            <th>Score</th>
-                            <th>Time Spent</th>
+                            <th class="text-center p-1">Test #</th>
+                            <th class="text-center p-1">Grade Level</th>
+                            <th class="text-center p-1">Score</th>
+                            <th class="text-center p-1">Time Spent</th>
                         </tr>
                         <?php
                         while ($row = $activities->fetch_object()) {
