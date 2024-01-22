@@ -1,4 +1,4 @@
-<?php require "_sessionHeader.php" // connect is included ?>
+<?php require "_adminSessionHeader.php" ?> 
 <?php require_once '_incFunctions.php' // htmlpurifier-4.15.0-lite/library/HTMLPurifier.auto.php is included ?>
 <script>
 $(function() {

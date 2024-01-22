@@ -11,7 +11,7 @@ $student= isset($_SESSION["student"]) ? sanitizeHTML($_SESSION["student"]) : "";
 $grade=isset($_SESSION["grade"]) ? sanitizeHTML($_SESSION["grade"]) : "";
 
 // load Grade
-$sql = "SELECT Grade FROM grade";
+$sql = "SELECT GradeId, GradeName  FROM grade";
 $result = $conn->query($sql);
 $sqlEvent="SELECT Id FROM `event` WHERE ExpiredDate> CURRENT_DATE() and ActiveDate<=CURRENT_DATE() ORDER by Id DESC";
 $resultEvent = $conn->query($sqlEvent);
@@ -101,11 +101,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $errorEvent=='') {
                             <?php
                             $options = "<option  value=''>Select Grade</option>";
                             while ($row = $result->fetch_assoc()) {
-                                $optionValue = $row["Grade"];
+                                $optionValue = $row["GradeId"];
+                                $optionName = $row["GradeName"];
                                 $Selected="";
                                 if($optionValue==$grade)
                                     $Selected="selected";
-                                $options .= "<option value=\"$optionValue\" ".$Selected.">Grade $optionValue</option>";
+                                $options .= "<option value=\"$optionValue\" ".$Selected.">Grade $optionName</option>";
                             }
                             echo '<select name="grade" class="form-select form-select-lg mb-3 textbox-frame form-control" aria-label=".form-select-lg example">';
                             echo $options;

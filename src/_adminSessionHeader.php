@@ -38,12 +38,22 @@
                 </ul>
         </div>
         </div>
-        <?php
-        if (!$_SESSION["IsAdmin"]=='1') {
-            $error = "Only admins can access this page.";
-            header("Location: error.php?error=" . urlencode($error));
-        } else {
-            echo "Welcome, admin.";
-        }
-        ?>
+        <div>
+            <ul class="adminMenu">
+                <li><a href="admin.php">Events</a></li>
+                <li><a href="adminWords.php">Words</a></li>
+            </ul>
+        </div>
+        <div>
+            <P>
+                <?php
+                if (!$_SESSION["IsAdmin"]=='1') {
+                    $error = "Only admins can access this page.";
+                    header("Location: error.php?error=" . urlencode($error));
+                } else {
+                    echo "Welcome, admin.";
+                }
+                ?>
+            </P>
+        </div>
     
