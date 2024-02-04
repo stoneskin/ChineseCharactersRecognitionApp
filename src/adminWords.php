@@ -86,7 +86,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </div>
                 <div>
                 <input type="hidden" name="MAX_FILE_SIZE" value="30000" />
-                <input type="file" id="wordListFile" name="wordListFile" required accept=".txt" />
+                <input type="file" id="wordListFile" name="wordListFile" required accept=".txt,.csv" />
                 </div>
             </div>
             <div class="frame-botton">
