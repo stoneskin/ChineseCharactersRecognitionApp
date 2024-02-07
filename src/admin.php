@@ -1,5 +1,12 @@
 <?php require "_adminSessionHeader.php" ?> 
 <?php require_once '_incFunctions.php' // htmlpurifier-4.15.0-lite/library/HTMLPurifier.auto.php is included ?>
+<?php
+   if (isset($_GET['includeNonActive']) && $_GET['includeNonActive']==1) {
+        $includeNonActive = true;                  
+    } else {     
+        $includeNonActive = false;               
+   }
+?>
 <script>
 $(function() {
         // Create New Row
@@ -96,6 +103,29 @@ window.cancel_button = function(_this) {
         _this.closest('tr').find('.noneditable').show('fast')
     }
 }
+
+function switchEventList(includeNonActive)
+{
+    alert(includeNonActive);
+    if (includeNonActive == 1)
+    {
+        window.location.assign('admin.php?includeNonActive=1');
+    }
+    else
+    {
+        window.location.assign('admin.php');
+    }
+}
+
+function chkIncludeNonActive_Click(checkbox) {
+    if(checkbox.checked){
+        window.location.assign('admin.php?includeNonActive=1');
+    }
+    else{
+        window.location.assign('admin.php');
+    }
+}
+
 </script>
 
 <div class="container">
@@ -124,12 +154,20 @@ window.cancel_button = function(_this) {
     </div>
 
     <h2>Event List</h2>
- 
+    
     <div class="row">
 
         <div class="col-12">
             <!-- Table Form start -->
             <form action="" id="form-data">
+                <?php 
+                    if ($includeNonActive) {
+                        echo '<input type="checkbox" id="chkIncludeNonActive" name="chkIncludeNonActive" checked onclick="chkIncludeNonActive_Click(this)">';                 
+                    } else {                
+                        echo '<input type="checkbox" id="chkIncludeNonActive" name="chkIncludeNonActive" onclick="chkIncludeNonActive_Click(this)">';  
+                    }
+                ?>
+                <label for="chkIncludeNonActiveEvent">Include non-active events</label><br>
                 <input type="hidden" name="id" value="">
                 <table id="form-tbl">
                     <colgroup>
@@ -150,7 +188,12 @@ window.cancel_button = function(_this) {
                     </thead>
                     <tbody>
                     <?php 
-                    $query = $conn->query("SELECT * FROM `event` order by id asc");
+                    if ($includeNonActive) {
+                        $query = $conn->query("SELECT * FROM `event` ORDER by ExpiredDate DESC limit 50");                      
+                    } else {                
+                        $query = $conn->query("SELECT * FROM `event` WHERE ExpiredDate> CURRENT_DATE() and ActiveDate<=CURRENT_DATE() ORDER by ExpiredDate DESC");                               
+                    }
+                  
                     while($row = $query->fetch_assoc()):
                     ?>
                     <tr data-id='<?php echo $row['ID'] ?>'>
