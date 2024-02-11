@@ -7,11 +7,11 @@ $errorStudent = '';
 $errorGrade = '';
 $errorEvent='';
 $_SESSION["activityid"]=null;
-$student= isset($_SESSION["student"]) ? sanitizeHTML($_SESSION["student"]) : "";
+
 $grade=isset($_SESSION["grade"]) ? sanitizeHTML($_SESSION["grade"]) : "";
 
 // load Grade
-$sql = "SELECT GradeId, GradeName  FROM grade";
+$sql = "SELECT GradeId, GradeName FROM grade";
 $result = $conn->query($sql);
 $sqlEvent="SELECT Id FROM `event` WHERE ExpiredDate> CURRENT_DATE() and ActiveDate<=CURRENT_DATE() ORDER by Id DESC";
 $resultEvent = $conn->query($sqlEvent);
@@ -24,49 +24,47 @@ if ($rowEvent!=null) {
     $errorEvent="No Active Event Available.";
 }
 
-
+$student = $_SESSION["userType"] == 'student' ? sanitizeHTML($_SESSION["loginUser"]) : '';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && $errorEvent=='') {  
-    if (isset($_POST["student"]) && isset($_POST["grade"]) ) {
+    if($_SESSION["userType"] != 'student' && isset($_POST["student"])) {
         $student = $conn->real_escape_string(trim(sanitizeHTML($_POST["student"])));
-        $grade = $conn->real_escape_string(trim(sanitizeHTML($_POST["grade"])));
-    
-        if($student==''){
-            $errorStudent="Please Input Student Name!";
-        }
-
-        if($grade==''){
-            $errorGrade="Please Select grade!";
-        }
-
-        if($errorStudent=='' && $errorGrade==''){
-            $_SESSION["student"] = $student;
-            $_SESSION["grade"] = $grade;
-            $username = $_SESSION["loginUser"];
-            $findStudentSql = "SELECT ID FROM user WHERE Email = '$username'";
-            $row = $conn->query($findStudentSql);
-            
-
-
-            $activitySql = "INSERT INTO `activities` (`EventID`, `StudentName`, `StudentID`, `JudgeName`, `Level`) VALUES (?, ?, ?, ?, ?);";
-            
-            if($stmt = $conn->prepare($activitySql)){
-                $judge = $username;
-                $stmt->bind_param("isisi", $eventID, $student, $studentID, $judge, $grade);
-                $stmt->execute();
-            }else{
-                die("Errormessage: ". $conn->error);
-            }
-
-          
-
-            $_SESSION["activityid"] =  mysqli_insert_id( $conn);
-
-            header("Location: startTest.php".'?studentname='.$student.'&grade='.$grade);
-        }
-
     }
 
+    if($student==''){
+        $errorStudent="Please Input Student Name!";
+    }
+
+    if (isset($_POST["grade"]) ) {
+        $grade = $conn->real_escape_string(trim(sanitizeHTML($_POST["grade"])));
+    }
+
+    if($grade==''){
+        $errorGrade="Please Select grade!";
+    }
+
+    if($errorStudent=='' && $errorGrade==''){
+        $_SESSION["student"] = $student;
+        $_SESSION["grade"] = $grade;
+        $username = $_SESSION["loginUser"];
+        $findStudentSql = "SELECT ID FROM user WHERE Email = '$username'";
+        $row = $conn->query($findStudentSql);
+        
+        $activitySql = "INSERT INTO `activities` (`EventID`, `StudentName`, `StudentID`, `JudgeName`, `Level`) VALUES (?, ?, ?, ?, ?);";
+        
+        if($stmt = $conn->prepare($activitySql)){
+            $judge = $username;
+            $stmt->bind_param("isisi", $eventID, $student, $studentID, $judge, $grade);
+            $stmt->execute();
+        }else{
+            die("Errormessage: ". $conn->error);
+        }
+
+
+        $_SESSION["activityid"] =  mysqli_insert_id( $conn);
+
+        header("Location: startTest.php".'?studentname='.$student.'&grade='.$grade);
+    }
 }
 ?>
 
@@ -81,12 +79,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $errorEvent=='') {
             
                     <div class="input-component">
                         <div class="label-frame">
-                            <div class="label">Student</div>
+                            <div class="label">Student Name</div>
                         </div>
-                        <div >
-                            <input type='text' name='student' class='textbox-frame form-control' id='txtUserName'  placeholder='Enter Student Name' value="<?php  echo $student ?>">
-                            
-                        </div>
+
+                        <?php if ($_SESSION["userType"] == 'student'): ?>
+                            <?php echo $student ?>
+                        <?php else: ?>
+                            <div class="input-component">
+                                <input type='text' name='student' class='textbox-frame form-control' id='txtUserName'  placeholder='Enter Student Name' value="">
+                            </div>          
+                        <?php endif; ?>
 
                     </div>     <?php
                             if ($errorStudent!='') {

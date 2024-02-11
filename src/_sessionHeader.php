@@ -38,7 +38,7 @@ require_once "_needSession.php";
                     ?> </span> </li>
 
                     <?php
-                    if ($_SESSION["IsAdmin"]){
+                    if (isset($_SESSION["IsAdmin"]) && $_SESSION["IsAdmin"]){
                         echo "<li> <a href='admin.php'>Admin</a></li>";
                     } else {
                         echo "<li> <a href='personalAccount.php'> Account</a></li>";
