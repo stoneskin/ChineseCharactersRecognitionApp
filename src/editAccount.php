@@ -2,11 +2,11 @@
 <?php require_once '_incFunctions.php';
 if (!$_SESSION["IsAdmin"]) {
     $options = "<option  value=''>Select Grade</option>";
-    $sql = "SELECT Grade FROM grade";
+    $sql = "SELECT GradeId FROM grade";
     $result = $conn->query($sql);
     $grade=isset($_SESSION["grade"]) ? sanitizeHTML($_SESSION["grade"]) : "";
     while ($row = $result->fetch_assoc()) {
-        $optionValue = $row["Grade"];
+        $optionValue = $row["GradeId"];
         $Selected="";
         if($optionValue==$grade)
             $Selected="selected";
