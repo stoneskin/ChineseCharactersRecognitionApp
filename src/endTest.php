@@ -12,6 +12,11 @@
     $level = $row->Level;
     $finalScore = $row->FinalScore;
     $timeSpent = $row->TimeSpent;
+
+    $sqlGrade = "SELECT GradeId, GradeName FROM grade where GradeId='$level'";
+    $resultGrade = $conn->query($sqlGrade);
+    $rowGrade=$resultGrade->fetch_object();
+    $gradeLevel=$rowGrade -> GradeName;
 ?>
 
 <?php require "_sessionHeader.php" ?>
@@ -22,7 +27,7 @@
                
                     <div class="label wrap">Student: <?php echo $studentName ?>
                     </div>
-                    <div class="label wrap">Level: <?php echo $level ?>
+                    <div class="label wrap">Level: <?php echo $gradeLevel ?>
                     </div>
                     <div class="label wrap">Score: <?php echo $finalScore ?>%
                     </div>
