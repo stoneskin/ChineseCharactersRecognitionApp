@@ -23,10 +23,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         $wordlist = str_replace("，", ",", $wordlist); //replace Chinese comma with English comma
         $words = preg_split("/[',']+/", $wordlist); 
- 
+        
+        $msg = "";
+
         foreach($words as $word){
+            
             $word = ltrim($word, " ");
             $word = rtrim($word, " ");
+            $msg = $msg. $word ."|";
             if (empty($word))
             {
                 continue;
@@ -36,10 +40,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             if($stmt = $conn->prepare($sql)){
                 $stmt->bind_param("siis", $word, $grade, $grade, $word);
-                $stmt->execute();     
+                $stmt->execute();   
+                $msg =$msg."+";  
             }
         }
-        echo ("Words have been imported successfully.");
+        echo ($msg. " Words have been imported successfully.");
     }
     else
     {

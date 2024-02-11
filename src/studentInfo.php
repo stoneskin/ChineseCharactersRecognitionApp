@@ -8,6 +8,17 @@ $errorGrade = '';
 $errorEvent='';
 $_SESSION["activityid"]=null;
 
+
+
+
+$student= isset($_SESSION["student"]) ? sanitizeHTML($_SESSION["student"]) : "";
+$_SESSION["student"]=null;
+$userType=  $_SESSION["userType"];
+if($userType == 'student'){
+    $student=$_SESSION["loginUser"];  
+}
+
+
 $grade=isset($_SESSION["grade"]) ? sanitizeHTML($_SESSION["grade"]) : "";
 
 // load Grade
@@ -31,13 +42,46 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $errorEvent=='') {
         $student = $conn->real_escape_string(trim(sanitizeHTML($_POST["student"])));
     }
 
-    if($student==''){
-        $errorStudent="Please Input Student Name!";
-    }
 
-    if (isset($_POST["grade"]) ) {
-        $grade = $conn->real_escape_string(trim(sanitizeHTML($_POST["grade"])));
-    }
+        if($errorStudent=='' && $errorGrade==''){
+            $_SESSION["student"] = $student;
+            $_SESSION["grade"] = $grade;
+            $username = $_SESSION["loginUser"];
+            $findStudentSql = "SELECT ID FROM user WHERE Email = '$student'";
+            $resultStu = $conn->query($findStudentSql);
+            $studentID=null;
+            $msg="check student";
+            if($rowStu = $resultStu->fetch_object()){
+                $studentID=$rowStu->ID;
+                $msg= "GetStudentId=".$studentID;
+            }
+            else{
+                // insert a row for student
+                //try {
+                    $sql = sprintf(
+                        "INSERT INTO user (Email, Password, UserType,GradeID) VALUES ('%s', '%s', '%s',%u)",
+                        $student,
+                        generateRandomString(6),
+                        'student',
+                        $grade
+                    );
+        
+                    if (!$conn->query($sql)) {
+                        $error = $conn->error;
+                        throw new Exception($error);
+                    }
+
+                    $resultStu = $conn->query($findStudentSql);                    
+                    if($rowStu = $resultStu->fetch_object()){
+                        $studentID=$rowStu->ID;
+                    }
+                    
+                //}
+                //catch (Exception $e) {
+                //    $error = $e->getMessage();
+                //}
+            }
+
 
     if($grade==''){
         $errorGrade="Please Select grade!";

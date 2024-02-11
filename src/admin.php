@@ -129,7 +129,7 @@ function chkIncludeNonActive_Click(checkbox) {
 </script>
 
 <div class="container">
-    <div class="row">
+    <!-- <div class="row">
         <div class="frame-main col-md-3 col-sm-3">
             <div class="form-title">Admin Account Info</div>
             <div class="row">
@@ -151,7 +151,7 @@ function chkIncludeNonActive_Click(checkbox) {
                 </div>
             </div>
         </div> 
-    </div>
+    </div> -->
 
     <h2>Event List</h2>
     
