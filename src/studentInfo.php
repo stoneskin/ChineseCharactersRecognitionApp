@@ -120,12 +120,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $errorEvent=='') {
             
                     <div class="input-component">
                         <div class="label-frame">
-                            <div class="label">Student</div>
+                            <div class="label">Student Name</div>
                         </div>
-                        <div >
-                            <input type='text' name='student' class='textbox-frame form-control' id='txtUserName'  placeholder='Enter Student Name' value="<?php  echo $student ?>">
-                            
-                        </div>
+
+                        <?php if ($_SESSION["userType"] == 'student'): ?>
+                            <?php echo $student ?>
+                        <?php else: ?>
+                            <div class="input-component">
+                                <input type='text' name='student' class='textbox-frame form-control' id='txtUserName'  placeholder='Enter Student Name' value="">
+                            </div>          
+                        <?php endif; ?>
 
                     </div>     <?php
                             if ($errorStudent!='') {
