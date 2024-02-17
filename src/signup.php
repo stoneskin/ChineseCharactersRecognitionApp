@@ -58,12 +58,12 @@ if (isset($_POST['submit'])) {
                     <div class="form-title">Sign Up</div>             
                     
                     <div class="input-component padding20">
-                        <div >
-                            <input class="form-check-input" type="radio" name="userOptions" id="inlineRadio1" value="student" checked>
+                        <div style="display: none;">
+                            <input class="form-check-input" type="radio" name="userOptions" id="inlineRadio1" value="student" >
                             <label class="form-check-label" for="inlineRadio1">Student</label>
                         </div>
                         <div >
-                            <input class="form-check-input" type="radio" name="userOptions" id="inlineRadio2" value="judge">
+                            <input class="form-check-input" type="radio" name="userOptions" id="inlineRadio2" value="judge"  checked style="appearance: none;-webkit-appearance: none;border-radius: 50%; background: #FF572233;border: 3px solid #FFF;  box-shadow: 0 0 0 1px #FF5722;">
                             <label class="form-check-label" for="inlineRadio2">Judge/Parent</label>
                         </div>
                     </div>
