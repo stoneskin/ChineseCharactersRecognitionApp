@@ -9,13 +9,16 @@ $errorEvent='';
 $_SESSION["activityid"]=null;
 
 
-
-
-$student= isset($_SESSION["student"]) ? sanitizeHTML($_SESSION["student"]) : "";
-if($_SESSION["student"]){
+//clear selected students if return the student info page
+if(isset($_SESSION["student"]) || isset($_SESSION["grade"])){
     $_SESSION["student"]=null;
+    $_SESSION["grade"] = null;
     header("Location: studentInfo.php");
 }
+
+
+$student="";// isset($_SESSION["student"]) ? sanitizeHTML($_SESSION["student"]) : "";
+$grade="";//isset($_SESSION["grade"]) ? sanitizeHTML($_SESSION["grade"]) : "";
 
 $userType=  $_SESSION["userType"];
 if($userType == 'student'){
@@ -23,7 +26,8 @@ if($userType == 'student'){
 }
 
 
-$grade=isset($_SESSION["grade"]) ? sanitizeHTML($_SESSION["grade"]) : "";
+
+
 
 // load Grade
 $sql = "SELECT GradeId, GradeName FROM grade";

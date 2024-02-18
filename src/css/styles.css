@@ -56,7 +56,7 @@
   color: var(--head-fontcolor, #ffffff);
   text-align: left;
   font: var(--head-title, 700 64px "Work Sans", sans-serif);
-  font-size:4vw;
+  font-size:3vw;
   position: relative;
   align-self: stretch;
   flex: 1;
@@ -594,7 +594,7 @@ li a:hover {
   } */
 .mlccc-words-test {
 
-    font-size:6vw;
+    font-size:4vw;
 }
 .main>.center-board>.label{
   font-size: 105px;
