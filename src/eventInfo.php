@@ -1,18 +1,34 @@
-<?php require "_sessionHeader.php" ?>
+<?php require "_adminSessionHeader.php" ?>
 <?php require_once '_incFunctions.php';
+
+//get event name
 $eventID = $_GET['event'];
-$eventSql = "SELECT EventName FROM event WHERE ID = $eventID";
-$result = $conn->query($eventSql);
-$row = $result->fetch_object();
+$eventSql = "SELECT EventName FROM event WHERE ID = ?";      
+if($stmt = $conn->prepare($eventSql)){
+    $stmt->bind_param("i", $eventID);
+    $stmt->execute();
+}else{
+    die("Errormessage: ". $conn->error);
+}
+$row = $stmt->get_result()->fetch_assoc();
 if ($row==null) {
     $tableTitle = "No event found";
 }
-if ($row != null && $row->EventName != null) {
-    $tableTitle = $row->EventName . " Activity List";
+if ($row != null && $row['EventName'] != null) {
+    $tableTitle = $row['EventName']. " Activity List";
 }
 
-$activitySql = "SELECT StudentName, StudentID, ActivityID, Level, FinalScore, TimeSpent FROM activities WHERE EventID = $eventID ORDER BY ActivityID DESC";
-$activities = $conn->query($activitySql);
+//get activity list by EventID
+$activitySql = "SELECT StudentName, StudentID, ActivityID, Level, FinalScore, TimeSpent FROM activities WHERE EventID = ? ORDER BY ActivityID DESC";
+if($stmtActivity = $conn->prepare($activitySql)){
+    $stmtActivity->bind_param("i", $eventID);
+    $stmtActivity->execute();
+}else{
+    die("Errormessage: ". $conn->error);
+}
+$resultActivity = $stmtActivity->get_result();
+
+
 ?>
 
 <div class="container">
@@ -31,14 +47,14 @@ $activities = $conn->query($activitySql);
                         <th class="text-center p-1">Time Spent</th>
                     </tr>
                     <?php
-                    while ($row = $activities->fetch_object()) {
+                    while ($row = $resultActivity->fetch_assoc()) {
                         echo '<tr>';
-                        echo '<th>' . $row->StudentName . '</th>';
-                        echo '<th>' . $row->StudentID . '</th>';
-                        echo '<th>' . $row->ActivityID . '</th>';
-                        echo '<th>' . $row->Level . '</th>';
-                        echo '<th>' . $row->FinalScore . '</th>';
-                        echo '<th>' . $row->TimeSpent . '</th>';
+                        echo '<td>' . $row["StudentName"] . '</td>';
+                        echo '<td>' . $row["StudentID"] . '</td>';
+                        echo '<td>' . $row["ActivityID"] . '</td>';
+                        echo '<td>' . $row["Level"] . '</td>';
+                        echo '<td>' . $row["FinalScore"] . '</td>';
+                        echo '<td>' . $row["TimeSpent"] . '</td>';
                         echo '</tr>';
                     }
                     ?>
