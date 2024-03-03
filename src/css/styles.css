@@ -35,6 +35,10 @@
   left: 5%;
   
 }
+
+.sortableHeader {
+  cursor: pointer;
+}
 .logo {
   align-self: stretch;
   flex-shrink: 0;
