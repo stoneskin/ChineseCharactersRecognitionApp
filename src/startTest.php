@@ -75,8 +75,8 @@ $timeLimit = 0;
                 
               
    
-                <div class="frame-botton">
-                    <div class="frame-botton2">
+                <div class="frame-button">
+                    <div class="frame-button2">
                         <div class="button button-tall" onclick="(()=>{window.location.assign('testBoard.php')})()">
                             <div class="submit">Start</div>
                         </div>

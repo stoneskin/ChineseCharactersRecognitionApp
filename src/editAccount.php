@@ -120,8 +120,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 }
             ?>
 
-            <div class="frame-botton">
-                <div class="frame-botton2">
+            <div class="frame-button">
+                <div class="frame-button2">
                     <button class="button submit" type="submit">Update</button>
                 </div>
             </div>
