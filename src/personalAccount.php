@@ -147,7 +147,12 @@ $(document).ready(function () {
                             {
                                 echo '<td>' . $row->StudentName . '</td>';
                             }
-                            echo '<td>' . $row->Level . '</td>';
+                            $level = $row->Level;
+                            $gradeSql = "SELECT GradeName FROM grade WHERE GradeID = $level";
+                            $gradeResult = $conn->query($gradeSql);
+                            $gradeRow = $gradeResult->fetch_assoc();
+                            $gradeName = $gradeRow["GradeName"];
+                            echo '<td>' . $gradeName . '</td>';
                             echo '<td>' . $row->FinalScore . '</td>';
                             echo '<td>' . $row->StartTime . '</td>';
                             echo '<td>' . $row->TimeSpent . '</td>';
