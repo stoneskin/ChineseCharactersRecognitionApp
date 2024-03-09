@@ -15,13 +15,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         if(empty($id)){   
             // Insert event
-            $sql = "INSERT INTO `ccrApp`.`event` (`eventName`, `accessKey`, `activeDate`, `expiredDate`) VALUES (?, ?, ?, ?);";         
+            $sql = "INSERT INTO `event` (`eventName`, `accessKey`, `activeDate`, `expiredDate`) VALUES (?, ?, ?, ?);";         
             $stmt = $conn->prepare($sql);
             $stmt->bind_param("ssss", $eventName, $accessKey, $activeDate, $expiredDate);
             $stmt->execute();
         }else{
             // Update event
-            $sql = "UPDATE `ccrApp`.`event` SET eventName = ?,accessKey = ?, activeDate= ?, expiredDate =? WHERE ID = ?";        
+            $sql = "UPDATE `event` SET eventName = ?,accessKey = ?, activeDate= ?, expiredDate =? WHERE ID = ?";        
             $stmt = $conn->prepare($sql);
             $stmt->bind_param("ssssi", $eventName, $accessKey, $activeDate, $expiredDate, $id);
             $stmt->execute();
@@ -29,7 +29,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $message = 'The event is saved successfully!';
     }
     catch (Exception $e) {
-        $message =  'There is an error occured while saving the event.';
+        $message =  'There is an error occured while saving the event.'.$e;
     }
 }
 else

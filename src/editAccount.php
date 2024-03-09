@@ -122,10 +122,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
             <div class="row">
-                <div class="frame-botton2 col-xs-6">
+                <div class="frame-button2 col-xs-6">
                     <button class="button submit" onclick="window.location.assign('personalAccount.php'); return false;">Cancel</button>
                 </div>
-                <div class="frame-botton2 col-xs-6">
+                <div class="frame-button2 col-xs-6">
 
                     <button class="button submit" type="submit">Update</button>
                 </div>
