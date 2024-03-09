@@ -52,6 +52,8 @@ require_once '_incFunctions.php';
             if(timer){
                 clearTimeout(timer);
             }
+            //save testList to sessionstorage
+            sessionStorage.setItem("testResult", JSON.stringify(testList));
             $.post('updateActivities.php', {
                 data: JSON.stringify(testList)
             }, function(response) {
@@ -94,8 +96,8 @@ require_once '_incFunctions.php';
 
         <div class="container">
             <div class="row main">
-                <div class="col-sm-2 side-bar">
-                    <div onclick="previousItem()" class="label wrap"><</div>
+                <div class="col-sm-2 side-bar" >
+                    <div onclick="/*previousItem()*/" class="label wrap disabled"><</div>
                 </div>
                 <div class=" col-sm-8  center-board">
                     <div class="row">
@@ -114,12 +116,12 @@ require_once '_incFunctions.php';
 
                     </div>
                     <div class="row">
-                        <div class="frame-botton2 col-xs-6">
+                        <div class="frame-button2 col-xs-6">
                             <div class="button button-tall button-wrong" onclick="nextItem(false)">
                                 <div class="submit">Wrong</div>
                             </div>
                         </div>
-                        <div class="frame-botton2 col-xs-6">
+                        <div class="frame-button2 col-xs-6">
                             <div class="button button-tall button-green" onclick="nextItem(true)">
                                 <div class="submit">Correct</div>
                             </div>

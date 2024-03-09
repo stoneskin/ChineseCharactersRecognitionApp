@@ -94,8 +94,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <input type="file" id="wordListFile" name="wordListFile" required accept=".txt,.csv" />
                 </div>
             </div>
-            <div class="frame-botton">
-                <div class="frame-botton2">
+            <div class="frame-button">
+                <div class="frame-button2">
                     <button class="button submit" type="submit">Upload File</button>
                 </div>
             </div>

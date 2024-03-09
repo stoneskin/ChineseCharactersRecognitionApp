@@ -100,8 +100,8 @@ if (isset($_POST['submit'])) {
                             echo "<p style='color: red;'>$error</p>";
                         }
                     ?>
-                    <div class="frame-botton">
-                        <div class="frame-botton2">
+                    <div class="frame-button">
+                        <div class="frame-button2">
                             <!--
                             <div class="button">
                                 <div class="submit">Sign Up</div>         
