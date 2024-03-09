@@ -8,6 +8,20 @@
    }
 ?>
 <script>
+function limitTextLength(event, maxLength) {
+    if (event.target.textContent.length >= maxLength && !isSpecialKey(event)) {
+        event.preventDefault(); // Prevent further input
+    }
+}
+
+function isSpecialKey(event) {
+    return event.ctrlKey && (event.key === 'a' || event.key === 'x') ||isNavigationKey(event.key);
+}
+
+function isNavigationKey(key) {
+    return key.includes('Arrow') || key === 'Backspace' || key === 'Delete' || key === 'Home' || key === 'End';
+}
+
 $(function() {
         // Create New Row
         $('#add_event').click(function() {
@@ -19,8 +33,8 @@ $(function() {
             $('input[name="id"]').val('')
             tr.addClass('py-1 px-2');
             tr.attr('data-id', '');
-            tr.append('<td contenteditable name="eventName"></td>')
-            tr.append('<td contenteditable name="accessKey"></td>')
+            tr.append('<td contenteditable name="eventName" onkeydown="limitTextLength(event, 100)"></td>')
+            tr.append('<td contenteditable name="accessKey" onkeydown="limitTextLength(event, 100)"></td>')
             tr.append('<td contenteditable name="activeDate"></td>')
             tr.append('<td contenteditable name="expiredDate"></td>')
             tr.append('<td class="text-center"><button class="btn btn-sm btn-primary btn-flat rounded-0 px-2 py-0">Save</button><button class="btn btn-sm btn-dark btn-flat rounded-0 px-2 py-0" onclick="cancel_button($(this))" type="button">Cancel</button></td>')
@@ -129,30 +143,6 @@ function chkIncludeNonActive_Click(checkbox) {
 </script>
 
 <div class="container">
-    <!-- <div class="row">
-        <div class="frame-main col-md-3 col-sm-3">
-            <div class="form-title">Admin Account Info</div>
-            <div class="row">
-                <div class="col-md-3 col-sm-3">
-                    <div class="label">UserName:</div>
-                </div>
-                <div class="col-md-3 col-sm-3">
-                    <div class="label">
-                        <?php echo $_SESSION["loginUser"] ?>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-md-3 col-sm-3">
-                    <div class="label">
-                        <a href="editAccount.php">Edit Account</a>
-                    </div>
-                </div>
-            </div>
-        </div> 
-    </div> -->
-
     <h2>Event List</h2>
     
     <div class="row">
@@ -201,8 +191,8 @@ function chkIncludeNonActive_Click(checkbox) {
                             $eventName = $row['EventName']; 
                             $eventID = $row['ID'];
                         ?>
-                        <td name="eventName"><?php echo "<a href=eventInfo.php?event=".$eventID.">".$eventName."</a>" ?></td>
-                        <td name="accessKey"><?php echo $row['AccessKey'] ?></td>
+                        <td name="eventName" onkeydown="limitTextLength(event, 100)"><?php echo "<a href=eventInfo.php?event=".$eventID.">".$eventName."</a>" ?></td>
+                        <td name="accessKey" onkeydown="limitTextLength(event, 100)"><?php echo $row['AccessKey'] ?></td>
                         <td name="activeDate"><?php echo (new DateTime($row['ActiveDate']))->format('Y-m-d') ?></td>
                         <td name="expiredDate"><?php echo (new DateTime($row['ExpiredDate']))->format('Y-m-d') ?></td>
                         <td class="text-center">
