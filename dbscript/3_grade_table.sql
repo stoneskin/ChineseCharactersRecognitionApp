@@ -31,7 +31,7 @@ INSERT INTO `grade` (`GradeId`, `GradeName`,  `NumberOfWords`,`TimeLimit`, `Crea
     (17, 'CSL-2', 20, 10, current_timestamp(), current_timestamp()),
     (18, 'CSL-3', 20, 10, current_timestamp(), current_timestamp()),
     (19, 'CSL-4', 20, 10, current_timestamp(), current_timestamp()),
-    (20, 'CSL-56', 20, 10, current_timestamp(), current_timestamp());
+    (20, 'CSL-5/6', 20, 10, current_timestamp(), current_timestamp());
 
 
 

@@ -32,8 +32,8 @@ require_once "_needSession.php";
                     }                    
                     ?> </span> </li>
                     <li><span>   <?php 
-                    if (isset($_SESSION["grade"])){
-                        echo "[Grade".$_SESSION["grade"]."]";
+                    if (isset($_SESSION["gradeName"])){
+                        echo "[".$_SESSION["gradeName"]."]";
                     }                    
                     ?> </span> </li>
 

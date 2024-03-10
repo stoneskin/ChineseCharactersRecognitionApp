@@ -57,6 +57,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $errorEvent=='') {
         if($errorStudent=='' && $errorGrade==''){
             $_SESSION["student"] = $student;
             $_SESSION["grade"] = $grade;
+            $sql = sprintf("SELECT GradeName FROM grade WHERE GradeId = %s", $grade);
+            $result = $conn->query($sql);
+            $row = $result->fetch_object();
+            $_SESSION["gradeName"] = $row->GradeName;
+
             $username = $_SESSION["loginUser"];
             $findStudentSql = "SELECT ID FROM user WHERE Email = '$student'";
             $resultStu = $conn->query($findStudentSql);
@@ -152,7 +157,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $errorEvent=='') {
                                 $Selected="";
                                 if($optionValue==$grade)
                                     $Selected="selected";
-                                $options .= "<option value=\"$optionValue\" ".$Selected.">Grade $optionName</option>";
+                                $options .= "<option value=\"$optionValue\" ".$Selected.">$optionName</option>";
                             }
                             echo '<select name="grade" class="form-select form-select-lg mb-3 textbox-frame form-control" aria-label=".form-select-lg example">';
                             echo $options;
