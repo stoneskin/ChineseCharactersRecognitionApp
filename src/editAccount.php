@@ -2,15 +2,16 @@
 <?php require_once '_incFunctions.php';
 if (!$_SESSION["IsAdmin"]) {
     $options = "<option  value=''>Select Grade</option>";
-    $sql = "SELECT GradeId FROM grade";
+    $sql = "SELECT GradeId, GradeName FROM grade";
     $result = $conn->query($sql);
     $grade=isset($_SESSION["grade"]) ? sanitizeHTML($_SESSION["grade"]) : "";
     while ($row = $result->fetch_assoc()) {
         $optionValue = $row["GradeId"];
+        $optionName = $row["GradeName"];
         $Selected="";
         if($optionValue==$grade)
             $Selected="selected";
-        $options .= "<option value=\"$optionValue\" ".$Selected.">Grade $optionValue</option>";
+        $options .= "<option value=\"$optionValue\" ".$Selected.">Grade $optionName</option>";
     }
 }
 
@@ -22,25 +23,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $myNewPassword = $conn->real_escape_string(trim(sanitizeHTML($_POST["newPassword"]))); 
         $myNewPasswordRetyped = $conn->real_escape_string(trim(sanitizeHTML($_POST["newPasswordRetyped"])));
         $myemail = $_SESSION["loginUser"];
-        if (!$_SESSION["IsAdmin"]) {
-            $sql = "SELECT StudentId FROM student WHERE Email = '$myemail' and Password = '$myOldPassword'";
-            $result = $conn->query($sql);
-            $row = $result->fetch_object();
-        } else {
-            $sql = "SELECT ID FROM user WHERE Email = '$myemail' and Password = '$myOldPassword'";
-            $result = $conn->query($sql);
-            $row = $result->fetch_object();
-        }
+        
+        $sql = "SELECT ID FROM user WHERE Email = '$myemail' and Password = '$myOldPassword'";
+        $result = $conn->query($sql);
+        $row = $result->fetch_object();
+        
         
         if ($row != null) {
             if ($myNewPassword == $myNewPasswordRetyped) {
-                if (!$_SESSION["IsAdmin"]) {
+                if ($_SESSION["userType"] = "student") {
                     if ($myNewPassword != null) {
-                        $sql = "UPDATE student SET Password = '$myNewPassword' WHERE Email = '$myemail'";
+                        $sql = "UPDATE user SET Password = '$myNewPassword' WHERE Email = '$myemail'";
                         $conn->query($sql);
                     }
                     if ($grade != null) {
-                        $sql = "UPDATE student SET GradeID = '$grade' WHERE Email = '$myemail'";
+                        $sql = "UPDATE user SET GradeID = '$grade' WHERE Email = '$myemail'";
                         $conn->query($sql);
                     }
                 } else {

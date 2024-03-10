@@ -33,7 +33,10 @@ require_once "_needSession.php";
                     ?> </span> </li>
                     <li><span>   <?php 
                     if (isset($_SESSION["grade"])){
-                        echo "[Grade".$_SESSION["grade"]."]";
+                        $sql = sprintf("SELECT GradeName FROM grade WHERE GradeId = %s", $_SESSION["grade"]);
+                        $result = $conn->query($sql);
+                        $row = $result->fetch_object();
+                        echo "[Grade $row->GradeName]";
                     }                    
                     ?> </span> </li>
 

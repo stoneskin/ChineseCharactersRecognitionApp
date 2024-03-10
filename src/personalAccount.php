@@ -3,7 +3,7 @@
 $myemail = $_SESSION["loginUser"];
 $userType = $_SESSION["userType"];
 
-$sql = "SELECT ID, GradeID FROM user WHERE Email = '$myemail'";
+$sql = "SELECT user.ID, user.GradeID, grade.GradeName FROM user LEFT JOIN grade ON user.GradeID = grade.GradeID WHERE user.Email = '$myemail'";
 $result = $conn->query($sql);
 $row = $result->fetch_object();
 if ($row==null)
@@ -16,8 +16,10 @@ $grade = "0";
 if ($row != null && $row->GradeID != null) {
     $grade = $row->GradeID;
 }
-
-
+$levelSql = "SELECT GradeName FROM grade WHERE GradeId = '$grade'";
+$result = $conn->query($levelSql);
+$levelRow = $result->fetch_object();
+$level = ($userType == "student") ? $levelRow->GradeName : "N/A";
 //get activity list by StudentID or JudgeName
 if ($userType == "student")
 {
@@ -41,9 +43,6 @@ else
     }
     $resultActivity = $stmtActivity->get_result();
 }
-
-
-
 ?>
 
 <script>
@@ -107,7 +106,7 @@ $(document).ready(function () {
                 </div>
                 <div class="col-md-9 col-sm-9">
                     <div class="label">
-                        <?php echo $grade ?>
+                        <?php echo $level?>
                     </div>
                 </div>
             </div>
