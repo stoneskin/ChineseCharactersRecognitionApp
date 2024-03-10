@@ -26,8 +26,8 @@ require_once '_incFunctions.php';
             echo "<p style='color: red;'>$error</p>";
         }
     ?>
-    <div class="frame-botton">
-        <div class="frame-botton2">
+    <div class="frame-button">
+        <div class="frame-button2">
             <button class="button submit" type="submit">Log In</button>
         </div>
     </div>

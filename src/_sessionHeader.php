@@ -21,9 +21,9 @@ require_once "_needSession.php";
         <div class="header">
             <div class="header2">
                 <div class="logo">
-                    <img class="logo2" src="images/logo.png" />
+                    <img class="logo2" src="images/logo.png" style="cursor:pointer" onclick="(()=>{window.location.assign('studentInfo.php')})()" />
                 </div>
-                <div class="mlccc-words-test">MLCCC Words Test</div>
+                <div class="mlccc-words-test" style="cursor:pointer" onclick="(()=>{window.location.assign('studentInfo.php')})()" >识字比赛<br>Character Recognition Contest</div>
 
                 <ul class="nav navbar-nav navbar-right">
                     <li><span> <?php
@@ -32,18 +32,22 @@ require_once "_needSession.php";
                     }                    
                     ?> </span> </li>
                     <li><span>   <?php 
-                    if (isset($_SESSION["grade"])){
-                        echo "[Grade".$_SESSION["grade"]."]";
+                    if (isset($_SESSION["gradeName"])){
+                        echo "[".$_SESSION["gradeName"]."]";
                     }                    
                     ?> </span> </li>
+
                     <?php
-                        if (isset($_SESSION["userType"]) && $_SESSION["userType"]!= "guest"){
-                            echo "<li> <a href='personalAccount.php'> Account</a></li>";
-                        }
-                    ?>   
+                    if (isset($_SESSION["IsAdmin"]) && $_SESSION["IsAdmin"]){
+                        echo "<li> <a href='admin.php'>Admin</a></li>";
+                    } else {
+                        echo "<li> <a href='personalAccount.php'> MyAccount</a></li>";
+                    }
+                    ?>  
                     
 
-                    <li> <a href="logout.php"> Logout</a></li>
+
+                    <li> <a href="logout.php">Logout</a></li>
                 </ul>
         </div>
         </div>

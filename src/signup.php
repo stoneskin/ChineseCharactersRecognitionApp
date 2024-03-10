@@ -23,29 +23,23 @@ if (isset($_POST['submit'])) {
       //$password = password_hash($password, PASSWORD_DEFAULT);
 
         try {
+            $sql = sprintf(
+                "INSERT INTO user (Email, Password, UserType) VALUES ('%s', '%s', '%s')",
+                $conn->real_escape_string($email),
+                $conn->real_escape_string($password),
+                ($_POST['userOptions'] === 'student') ? 'student' : 'parent'
+            );
 
-            if ($_POST['userOptions'] === 'student')
-            {
-                $sql = sprintf(
-                    "INSERT INTO student (email, password) VALUES ('%s', '%s')",
-                    $conn->real_escape_string($email),
-                    $conn->real_escape_string($password));
+            if (!$conn->query($sql)) {
+                $error = $conn->error;
             }
-            else
-            {
-                $sql = sprintf(
-                    "INSERT INTO user (email, password) VALUES ('%s', '%s')",
-                    $conn->real_escape_string($email),
-                    $conn->real_escape_string($password));    
-            }
-
-            $conn->query($sql);
             $conn->close();
-
-            header("Location: login.php?email=" . urlencode(sanitizeHTML($email)));
+            if($error == '') {
+                header("Location: login.php?email=" . urlencode(sanitizeHTML($email)));
+            }
         }
         catch (Exception $e) {
-            $error = "Invalid email or password";
+            $error = $e->getMessage();
         }
     }
     else
@@ -64,12 +58,12 @@ if (isset($_POST['submit'])) {
                     <div class="form-title">Sign Up</div>             
                     
                     <div class="input-component padding20">
-                        <div >
-                            <input class="form-check-input" type="radio" name="userOptions" id="inlineRadio1" value="student" checked>
+                        <div style="display: none;">
+                            <input class="form-check-input" type="radio" name="userOptions" id="inlineRadio1" value="student" >
                             <label class="form-check-label" for="inlineRadio1">Student</label>
                         </div>
                         <div >
-                            <input class="form-check-input" type="radio" name="userOptions" id="inlineRadio2" value="judge">
+                            <input class="form-check-input" type="radio" name="userOptions" id="inlineRadio2" value="judge"  checked style="appearance: none;-webkit-appearance: none;border-radius: 50%; background: #FF572233;border: 3px solid #FFF;  box-shadow: 0 0 0 1px #FF5722;">
                             <label class="form-check-label" for="inlineRadio2">Judge/Parent</label>
                         </div>
                     </div>
@@ -106,8 +100,8 @@ if (isset($_POST['submit'])) {
                             echo "<p style='color: red;'>$error</p>";
                         }
                     ?>
-                    <div class="frame-botton">
-                        <div class="frame-botton2">
+                    <div class="frame-button">
+                        <div class="frame-button2">
                             <!--
                             <div class="button">
                                 <div class="submit">Sign Up</div>         

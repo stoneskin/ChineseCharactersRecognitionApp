@@ -35,6 +35,10 @@
   left: 5%;
   
 }
+
+.sortableHeader {
+  cursor: pointer;
+}
 .logo {
   align-self: stretch;
   flex-shrink: 0;
@@ -56,13 +60,16 @@
   color: var(--head-fontcolor, #ffffff);
   text-align: left;
   font: var(--head-title, 700 64px "Work Sans", sans-serif);
-  font-size:4vw;
+  font-size:3vw;
   position: relative;
   align-self: stretch;
   flex: 1;
   display: flex;
   align-items: center;
   justify-content: flex-start;
+}
+.editable{
+  display:none;
 }
 .two-column-frame {
   padding: 50px 0px 50px 0px;
@@ -184,7 +191,7 @@
   align-items: center;
   justify-content: flex-start;
 }
-.frame-botton {
+.frame-button {
   display: flex;
   flex-direction: column;
   gap: 0px;
@@ -193,8 +200,9 @@
   align-self: stretch;
   flex-shrink: 0;
   position: relative;
+  margin-top: 3vw;
 }
-.frame-botton2 {
+.frame-button2 {
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -487,6 +495,15 @@ vertical-align: middle;
 .side-bar>.label:hover{
   background-color: #edf6d9d1;
 }
+
+.side-bar>.disabled,.side-bar>.disabled:hover{
+  background-color: #f2f2f2;
+  color: #dddddd;
+  cursor:default;
+}
+
+
+
 .time-block{
   display:flex;
   flex-direction: column;
@@ -535,12 +552,61 @@ td, th {
   padding: 8px;
 }
 
+
+
+/*admin menu*/
+.adminMenu{
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #3a0a0a;
+}
+
+li {
+  float: left;
+}
+
+li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+/* Change the link color to #111 (black) on hover */
+li a:hover {
+  background-color: #eadbdb;
+}
+
+
+
+
+@media only screen and (max-width: 2800px) {
+  .frame-main>.label{
+    text-wrap: balance; 
+    word-wrap: normal;
+    font-size: 1.8vw;
+    margin: 50px;
+  }
+  .mlccc-words-test {
+  
+    font-size:1.8vw;
+  }
+  }
+
+
 @media only screen and (max-width: 1800px) {
 .frame-main>.label{
   text-wrap: balance; 
   word-wrap: normal;
   font-size: 2vw;
   margin: 50px;
+}
+.mlccc-words-test {
+
+  font-size:2.3vw;
 }
 }
 @media only screen and (max-width: 1400px) {
@@ -550,6 +616,10 @@ td, th {
     font-size: 2.3vw;
     margin: 50px;
   }
+  .mlccc-words-test {
+
+    font-size:2.5vw;
+  }
 }
 @media only screen and (max-width: 1000px) {
   /* body {
@@ -557,7 +627,7 @@ td, th {
   } */
 .mlccc-words-test {
 
-    font-size:6vw;
+    font-size:2.7vw;
 }
 .main>.center-board>.label{
   font-size: 105px;
@@ -638,4 +708,5 @@ td, th {
   font-size: 30px;
   width: 150px;
 }
+
 }
