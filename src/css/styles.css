@@ -583,7 +583,18 @@ li a:hover {
 
 
 
-
+@media only screen and (max-width: 2800px) {
+  .frame-main>.label{
+    text-wrap: balance; 
+    word-wrap: normal;
+    font-size: 1.8vw;
+    margin: 50px;
+  }
+  .mlccc-words-test {
+  
+    font-size:1.8vw;
+  }
+  }
 
 
 @media only screen and (max-width: 1800px) {
@@ -593,6 +604,10 @@ li a:hover {
   font-size: 2vw;
   margin: 50px;
 }
+.mlccc-words-test {
+
+  font-size:2.3vw;
+}
 }
 @media only screen and (max-width: 1400px) {
   .frame-main>.label{
@@ -601,6 +616,10 @@ li a:hover {
     font-size: 2.3vw;
     margin: 50px;
   }
+  .mlccc-words-test {
+
+    font-size:2.5vw;
+  }
 }
 @media only screen and (max-width: 1000px) {
   /* body {
@@ -608,7 +627,7 @@ li a:hover {
   } */
 .mlccc-words-test {
 
-    font-size:4vw;
+    font-size:2.7vw;
 }
 .main>.center-board>.label{
   font-size: 105px;

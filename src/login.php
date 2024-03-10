@@ -7,16 +7,16 @@ $session = new MySessionHandler($conn);
 if ($_SERVER["REQUEST_METHOD"] == "POST") {  
     // username and password sent from form 
     if (isset($_POST["email"]) && isset($_POST["password"])) {
-        $myemail = $conn->real_escape_string(trim($_POST["email"]));
+        $myEmail = $conn->real_escape_string(trim($_POST["email"]));
         $mypassword = $conn->real_escape_string(trim($_POST["password"])); 
 
-        $sql = "SELECT id, isAdmin, UserType FROM user WHERE Email = '$myemail' and Password = '$mypassword'";
+        $sql = "SELECT id, isAdmin, UserType FROM user WHERE Email = '$myEmail' and Password = '$mypassword'";
         $result = $conn->query($sql);
         $row = $result->fetch_object();
         if ($row != null) {
             
             $_SESSION["SID"] = session_id();
-            $_SESSION["loginUser"] = $myemail;
+            $_SESSION["loginUser"] = $myEmail;
             $_SESSION["userType"]= $row->UserType;
             $_SESSION["IsAdmin"]= $row->isAdmin;
             $_SESSION["Id"]= $row->id;

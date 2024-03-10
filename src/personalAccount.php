@@ -1,14 +1,14 @@
 <?php require "_sessionHeader.php" ?>
 <?php require_once '_incFunctions.php';
-$myemail = $_SESSION["loginUser"];
+$myEmail = $_SESSION["loginUser"];
 $userType = $_SESSION["userType"];
 
-$sql = "SELECT user.ID, user.GradeID, grade.GradeName FROM user LEFT JOIN grade ON user.GradeID = grade.GradeID WHERE user.Email = '$myemail'";
+$sql = "SELECT user.ID, user.GradeID, grade.GradeName FROM user LEFT JOIN grade ON user.GradeID = grade.GradeID WHERE user.Email = '$myEmail'";
 $result = $conn->query($sql);
 $row = $result->fetch_object();
 if ($row==null)
     {
-        $error = "There are no users with the email $myemail. ";
+        $error = "There are no users with the email $myEmail. ";
         header("Location: error.php?error=" . urlencode($error));
     }
 $ID = $row->ID;
@@ -36,7 +36,7 @@ else
 {
     $activitySql = "SELECT EventName, Level, FinalScore,  StartTime, TimeSpent, StudentName FROM activities INNER JOIN event on activities.EventID=event.ID WHERE JudgeName = ? ORDER BY ActivityID DESC";
     if($stmtActivity = $conn->prepare($activitySql)){
-        $stmtActivity->bind_param("s", $myemail);
+        $stmtActivity->bind_param("s", $myEmail);
         $stmtActivity->execute();
     }else{
         die("Errormessage: ". $conn->error);
