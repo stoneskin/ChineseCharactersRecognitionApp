@@ -2,7 +2,7 @@
 <?php
 require_once '_incFunctions.php';
 
-
+ $timeLimit=sanitizeHTML($_COOKIE['timeLimit']);
 ?>
 
 
@@ -11,22 +11,9 @@ require_once '_incFunctions.php';
     // var testLevel="3"
    // var testList=["中国","测试","新年好","花好月圆"];
 
-   var testList = [];
+   var testList = JSON.parse(sessionStorage.getItem("wordlist"));
    var wordItem;
-   <?php 
-   $list = unserialize(sanitizeHTML($_COOKIE['wordlist']));
-   $timeLimit=sanitizeHTML($_COOKIE['timeLimit']);
-   foreach ($list as $item) : 
-   ?>
-    wordItem = {
-        id: <?php echo $item['ID']?>,
-        word: "<?php echo $item['Words']?>",
-        passed:null,
-        timeElapsed:null
-        };
 
-    testList.push(wordItem);
-   <?php endforeach; ?>
 
 
     var current=0;

@@ -119,7 +119,9 @@
   margin: 50px;
 }
 
-
+.indent {
+  margin-left: 40px;
+}
 
 .form-title {
   color: var(--main-text-color, #707070);
@@ -165,6 +167,9 @@
   display: flex;
   align-items: center;
   justify-content: flex-start;
+}
+.wrap {
+  text-wrap:wrap
 }
 .textbox-frame {
   border-radius: 10px;
@@ -449,7 +454,11 @@
   margin-top: 15px;
 }
 
-
+a {
+  color: red;
+  background-color: transparent;
+  text-decoration: underline;
+}
 .errorMessage{
   font-size: 1.5vw;
   color: red;

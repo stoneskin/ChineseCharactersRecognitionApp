@@ -7,6 +7,7 @@ $studentName = '';
 $grade = '';
 $numberOfWords = 0;
 $timeLimit = 0;
+$wordlist='';
 
     try {
         if (isset($_GET['studentName'])) {
@@ -33,8 +34,10 @@ $timeLimit = 0;
                     $conn->real_escape_string($numberOfWords));
 
                 $result = $conn->query($sql_words);       
-                $rows = $result->fetch_all(MYSQLI_ASSOC);
-                setcookie('wordlist', serialize($rows), time()+3600);
+                $wordlist = $result->fetch_all(MYSQLI_ASSOC);
+               
+                //window.sessionStorage.setItem('wordlist', serialize($rows));
+                //setcookie('wordlist', serialize($rows), time()+3600);
                 setcookie('timeLimit', $timeLimit, time()+3600);
 
 
@@ -52,7 +55,24 @@ $timeLimit = 0;
 
 <?php require "_sessionHeader.php" ?>
 
+<script>
 
+var testList = [];
+var wordItem;
+    <?php
+    foreach ($wordlist as $item) : 
+    ?>
+    wordItem = {
+            id: <?php echo $item['ID']?>,
+            word: "<?php echo $item['Words']?>",
+            passed:null,
+            timeElapsed:null
+            };
+
+        testList.push(wordItem);
+    <?php endforeach; ?>
+sessionStorage.setItem("wordlist", JSON.stringify(testList));
+</script>
 <div class="container">
             <div class="row">
          
