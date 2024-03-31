@@ -21,7 +21,7 @@ require_once "_needSession.php";
         <div class="header">
             <div class="header2">
                 <div class="logo">
-                    <img class="logo2" src="images/logo.png" style="cursor:pointer" onclick="(()=>{window.location.assign('studentInfo.php')})()" />
+                    <img class="logo2" src="images/logo.png" style="cursor:pointer" onclick="(()=>{window.open('https://mlccc.herokuapp.com/')})()" />
                 </div>
                 <div class="mlccc-words-test" style="cursor:pointer" onclick="(()=>{window.location.assign('studentInfo.php')})()" >识字比赛<br>Character Recognition Contest</div>
 
