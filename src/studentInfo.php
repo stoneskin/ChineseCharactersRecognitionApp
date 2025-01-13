@@ -124,26 +124,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $errorEvent=='') {
 
             <div class="frame col-md-5 col-sm-8">
 
-                    <div class="form-title">Student Info</div>             
-            
-                    <div class="input-component">
-                        <div class="label-frame">
-                            <div class="label">Student Name</div>
-                        </div>
-
-                        <?php if ($_SESSION["userType"] == 'student'): ?>
-                            <?php echo $student ?>
-                        <?php else: ?>
-                            <div class="input-component">
-                                <input type='text' name='student' class='textbox-frame form-control' id='txtUserName'  placeholder='Enter Student Name' value="">
-                            </div>          
-                        <?php endif; ?>
-
-                    </div>     <?php
-                            if ($errorStudent!='') {
-                                echo "<div class='errorMessage'>$errorStudent</div>";
-                            }
-                            ?>
+            <div class="form-title">Student Info</div>    
                     <div class="input-component">
                         <div class="label-frame">
                             <div class="label">Grade</div>
@@ -169,14 +150,35 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $errorEvent=='') {
                         <?php
                             if ($errorGrade!='') {
                                 echo "<div class='errorMessage'>$errorGrade</div>";
-                            }
-
-                            if ($errorEvent!='') {
-                                echo "<div class='errorMessage'>$errorEvent</div>";
-                            }
+                            }                      
 
                         ?>
-             
+                     
+            
+                <div class="input-component">
+                    <div class="label-frame">
+                        <div class="label">Student Name</div>
+                    </div>
+
+                    <?php if ($_SESSION["userType"] == 'student'): ?>
+                        <?php echo $student ?>
+                    <?php else: ?>
+                        <div class="input-component">
+                            <input type='text' name='student' class='textbox-frame form-control' id='txtUserName'  placeholder='Enter Student Name' value="">
+                        </div>          
+                    <?php endif; ?>
+
+                </div>     
+                <?php
+                    if ($errorStudent!='') {
+                        echo "<div class='errorMessage'>$errorStudent</div>";
+                    }
+                    ?>     
+                    <?php
+                        if ($errorEvent!='') {
+                            echo "<div class='errorMessage'>$errorEvent</div>";
+                        }
+                    ?>       
                     <div class="frame-button">
                         <div class="frame-button2">
                             <button class="button submit" type="submit">Enter</button>
@@ -190,4 +192,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $errorEvent=='') {
             </div>
         </div>
 </form> 
+<script>
+    //clear sessionStorage
+    sessionStorage.clear();
+</script>
 <?php require "_footer.php" ?>

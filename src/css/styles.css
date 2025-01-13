@@ -133,6 +133,7 @@
   display: flex;
   align-items: center;
   justify-content: flex-start;
+  margin-bottom: 2vw;
 }
 .input-component {
   padding: 25px 0px 25px 0px;
@@ -205,7 +206,7 @@
   align-self: stretch;
   flex-shrink: 0;
   position: relative;
-  margin-top: 3vw;
+  margin-top: 2vw;
 }
 .frame-button2 {
   display: flex;
