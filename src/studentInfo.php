@@ -204,12 +204,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $errorEvent=='') {
         studentInput.addEventListener('input', function() {
             const query = studentInput.value;
             if (query.length > 0) {
-                fetch('api/getRecentStudents.php')
-                    .then(response => response.json())
-                    .then(data => {
-                        let matches = data.filter(student => (student.toLowerCase().startsWith(query.toLowerCase())||student.toLowerCase().includes(' '+query.toLowerCase())));
-                        displayMatches(matches);
-                    });
+                if (sessionStorage.getItem('recentStudents')) {
+                    const data = JSON.parse(sessionStorage.getItem('recentStudents'));
+                    let matches = data.filter(student => (student.toLowerCase().startsWith(query.toLowerCase()) || student.toLowerCase().includes(' ' + query.toLowerCase())));
+                    displayMatches(matches);
+                } else {
+                    fetch('api/getRecentStudents.php')
+                        .then(response => response.json())
+                        .then(data => {
+                            sessionStorage.setItem('recentStudents', JSON.stringify(data));
+                            let matches = data.filter(student => (student.toLowerCase().startsWith(query.toLowerCase()) || student.toLowerCase().includes(' ' + query.toLowerCase())));
+                            displayMatches(matches);
+                        });
+                }
             } else {
                 studentList.innerHTML = '';
                 studentList.classList.remove('show');
@@ -218,7 +225,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $errorEvent=='') {
 
         function displayMatches(matches) {
             if (matches.length > 0) {
-                studentList.innerHTML = matches.map(match => `<a class="dropdown-item d-block">${match}</a>`).join('  ');
+                studentList.innerHTML = matches.map(match => `<a class="dropdown-item d-block">${match}</a>`).join('');
                 studentList.classList.add('show');
                 document.querySelectorAll('.dropdown-item').forEach(item => {
                     item.addEventListener('click', function() {
