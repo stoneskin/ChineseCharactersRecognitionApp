@@ -49,7 +49,7 @@
                     <div class="frame-button">
                         <div class="frame-button2">
                             <div class="button button-tall" onclick="(()=>{window.location.assign('studentInfo.php')})()">
-                                <div class="submit">Next Test</div>
+                                <div class="submit">Next Practice</div>
                             </div>
                         </div>
                     </div>

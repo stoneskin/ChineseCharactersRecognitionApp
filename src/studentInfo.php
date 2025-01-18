@@ -112,7 +112,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $errorEvent=='') {
 
             $_SESSION["activityid"] =  mysqli_insert_id( $conn);
 
-            header("Location: startTest.php".'?studentname='.$student.'&grade='.$grade);
+            if ($_SESSION["userType"] == 'student') {
+                header("Location: startPractice.php".'?studentname='.$student.'&grade='.$grade);
+            } else {
+                header("Location: startTest.php".'?studentname='.$student.'&grade='.$grade);
+            }
+
+            
     }
 }
 ?>
