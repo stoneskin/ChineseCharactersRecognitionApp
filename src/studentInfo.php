@@ -204,7 +204,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $errorEvent=='') {
         studentInput.addEventListener('input', function() {
             const query = studentInput.value;
             if (query.length > 0) {
-                fetch('getRecentStudents.php')
+                fetch('api/getRecentStudents.php')
                     .then(response => response.json())
                     .then(data => {
                         let matches = data.filter(student => (student.toLowerCase().startsWith(query.toLowerCase())||student.toLowerCase().includes(' '+query.toLowerCase())));
