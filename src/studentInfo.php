@@ -124,26 +124,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $errorEvent=='') {
 
             <div class="frame col-md-5 col-sm-8">
 
-                    <div class="form-title">Student Info</div>             
-            
-                    <div class="input-component">
-                        <div class="label-frame">
-                            <div class="label">Student Name</div>
-                        </div>
-
-                        <?php if ($_SESSION["userType"] == 'student'): ?>
-                            <?php echo $student ?>
-                        <?php else: ?>
-                            <div class="input-component">
-                                <input type='text' name='student' class='textbox-frame form-control' id='txtUserName'  placeholder='Enter Student Name' value="">
-                            </div>          
-                        <?php endif; ?>
-
-                    </div>     <?php
-                            if ($errorStudent!='') {
-                                echo "<div class='errorMessage'>$errorStudent</div>";
-                            }
-                            ?>
+            <div class="form-title">Student Info</div>    
                     <div class="input-component">
                         <div class="label-frame">
                             <div class="label">Grade</div>
@@ -169,14 +150,36 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $errorEvent=='') {
                         <?php
                             if ($errorGrade!='') {
                                 echo "<div class='errorMessage'>$errorGrade</div>";
-                            }
-
-                            if ($errorEvent!='') {
-                                echo "<div class='errorMessage'>$errorEvent</div>";
-                            }
+                            }                      
 
                         ?>
-             
+                     
+            
+                <div class="input-component">
+                    <div class="label-frame">
+                        <div class="label">Student Name</div>
+                    </div>
+
+                    <?php if ($_SESSION["userType"] == 'student'): ?>
+                        <?php echo $student ?>
+                    <?php else: ?>
+                        <div class="input-component position-relative">
+                            <input type='text' name='student' class='textbox-frame form-control' id='txtUserName'  placeholder='Enter Student Name' value="">
+                            <div id="studentList" class="dropdown-menu position-absolute w-100"></div>
+                        </div>          
+                    <?php endif; ?>
+
+                </div>     
+                <?php
+                    if ($errorStudent!='') {
+                        echo "<div class='errorMessage'>$errorStudent</div>";
+                    }
+                    ?>     
+                    <?php
+                        if ($errorEvent!='') {
+                            echo "<div class='errorMessage'>$errorEvent</div>";
+                        }
+                    ?>       
                     <div class="frame-button">
                         <div class="frame-button2">
                             <button class="button submit" type="submit">Enter</button>
@@ -190,4 +193,45 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $errorEvent=='') {
             </div>
         </div>
 </form> 
+<script>
+    //clear sessionStorage
+    sessionStorage.clear();
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const studentInput = document.getElementById('txtUserName');
+        const studentList = document.getElementById('studentList');
+
+        studentInput.addEventListener('input', function() {
+            const query = studentInput.value;
+            if (query.length > 0) {
+                fetch('getRecentStudents.php')
+                    .then(response => response.json())
+                    .then(data => {
+                        let matches = data.filter(student => (student.toLowerCase().startsWith(query.toLowerCase())||student.toLowerCase().includes(' '+query.toLowerCase())));
+                        displayMatches(matches);
+                    });
+            } else {
+                studentList.innerHTML = '';
+                studentList.classList.remove('show');
+            }
+        });
+
+        function displayMatches(matches) {
+            if (matches.length > 0) {
+                studentList.innerHTML = matches.map(match => `<a class="dropdown-item d-block">${match}</a>`).join('  ');
+                studentList.classList.add('show');
+                document.querySelectorAll('.dropdown-item').forEach(item => {
+                    item.addEventListener('click', function() {
+                        studentInput.value = this.textContent;
+                        studentList.innerHTML = '';
+                        studentList.classList.remove('show');
+                    });
+                });
+            } else {
+                studentList.innerHTML = '';
+                studentList.classList.remove('show');
+            }
+        }
+    });
+</script>
 <?php require "_footer.php" ?>
