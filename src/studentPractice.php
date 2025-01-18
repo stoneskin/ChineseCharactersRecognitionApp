@@ -33,6 +33,7 @@ $timeLimit = isset($_COOKIE['timeLimit']) ? sanitizeHTML($_COOKIE['timeLimit']) 
         testList[current].passed = passed;
         testList[current].timeElapsed = timeElapsed; 
 
+        
         if((current + 1) < testList.length){
             current += 1;
             setTestWord();
