@@ -41,3 +41,8 @@ UI design html , css and image files could be find in `UI_Design` folder
 
 - Only [MLCCC](https://mlccc.org/)  members could contribute to this project
 - For How to start development and contribution, please check [Developer Guide](./doc/developer_guideline.md)
+
+## New Features
+- 2025-01-18: Add students name load and audio play feature in the student practice page
+[![Demo Video](./doc/Demo_newfeature_2025-01-18 162111.mp4)](./doc/Demo_newfeature_2025-01-18 162111.mp4)
+
