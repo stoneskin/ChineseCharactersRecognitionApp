@@ -54,71 +54,61 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $errorEvent=='') {
         $errorGrade="Please Select grade!";
     }
 
-        if($errorStudent=='' && $errorGrade==''){
-            $_SESSION["student"] = $student;
-            $_SESSION["grade"] = $grade;
-            $sql = sprintf("SELECT GradeName FROM grade WHERE GradeId = %s", $grade);
-            $result = $conn->query($sql);
-            $row = $result->fetch_object();
-            $_SESSION["gradeName"] = $row->GradeName;
+    if($errorStudent=='' && $errorGrade==''){
+        $_SESSION["student"] = $student;
+        $_SESSION["grade"] = $grade;
+        $sql = sprintf("SELECT GradeName FROM grade WHERE GradeId = %s", $grade);
+        $result = $conn->query($sql);
+        $row = $result->fetch_object();
+        $_SESSION["gradeName"] = $row->GradeName;
 
-            $username = $_SESSION["loginUser"];
-            $findStudentSql = "SELECT ID FROM user WHERE Email = '$student'";
-            $resultStu = $conn->query($findStudentSql);
-            $studentID=null;
-            $msg="check student";
+        $username = $_SESSION["loginUser"];
+        $findStudentSql = "SELECT ID FROM user WHERE Email = '$student'";
+        $resultStu = $conn->query($findStudentSql);
+        $studentID=null;
+        $msg="check student";
+        if($rowStu = $resultStu->fetch_object()){
+            $studentID=$rowStu->ID;
+            $msg= "GetStudentId=".$studentID;
+        }
+        else{
+            // insert a row for student
+            $sql = sprintf(
+                "INSERT INTO user (Email, Password, UserType,GradeID) VALUES ('%s', '%s', '%s',%u)",
+                $student,
+                generateRandomString(6),
+                'student',
+                $grade
+            );
+
+            if (!$conn->query($sql)) {
+                $error = $conn->error;
+                throw new Exception($error);
+            }
+
+            $resultStu = $conn->query($findStudentSql);                    
             if($rowStu = $resultStu->fetch_object()){
                 $studentID=$rowStu->ID;
-                $msg= "GetStudentId=".$studentID;
             }
-            else{
-                // insert a row for student
-                //try {
-                    $sql = sprintf(
-                        "INSERT INTO user (Email, Password, UserType,GradeID) VALUES ('%s', '%s', '%s',%u)",
-                        $student,
-                        generateRandomString(6),
-                        'student',
-                        $grade
-                    );
+        }
+
+        $activitySql = "INSERT INTO `activities` (`EventID`, `StudentName`, `StudentID`, `JudgeName`, `Level`) VALUES (?, ?, ?, ?, ?);";
         
-                    if (!$conn->query($sql)) {
-                        $error = $conn->error;
-                        throw new Exception($error);
-                    }
+        if($stmt = $conn->prepare($activitySql)){
+            $judge = $username;
+            $stmt->bind_param("isisi", $eventID, $student, $studentID, $judge, $grade);
+            $stmt->execute();
+        }else{
+            die("Errormessage: ". $conn->error);
+        }
 
-                    $resultStu = $conn->query($findStudentSql);                    
-                    if($rowStu = $resultStu->fetch_object()){
-                        $studentID=$rowStu->ID;
-                    }
-                    
-                //}
-                //catch (Exception $e) {
-                //    $error = $e->getMessage();
-                //}
-            }
+        $_SESSION["activityid"] =  mysqli_insert_id( $conn);
 
-        
-            $activitySql = "INSERT INTO `activities` (`EventID`, `StudentName`, `StudentID`, `JudgeName`, `Level`) VALUES (?, ?, ?, ?, ?);";
-            
-            if($stmt = $conn->prepare($activitySql)){
-                $judge = $username;
-                $stmt->bind_param("isisi", $eventID, $student, $studentID, $judge, $grade);
-                $stmt->execute();
-            }else{
-                die("Errormessage: ". $conn->error);
-            }
-
-
-            $_SESSION["activityid"] =  mysqli_insert_id( $conn);
-
-            if ($_SESSION["userType"] == 'student') {
-                header("Location: startPractice.php".'?studentname='.$student.'&grade='.$grade);
-            } else {
-                header("Location: startTest.php".'?studentname='.$student.'&grade='.$grade);
-            }
-
-            
+        if ($_SESSION["userType"] == 'student' || isset($_POST['practice'])) {
+            header("Location: startPractice.php".'?studentname='.$student.'&grade='.$grade);
+        } else {
+            header("Location: startTest.php".'?studentname='.$student.'&grade='.$grade);
+        }
     }
 }
 ?>
@@ -189,6 +179,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $errorEvent=='') {
                     <div class="frame-button">
                         <div class="frame-button2">
                             <button class="button submit" type="submit">Enter</button>
+                            <?php if ($_SESSION["userType"] != 'student'): ?>
+                                <button class="button submit" type="submit" name="practice">Practice</button>
+                            <?php endif; ?>
                         </div>
                     </div>
       
