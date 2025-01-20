@@ -19,7 +19,7 @@ if ($row != null && $row['EventName'] != null) {
 }
 
 //get activity list by EventID
-$activitySql = "SELECT StudentName, StudentID, ActivityID, Level, FinalScore, TimeSpent FROM activities WHERE EventID = ? ORDER BY ActivityID DESC";
+$activitySql = "SELECT StudentName, StudentID, ActivityID, g.GradeName, FinalScore, TimeSpent,isPractice FROM activities a join grade g on g.GradeId=a.level WHERE EventID = ? ORDER BY ActivityID DESC";
 if($stmtActivity = $conn->prepare($activitySql)){
     $stmtActivity->bind_param("i", $eventID);
     $stmtActivity->execute();
@@ -45,21 +45,18 @@ $resultActivity = $stmtActivity->get_result();
                         <th class="text-center p-1">Grade Level</th>
                         <th class="text-center p-1">Score</th>
                         <th class="text-center p-1">Time Spent</th>
+                        <th class="text-center p-1">IsPractice</th>
                     </tr>
                     <?php
                     while ($row = $resultActivity->fetch_assoc()) {
                         echo '<tr>';
                         echo '<td>' . $row["StudentName"] . '</td>';
                         echo '<td>' . $row["StudentID"] . '</td>';
-                        echo '<td>' . $row["ActivityID"] . '</td>';
-                        $level = $row["Level"];
-                        $gradeSql = "SELECT GradeName FROM grade WHERE GradeID = $level";
-                        $gradeResult = $conn->query($gradeSql);
-                        $gradeRow = $gradeResult->fetch_assoc();
-                        $gradeName = $gradeRow["GradeName"];
-                        echo '<td>' . $gradeName . '</td>';
+                        echo '<td>' . $row["ActivityID"] . '</td>';                     
+                        echo '<td>' . $row["GradeName"] . '</td>';
                         echo '<td>' . $row["FinalScore"] . '</td>';
                         echo '<td>' . $row["TimeSpent"] . '</td>';
+                        echo '<td>' . $row["isPractice"] . '</td>';
                         echo '</tr>';
                     }
                     ?>

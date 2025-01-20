@@ -13,17 +13,23 @@ if ($row==null)
     }
 $ID = $row->ID;
 $grade = "0";
+$gradeName  = "N/A";
 if ($row != null && $row->GradeID != null) {
     $grade = $row->GradeID;
+    if($userType == "student")
+    {
+        $gradeName=$row->GradeName;
+        
+    }
 }
-$levelSql = "SELECT GradeName FROM grade WHERE GradeId = '$grade'";
-$result = $conn->query($levelSql);
-$levelRow = $result->fetch_object();
-$level = ($userType == "student") ? $levelRow->GradeName : "N/A";
-//get activity list by StudentID or JudgeName
+// $levelSql = "SELECT GradeName FROM grade WHERE GradeId = '$grade'";
+// $result = $conn->query($levelSql);
+// $levelRow = $result->fetch_object();
+// $level = ($userType == "student") ? $levelRow->GradeName : "N/A";
+// //get activity list by StudentID or JudgeName
 if ($userType == "student")
 {
-    $activitySql = "SELECT EventName, Level, FinalScore, StartTime, TimeSpent FROM activities INNER JOIN event on activities.EventID=event.ID WHERE StudentID = ? ORDER BY ActivityID DESC LIMIT 50";
+    $activitySql = "SELECT EventName, Level, FinalScore, StartTime, TimeSpent,isPractice FROM activities INNER JOIN event on activities.EventID=event.ID WHERE StudentID = ? ORDER BY ActivityID DESC LIMIT 50";
     if($stmtActivity = $conn->prepare($activitySql)){
         $stmtActivity->bind_param("i", $ID);
         $stmtActivity->execute();
@@ -34,7 +40,7 @@ if ($userType == "student")
 }
 else
 {
-    $activitySql = "SELECT EventName, Level, FinalScore,  StartTime, TimeSpent, StudentName FROM activities INNER JOIN event on activities.EventID=event.ID WHERE JudgeName = ? ORDER BY ActivityID DESC";
+    $activitySql = "SELECT EventName, Level, FinalScore,  StartTime, TimeSpent, StudentName ,isPractice FROM activities INNER JOIN event on activities.EventID=event.ID WHERE JudgeName = ? ORDER BY ActivityID DESC";
     if($stmtActivity = $conn->prepare($activitySql)){
         $stmtActivity->bind_param("s", $myEmail);
         $stmtActivity->execute();
@@ -106,7 +112,7 @@ $(document).ready(function () {
                 </div>
                 <div class="col-md-9 col-sm-9">
                     <div class="label">
-                        <?php echo $level?>
+                        <?php echo $gradeName?>
                     </div>
                 </div>
             </div>
@@ -137,11 +143,12 @@ $(document).ready(function () {
                             <th class="text-center p-1 sortableHeader">Score</th>
                             <th class="text-center p-1 sortableHeader">Start Time</th>
                             <th class="text-center p-1 sortableHeader">Time Spent</th>
+                            <th class="text-center p-1 sortableHeader">Unknown Words</th>
                         </tr>
                         <?php
                         while ($row = $resultActivity->fetch_object()) {
                             echo '<tr>';
-                            echo '<td>' . $row->EventName . '</td>';
+                            echo '<td>' . $row->EventName .($row->isPractice==0?'':' (practice)' ). '</td>';
                             if ($userType == "parent")
                             {
                                 echo '<td>' . $row->StudentName . '</td>';
@@ -154,6 +161,7 @@ $(document).ready(function () {
                             echo '<td>' . $gradeName . '</td>';
                             echo '<td>' . $row->FinalScore . '</td>';
                             echo '<td>' . $row->StartTime . '</td>';
+                            echo '<td>' . $row->TimeSpent . '</td>';
                             echo '<td>' . $row->TimeSpent . '</td>';
                             echo '</tr>';
                         }

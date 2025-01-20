@@ -92,11 +92,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $errorEvent=='') {
             }
         }
 
-        $activitySql = "INSERT INTO `activities` (`EventID`, `StudentName`, `StudentID`, `JudgeName`, `Level`) VALUES (?, ?, ?, ?, ?);";
+        $activitySql = "INSERT INTO `activities` (`EventID`, `StudentName`, `StudentID`, `JudgeName`, `Level`,`isPractice`) VALUES (?, ?, ?, ?, ?,?);";
+
+        $isPractice= ($_SESSION["userType"] == 'student' || isset($_POST['practice'])) ? 1 : 0;
         
         if($stmt = $conn->prepare($activitySql)){
             $judge = $username;
-            $stmt->bind_param("isisi", $eventID, $student, $studentID, $judge, $grade);
+            $stmt->bind_param("isisii", $eventID, $student, $studentID, $judge, $grade,$isPractice);
             $stmt->execute();
         }else{
             die("Errormessage: ". $conn->error);
@@ -104,7 +106,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $errorEvent=='') {
 
         $_SESSION["activityid"] =  mysqli_insert_id( $conn);
 
-        if ($_SESSION["userType"] == 'student' || isset($_POST['practice'])) {
+        if ($isPractice==1) {
             header("Location: startPractice.php".'?studentname='.$student.'&grade='.$grade);
         } else {
             header("Location: startTest.php".'?studentname='.$student.'&grade='.$grade);
