@@ -45,4 +45,6 @@ UI design html , css and image files could be find in `UI_Design` folder
 ## New Features
 - 2025-01-18: Add students name load and audio play feature in the student practice page
 ![Demo Video](./doc/demo/CCR_Demo_newfeature_20250118/CCR_DEMO_0118.mp4)
+- 2025-01-20: Add word details
+![](./doc/demo/WordDetails.png)
 
