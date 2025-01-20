@@ -115,11 +115,24 @@ $timeLimit = isset($_COOKIE['timeLimit']) ? sanitizeHTML($_COOKIE['timeLimit']) 
                 <div class="test-word" id="boxTestword">
                     测试
                 </div>
+    </div>
+            <div class="row">
+                <div class="frame-button2 col-xs-6">
+                    <div class="button button-tall button-wrong" onclick="nextItem(false)">
+                        <div class="submit">Wrong</div>
+                    </div>
+                </div>
+                <div class="frame-button2 col-xs-6">
+                    <div class="button button-tall button-green" onclick="nextItem(true)">
+                        <div class="submit">Correct</div>
+                    </div>
+                </div>
             </div>
+        
         </div>
-        <div class="col-sm-2 side-bar">
-            <div id="next-btn" class="label wrap">></div>
+        <div class="col-sm-2 side-bar"><div onclick="nextItem(false)" class="label wrap">></div>
         </div>
+            
     </div>
 </div>
 <?php require "_footer.php" ?>
