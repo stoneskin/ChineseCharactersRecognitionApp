@@ -552,6 +552,14 @@ vertical-align: middle;
 .test-word{
   text-align: center;
   width: 100%;
+
+}
+
+.translate-word{
+  text-align: center;
+  font-size: 2em;
+  color: blue;
+  margin-top: 2%;
 }
 
 /* Style the table */
