@@ -56,16 +56,39 @@ $timeLimit = isset($_COOKIE['timeLimit']) ? sanitizeHTML($_COOKIE['timeLimit']) 
         }
     }
 
-    function setTestWord(){
+    function  setTestWord(){
         document.getElementById("boxTestword").innerHTML = testList[current].word;
         document.getElementById("boxCounter").innerHTML = (current + 1) + "/" + (testList.length);
         remain = <?php echo $timeLimit ?>;
         timeElapsed = 0;
+        setEnglishWord(testList[current].word);
         if(timer){
             clearTimeout(timer);
         }
         setTimer();
     }
+    function  setEnglishWord(chineseWord){
+
+        const url = `https://clients5.google.com/translate_a/t?client=dict-chrome-ex&sl=auto&tl=en&q=${chineseWord}`;
+        
+           fetch(url)
+            .then(response => response.json())
+            .then(translationData => {
+                // Process the JSON data
+                console.log(translationData);
+                if (translationData && translationData[0] && translationData[0][0]) {
+
+                const englishWord = translationData[0][0];
+                document.getElementById("boxEnglishWord").innerHTML=englishWord;            
+
+                }
+
+               
+            });      
+          
+
+        }
+    
 
     function setTimer(){
         document.getElementById("boxTimer").innerHTML = remain;
@@ -105,21 +128,37 @@ $timeLimit = isset($_COOKIE['timeLimit']) ? sanitizeHTML($_COOKIE['timeLimit']) 
                 <div style="display: inline-block;">
                     <div class="time-block" id="boxTimer">[time]</div>
                 </div>
-                <div style="display: inline-block; vertical-align: top; margin-left: 15px;">
+                <div style="display: inline-block; vertical-align: top; margin-left: 5%;">
                     <button id="mic-btn">
                         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Speaker_Icon.svg/1024px-Speaker_Icon.svg.png" height="50px" width="50px" alt="Microphone">
                     </button>
                 </div>
-            </div>
-            <div class="label wrap">
+            </div> <div class="translate-word" id="boxEnglishWord">
+                    Test
+                </div>
+            <div class="label wrap" style="margin-top:1%">
                 <div class="test-word" id="boxTestword">
                     测试
                 </div>
+               
+    </div>
+            <div class="row">
+                <div class="frame-button2 col-xs-6">
+                    <div class="button button-tall button-wrong" onclick="nextItem(false)">
+                        <div class="submit">Wrong</div>
+                    </div>
+                </div>
+                <div class="frame-button2 col-xs-6">
+                    <div class="button button-tall button-green" onclick="nextItem(true)">
+                        <div class="submit">Correct</div>
+                    </div>
+                </div>
             </div>
+        
         </div>
-        <div class="col-sm-2 side-bar">
-            <div id="next-btn" class="label wrap">></div>
+        <div class="col-sm-2 side-bar"><div onclick="nextItem(false)" class="label wrap">></div>
         </div>
+            
     </div>
 </div>
 <?php require "_footer.php" ?>

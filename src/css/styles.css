@@ -323,7 +323,13 @@
   height: 1em;
   /* margin-top: .25em;
   vertical-align: top; */
+  appearance: none;-webkit-appearance: none;border-radius: 50%; background: #FF572233;border: 3px solid #FFF;  box-shadow: 0 0 0 1px #FF5722;
 }
+.form-check-input:checked  {
+  background: #d06060;
+}
+
+
 .textbox-frame2 {
   background: var(--error-input-alert, rgba(255, 148, 148, 0.15));
   border-radius: 10px;
@@ -516,8 +522,7 @@ vertical-align: middle;
   display: block;
   height: 25px;
   color: #666;
-  margin-top: -20px;
-  margin-bottom: 20px;
+  line-height: 20px;
   padding-left: 10px;
 }
 .show {
@@ -547,6 +552,14 @@ vertical-align: middle;
 .test-word{
   text-align: center;
   width: 100%;
+
+}
+
+.translate-word{
+  text-align: center;
+  font-size: 2em;
+  color: blue;
+  margin-top: 2%;
 }
 
 /* Style the table */
