@@ -65,7 +65,7 @@ $timeLimit = isset($_COOKIE['timeLimit']) ? sanitizeHTML($_COOKIE['timeLimit']) 
         if(timer){
             clearTimeout(timer);
         }
-       // setTimer();
+        setTimer();
     }
     function  setEnglishWord(chineseWord){
 
