@@ -522,8 +522,7 @@ vertical-align: middle;
   display: block;
   height: 25px;
   color: #666;
-  margin-top: -20px;
-  margin-bottom: 20px;
+  line-height: 20px;
   padding-left: 10px;
 }
 .show {
