@@ -59,13 +59,21 @@ $timeLimit = isset($_COOKIE['timeLimit']) ? sanitizeHTML($_COOKIE['timeLimit']) 
     function  setTestWord(){
         document.getElementById("boxTestword").innerHTML = testList[current].word;
         document.getElementById("boxCounter").innerHTML = (current + 1) + "/" + (testList.length);
+        document.getElementById("boxEnglishWordAi").innerHTML="";
+        document.getElementById("boxEnglishWord2").innerHTML="";
+        document.getElementById("boxEnglishWord").innerHTML="";
+
         remain = <?php echo $timeLimit ?>;
         timeElapsed = 0;
-        setEnglishWord(testList[current].word);
+        currentWord=testList[current].word;
+
         if(timer){
             clearTimeout(timer);
         }
         setTimer();
+        setEnglishWord(currentWord);
+        setEnglishWordGoog(currentWord);
+        setEnglishWordAi(currentWord);
     }
     function  setEnglishWord(chineseWord){
 
@@ -88,6 +96,48 @@ $timeLimit = isset($_COOKIE['timeLimit']) ? sanitizeHTML($_COOKIE['timeLimit']) 
           
 
         }
+
+    function  setEnglishWordGoog(chineseWord){
+        //chineseWord=testList[current].word
+        const url = `api/getEnglishTranslateGoogle.php?text=${encodeURIComponent(chineseWord)}`;
+        console.log("setEnglishWordGoog",url);
+        fetch(url)
+        .then(response => response.json())
+        .then(translationData => {
+            // Process the JSON data
+            console.log("setEnglishWordGoog=",translationData);
+            if (translationData && translationData.data&& translationData.data.translations[0]) {
+
+            const englishWord = translationData.data.translations[0].translatedText;
+            document.getElementById("boxEnglishWord2").innerHTML=" ( "+ englishWord+" )";            
+
+            }
+
+        
+        });     
+
+    }        
+    function  setEnglishWordAi(chineseWord){
+        //chineseWord=testList[current].word
+        const url = `api/getEnglishTranslateAi.php?text=${encodeURIComponent(chineseWord)}`;
+        console.log("setEnglishWordAi",url);
+        fetch(url)
+        .then(response => response.json())
+        .then(translationData => {
+            // Process the JSON data
+            console.log("setEnglishWordAi=",translationData);
+            if (translationData && translationData[0]&& translationData[0].translation_text) {
+
+            const englishWord = translationData[0].translation_text;
+            document.getElementById("boxEnglishWordAi").innerHTML=" ( "+ englishWord+" )";            
+
+            }
+
+        
+        });     
+
+    }
+
     
 
     function setTimer(){
@@ -97,7 +147,7 @@ $timeLimit = isset($_COOKIE['timeLimit']) ? sanitizeHTML($_COOKIE['timeLimit']) 
             remain -= 1;
             totalTime += 1;
             timeElapsed += 1;
-            timer = setTimeout(setTimer, 1000);
+           // timer = setTimeout(setTimer, 1000);
         } else {
             nextItem(false);
         }
@@ -106,10 +156,7 @@ $timeLimit = isset($_COOKIE['timeLimit']) ? sanitizeHTML($_COOKIE['timeLimit']) 
     document.addEventListener('DOMContentLoaded', function() {
         var micBtn = document.getElementById('mic-btn');
         micBtn.addEventListener('click', readAloud);
-        var nextBtn = document.getElementById('next-btn');
-        nextBtn.addEventListener('click', function() {
-            nextItem(false);
-        });
+
         setTestWord();
     });
 
@@ -133,14 +180,14 @@ $timeLimit = isset($_COOKIE['timeLimit']) ? sanitizeHTML($_COOKIE['timeLimit']) 
                         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Speaker_Icon.svg/1024px-Speaker_Icon.svg.png" height="50px" width="50px" alt="Microphone">
                     </button>
                 </div>
-            </div> <div class="translate-word" id="boxEnglishWord">
-                    Test
+            </div> <div class="translate-word">
+                    <span id="boxEnglishWord"></span> <span  id="boxEnglishWord2" style="color:#4d9c2c"></span> <span  id="boxEnglishWordAi" style="color:#a94c94"></span>
                 </div>
             <div class="label wrap" style="margin-top:1%">
                 <div class="test-word" id="boxTestword">
                     测试
                 </div>
-               
+            
     </div>
             <div class="row">
                 <div class="frame-button2 col-xs-6">

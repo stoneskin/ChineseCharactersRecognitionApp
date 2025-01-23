@@ -1,4 +1,5 @@
 <?php
+require "_needSession.php";
 //require_once '_incFunctions.php';
 require "../connect.php";
 

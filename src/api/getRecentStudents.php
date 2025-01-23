@@ -1,4 +1,5 @@
 <?php
+require "_needSession.php";
 require_once "../connect_pg.php";
 
 header('Content-Type: application/json');
