@@ -59,15 +59,21 @@ $timeLimit = isset($_COOKIE['timeLimit']) ? sanitizeHTML($_COOKIE['timeLimit']) 
     function  setTestWord(){
         document.getElementById("boxTestword").innerHTML = testList[current].word;
         document.getElementById("boxCounter").innerHTML = (current + 1) + "/" + (testList.length);
+        document.getElementById("boxEnglishWordAi").innerHTML="";
+        document.getElementById("boxEnglishWord2").innerHTML="";
+        document.getElementById("boxEnglishWord").innerHTML="";
+
         remain = <?php echo $timeLimit ?>;
         timeElapsed = 0;
         currentWord=testList[current].word;
-        setEnglishWord(currentWord);
-        setEnglishWordAi(currentWord);
+
         if(timer){
             clearTimeout(timer);
         }
         setTimer();
+        setEnglishWord(currentWord);
+        setEnglishWordGoog(currentWord);
+        setEnglishWordAi(currentWord);
     }
     function  setEnglishWord(chineseWord){
 
@@ -90,19 +96,40 @@ $timeLimit = isset($_COOKIE['timeLimit']) ? sanitizeHTML($_COOKIE['timeLimit']) 
           
 
         }
-    function  setEnglishWordAi(chineseWord){
+
+    function  setEnglishWordGoog(chineseWord){
         //chineseWord=testList[current].word
-        const url = `api/getEnglishTranslateAi.php?text=${encodeURIComponent(chineseWord)}`;
-        console.log("setEnglishWord2",url);
+        const url = `api/getEnglishTranslateGoogle.php?text=${encodeURIComponent(chineseWord)}`;
+        console.log("setEnglishWordGoog",url);
         fetch(url)
         .then(response => response.json())
         .then(translationData => {
             // Process the JSON data
-            console.log("setEnglishWord2=",translationData);
+            console.log("setEnglishWordGoog=",translationData);
+            if (translationData && translationData.data&& translationData.data.translations[0]) {
+
+            const englishWord = translationData.data.translations[0].translatedText;
+            document.getElementById("boxEnglishWord2").innerHTML=" ( "+ englishWord+" )";            
+
+            }
+
+        
+        });     
+
+    }        
+    function  setEnglishWordAi(chineseWord){
+        //chineseWord=testList[current].word
+        const url = `api/getEnglishTranslateAi.php?text=${encodeURIComponent(chineseWord)}`;
+        console.log("setEnglishWordAi",url);
+        fetch(url)
+        .then(response => response.json())
+        .then(translationData => {
+            // Process the JSON data
+            console.log("setEnglishWordAi=",translationData);
             if (translationData && translationData[0]&& translationData[0].translation_text) {
 
             const englishWord = translationData[0].translation_text;
-            document.getElementById("boxEnglishWord2").innerHTML=" ( "+ englishWord+" )";            
+            document.getElementById("boxEnglishWordAi").innerHTML=" ( "+ englishWord+" )";            
 
             }
 
@@ -129,10 +156,7 @@ $timeLimit = isset($_COOKIE['timeLimit']) ? sanitizeHTML($_COOKIE['timeLimit']) 
     document.addEventListener('DOMContentLoaded', function() {
         var micBtn = document.getElementById('mic-btn');
         micBtn.addEventListener('click', readAloud);
-        var nextBtn = document.getElementById('next-btn');
-        nextBtn.addEventListener('click', function() {
-            nextItem(false);
-        });
+
         setTestWord();
     });
 
@@ -157,7 +181,7 @@ $timeLimit = isset($_COOKIE['timeLimit']) ? sanitizeHTML($_COOKIE['timeLimit']) 
                     </button>
                 </div>
             </div> <div class="translate-word">
-                    <span id="boxEnglishWord"></span> <span  id="boxEnglishWord2" style="color:#a94c94"></span>
+                    <span id="boxEnglishWord"></span> <span  id="boxEnglishWord2" style="color:#4d9c2c"></span> <span  id="boxEnglishWordAi" style="color:#a94c94"></span>
                 </div>
             <div class="label wrap" style="margin-top:1%">
                 <div class="test-word" id="boxTestword">

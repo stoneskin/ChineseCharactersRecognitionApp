@@ -35,9 +35,8 @@ curl_setopt_array($curl, [
     'target' => 'en'
   ]),
   CURLOPT_HTTPHEADER => [
-    "authorization: Bearer $google_access_token",
-    "content-type: application/json; charset=utf-8",
-    "x-goog-user-project: $google_project_id"
+    "x-goog-api-key: $google_api_key",
+    "content-type: application/json; charset=utf-8"    
   ],
 ]);
 
