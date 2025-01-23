@@ -62,8 +62,8 @@ $timeLimit = isset($_COOKIE['timeLimit']) ? sanitizeHTML($_COOKIE['timeLimit']) 
         remain = <?php echo $timeLimit ?>;
         timeElapsed = 0;
         currentWord=testList[current].word;
-       // setEnglishWord(currentWord);
-        setEnglishWord2(currentWord);
+        setEnglishWord(currentWord);
+        setEnglishWordAi(currentWord);
         if(timer){
             clearTimeout(timer);
         }
@@ -90,19 +90,19 @@ $timeLimit = isset($_COOKIE['timeLimit']) ? sanitizeHTML($_COOKIE['timeLimit']) 
           
 
         }
-    function  setEnglishWord2(chineseWord){
-       
-        const url = `api/getEnglishTranslate2.php?text=${encodeURIComponent(chineseWord)}`;
+    function  setEnglishWordAi(chineseWord){
+        //chineseWord=testList[current].word
+        const url = `api/getEnglishTranslateAi.php?text=${encodeURIComponent(chineseWord)}`;
         console.log("setEnglishWord2",url);
         fetch(url)
         .then(response => response.json())
         .then(translationData => {
             // Process the JSON data
             console.log("setEnglishWord2=",translationData);
-            if (translationData && translationData.data && translationData.data.translations[0]) {
+            if (translationData && translationData[0]&& translationData[0].translation_text) {
 
-            const englishWord = translationData.data.translations[0].translatedText;
-            document.getElementById("boxEnglishWord2").innerHTML=englishWord;            
+            const englishWord = translationData[0].translation_text;
+            document.getElementById("boxEnglishWord2").innerHTML=" ( "+ englishWord+" )";            
 
             }
 
@@ -110,24 +110,7 @@ $timeLimit = isset($_COOKIE['timeLimit']) ? sanitizeHTML($_COOKIE['timeLimit']) 
         });     
 
     }
-//     function setEnglishWord2(chineseWord) {
-//     const url = `api/getEnglishTranslate.php?text=${encodeURIComponent(chineseWord)}`;
-//     console.log("setEnglishWord2", url);
-    
-//     fetch(url)
-//         .then(response => response.json())
-//         .then(translationData => {
-//             console.log("setEnglishWord2=", translationData);
-//             if (translationData && translationData[0] && translationData[0].translation_text) {
-//                 const englishWord = translationData[0].translation_text;
-//                 document.getElementById("boxEnglishWord2").innerHTML = englishWord;
-//             }
-//         })
-//         .catch(error => {
-//             console.error("Translation error:", error);
-//             document.getElementById("boxEnglishWord2").innerHTML = "Translation failed";
-//         });
-// }
+
     
 
     function setTimer(){
@@ -174,7 +157,7 @@ $timeLimit = isset($_COOKIE['timeLimit']) ? sanitizeHTML($_COOKIE['timeLimit']) 
                     </button>
                 </div>
             </div> <div class="translate-word">
-                    <span id="boxEnglishWord"></span> <span  id="boxEnglishWord2"></span>
+                    <span id="boxEnglishWord"></span> <span  id="boxEnglishWord2" style="color:#a94c94"></span>
                 </div>
             <div class="label wrap" style="margin-top:1%">
                 <div class="test-word" id="boxTestword">
