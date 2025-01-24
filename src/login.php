@@ -80,14 +80,14 @@ if (isset($_GET['email'])) {
                         </div>
                     </div>
                 </form>
-                <div class="forgot-password-link text-center mb-3">
-                    <a href="#" id="forgotPasswordLink">Forgot Password?</a>
-                </div>
+               
                 <div class="don-t-have-an-account-sign-up">
                     <div class="don-t-have-an-account-sign-up2">
                         <span><span class="don-t-have-an-account-sign-up-2-span">Don't have an account? </span><span
-                                class="don-t-have-an-account-sign-up-2-span2"><a href="signup.php">Sign Up</a></span></span>
+                                class="don-t-have-an-account-sign-up-2-span2"><a href="signup.php">Sign Up</a></span>
+                                <span class="don-t-have-an-account-sign-up-2-span"> <a href="#" id="forgotPasswordLink">Forgot Password?</a> </span></span>
                     </div>
+                    
                 </div>
             </div>
 
@@ -102,19 +102,21 @@ if (isset($_GET['email'])) {
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="forgotPasswordModalLabel">Forgot Password</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
+                <h5 class="modal-title label" id="forgotPasswordModalLabel">Forgot Password</h5>
             </div>
-            <div class="modal-body">
-                <div id="forgotPasswordMessage"></div>
+            <div class="modal-body" >
+            <div id="forgotPasswordMessage"></div>
                 <form id="forgotPasswordForm">
-                    <div class="form-group">
-                        <label for="recoveryEmail">Please enter your email address:</label>
-                        <input type="email" class="form-control" id="recoveryEmail" name="email" required>
+                    <div class="form-group" >
+                        <label for="recoveryEmail" class="forgotPassword-label"  >Please enter your email address:</label>       
                     </div>
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <div class="form-group">
+                        <input type="email" class="form-control textbox-frame" id="recoveryEmail" name="email" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary button forgotPassword-button" >Submit</button>
                 </form>
             </div>
         </div>
@@ -161,14 +163,6 @@ $(document).ready(function() {
 });
 </script>
 
-<style>
-.forgot-password-link {
-    margin-top: 10px;
-}
-#forgotPasswordMessage {
-    margin-bottom: 15px;
-    display: none;
-}
-</style>
+
 
 <?php require "_footer.php" ?>
