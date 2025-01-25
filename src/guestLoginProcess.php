@@ -30,7 +30,8 @@
             $_SESSION["SID"] = session_id();
             $_SESSION["loginUser"] = $username;
             $_SESSION["userType"]= "guest";
-           // $_SESSION["EventId"]= $row->Id;
+            $_SESSION["EventId"]= $row->Id;  //guest only can access the event with eventkey =accesskey
+        
             header("Location: studentInfo.php");
             exit();  
         } else {

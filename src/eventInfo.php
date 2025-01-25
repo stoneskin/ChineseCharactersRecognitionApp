@@ -17,13 +17,13 @@ if ($row==null) {
 if ($row != null && $row['EventName'] != null) {
     $tableTitle = $row['EventName']. " Activity List";
 }
-
+$errormsg="";
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 // Check if form is submitted
     $isTestChecked = isset($_POST['testActivities']);
     $isPracticeChecked = isset($_POST['practiceActivities']);
     if (!$isTestChecked && !$isPracticeChecked) {
-        echo "<script>alert('Please check at least one activity type.');</script>";
+        $errormsg='Please check at least one activity type.';
     } else {
         $activitySql = "SELECT StudentName, StudentID, ActivityID, g.GradeName, FinalScore, TimeSpent, isPractice FROM activities a join grade g on g.GradeId=a.level WHERE EventID = ?";
 
@@ -70,9 +70,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <form method="post" action="">
                 <input type="checkbox" onchange="this.form.submit()" name="testActivities" id="testActivities" value="1" <?php echo $isTestChecked ? 'checked' : ''; ?>>   <label for="testActivities">Test activities</label>
                 <input type="checkbox" onchange="this.form.submit()"  name="practiceActivities" id="practiceActivities" value="1" <?php echo $isPracticeChecked ? 'checked' : ''; ?>>  <label for="practiceActivities">Practice activities</label>
-                <input type="submit" value="Filter" style="display:none">
+                <input type="submit" value="Filter" style="display:none">        <div id="errorMessage" class="alert alert-danger mt-2" style="display: none;"></div>
                 </form>
                 </div>
+        
                 <table>
                     <tr>
                         <th class="text-center p-1">Student Name #</th>
@@ -84,7 +85,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         <th class="text-center p-1">IsPractice</th>
                     </tr>
                     <?php
-                    while ($row = $resultActivity->fetch_assoc()) {
+                    while (isset($resultActivity) && $row = $resultActivity->fetch_assoc()) {
                         echo '<tr>';
                         echo '<td>' . $row["StudentName"] . '</td>';
                         echo '<td>' . $row["StudentID"] . '</td>';
@@ -101,5 +102,32 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         </div>
     </div>
 </div>
+
+<script>
+function showError(message) {
+    if(!!message){
+        $('#errorMessage')
+            .text(message)
+            .show()
+            //.delay(3000)  // Show for 3 seconds
+            //.fadeOut();
+    }
+}
+showError('<?php echo $errormsg ?>')
+// Replace the existing checkbox click handler
+</script>
+
+<style>
+#errorMessage {
+    max-width: 500px;
+    margin: auto;
+    text-align: center;
+    border-radius: 4px;
+    padding: 10px 15px;
+    line-height: 1em;
+    margin-top: -15px;
+    margin-bottom: 30px;
+}
+</style>
 
 <?php require "_footer.php" ?>

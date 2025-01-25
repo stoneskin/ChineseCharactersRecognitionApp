@@ -23,3 +23,7 @@ INSERT INTO `event` (
     '2023-09-01', 
     '2024-10-10'
 ) ;
+
+--2025-01-25 add isprivate column
+ALTER TABLE `event`
+ADD COLUMN `isprivate` BOOLEAN NOT NULL DEFAULT FALSE;

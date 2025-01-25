@@ -80,11 +80,14 @@ if (isset($_GET['email'])) {
                         </div>
                     </div>
                 </form>
+               
                 <div class="don-t-have-an-account-sign-up">
                     <div class="don-t-have-an-account-sign-up2">
-                        <span><span class="don-t-have-an-account-sign-up-2-span">Don’t have an account? </span><span
-                                class="don-t-have-an-account-sign-up-2-span2"><a href="signup.php">Sign Up</a></span></span>
+                        <span><span class="don-t-have-an-account-sign-up-2-span">Don't have an account? </span><span
+                                class="don-t-have-an-account-sign-up-2-span2"><a href="signup.php">Sign Up</a></span>
+                                <span class="don-t-have-an-account-sign-up-2-span"> <a href="#" id="forgotPasswordLink">Forgot Password?</a> </span></span>
                     </div>
+                    
                 </div>
             </div>
 
@@ -93,5 +96,73 @@ if (isset($_GET['email'])) {
             </div>
             
         </div>
+
+<!-- Forgot Password Modal -->
+<div class="modal fade" id="forgotPasswordModal" tabindex="-1" role="dialog" aria-labelledby="forgotPasswordModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h5 class="modal-title label" id="forgotPasswordModalLabel">Forgot Password</h5>
+            </div>
+            <div class="modal-body" >
+            <div id="forgotPasswordMessage"></div>
+                <form id="forgotPasswordForm">
+                    <div class="form-group" >
+                        <label for="recoveryEmail" class="forgotPassword-label"  >Please enter your email address:</label>       
+                    </div>
+                    <div class="form-group">
+                        <input type="email" class="form-control textbox-frame" id="recoveryEmail" name="email" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary button forgotPassword-button" >Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+$(document).ready(function() {
+    $('#forgotPasswordLink').click(function(e) {
+        e.preventDefault();
+        $('#forgotPasswordModal').modal('show');
+    });
+
+    $('#forgotPasswordForm').submit(function(e) {
+        e.preventDefault();
+        const email = $('#recoveryEmail').val();
+        
+        $.ajax({
+            url: 'api/recoverPassword.php',
+            method: 'POST',
+            data: { email: email },
+            dataType: 'json', // Specify that we expect JSON response
+            success: function(result) {
+                $('#forgotPasswordMessage')
+                    .removeClass('alert-success alert-danger')
+                    .addClass(result.success ? 'alert alert-success' : 'alert alert-danger')
+                    .html(result.message)
+                    .show();
+                
+                if (result.success) {
+                    $('#forgotPasswordForm').hide();
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error('Password recovery error details:', xhr.responseJSON?.errorDetails);
+                $('#forgotPasswordMessage')
+                    .removeClass('alert-success')
+                    .addClass('alert alert-danger')
+                    .html('An error occurred. Please try again later.')
+                    .show();
+            }
+        });
+    });
+});
+</script>
+
+
 
 <?php require "_footer.php" ?>

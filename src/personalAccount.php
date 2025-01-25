@@ -8,7 +8,7 @@ $result = $conn->query($sql);
 $row = $result->fetch_object();
 if ($row==null)
     {
-        $error = "There are no users with the email $myEmail. ";
+        $error = "There are no users data for  [$myEmail]. ";
         header("Location: error.php?error=" . urlencode($error));
     }
 $ID = $row->ID;

@@ -531,6 +531,27 @@ vertical-align: middle;
   margin-top:-20px;
   
 }
+.modal-body{  
+  color: #aa3737;
+  padding-left: 10%;
+  padding-bottom: 5%;
+}
+.forgotPassword-label{
+  font-size: 1.2em; height: 1em;
+}
+.forgotPassword-button{
+  margin-left: 15%;
+  font-size: 1.5em;
+}
+.forgot-password-link {
+  margin-top: 10px;
+}
+#forgotPasswordMessage {
+  margin-bottom: 15px;
+  display: none;
+  margin-right: 10%;
+  margin-left: 10%;  
+}
 
 .time-block{
   display:flex;
@@ -750,6 +771,8 @@ li a:hover {
   margin-top:-20px;
   
 }
-
+.forgotPassword-label{
+  font-size: 1.2em; height: 4em;
+}
 
 }
