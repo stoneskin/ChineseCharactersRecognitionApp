@@ -32,16 +32,29 @@ if($userType == 'student'){
 // load Grade
 $sql = "SELECT GradeId, GradeName FROM grade";
 $result = $conn->query($sql);
-$sqlEvent="SELECT Id FROM `event` WHERE ExpiredDate> CURRENT_DATE() and ActiveDate<=CURRENT_DATE() ORDER by Id DESC";
-$resultEvent = $conn->query($sqlEvent);
-$rowEvent = $resultEvent->fetch_object();
-if ($rowEvent!=null) {
-    $eventID = $rowEvent->Id;
-    $_SESSION["EventId"]= $eventID;
-    
-}else{
-    $errorEvent="No Active Event Available.";
+
+
+
+
+
+if(isset( $_SESSION["EventId"])){
+    $eventID=  $_SESSION["EventId"];
 }
+else{
+    $sqlEvent="SELECT Id FROM `event` WHERE isprivate=0 and ExpiredDate> CURRENT_DATE() and ActiveDate<=CURRENT_DATE() ORDER by Id DESC";
+    $resultEvent = $conn->query($sqlEvent);
+    $rowEvent = $resultEvent->fetch_object();
+    if ($rowEvent!=null) {
+        $eventID = $rowEvent->Id;
+        $_SESSION["EventId"]= $eventID;
+        
+    }else{
+        $errorEvent="No Active Event Available.";
+    }
+}
+
+
+
 
 $student = $_SESSION["userType"] == 'student' ? sanitizeHTML($_SESSION["loginUser"]) : '';
 
