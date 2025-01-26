@@ -144,7 +144,7 @@ $(function() {
         var emailCell = tr.find('[name="email"]');
         var passwordCell = tr.find('[name="password"]');
         
-        var emailValue = emailCell.text();
+        var emailValue = emailCell.find('a').length ? emailCell.find('a').text() : emailCell.text();
         var passwordValue = passwordCell.text();
         
         emailCell.html(`<input type="text" class="form-control" value="${emailValue}" maxlength="100">`);
@@ -389,7 +389,11 @@ td[name="password"] input:focus {
                         $gradeName = ($gradeQuery && $row['GradeID'] > 0) ? $gradeQuery->fetch_assoc()['GradeName'] : 'N/A';
                     ?>
                     <tr data-id='<?php echo $row['ID'] ?>'>
-                        <td name="email" onkeydown="limitTextLength(event, 100)"><?php echo $row['Email'] ?></td>
+                        <td name="email" onkeydown="limitTextLength(event, 100)">
+                            <?php if ($row['Email']): ?>
+                                <a href="userDetail.php?id=<?php echo $row['ID']; ?>"><?php echo $row['Email']; ?></a>
+                            <?php endif; ?>
+                        </td>
                         <td name="password" onkeydown="limitTextLength(event, 100)"><?php echo $row['Password'] ?></td>
                         <td>
                             <select name="userType" class="form-control" disabled>

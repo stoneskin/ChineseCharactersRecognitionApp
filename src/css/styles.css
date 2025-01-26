@@ -638,7 +638,35 @@ li a:hover {
 }
 
 
+.word-block .card {
+  height: 5em;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  transition: box-shadow 0.3s ease;
+}
 
+.word-block .card:hover {
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.word-block .card[class*="border-success"] {
+  background-color: #bcedc0;  /* light green */
+  border-width: 2px;
+}
+
+.word-block .card[class*="border-danger"] {
+  background-color: #efbfc6;  /* light red */
+  border-width: 2px;
+}
+
+.word-block .card-body {
+  padding: 1rem;
+}
+
+.details-link {
+  color: #007bff;
+  text-decoration: underline;
+  cursor: pointer;
+}
 
 @media only screen and (max-width: 2800px) {
   .frame-main>.label{
