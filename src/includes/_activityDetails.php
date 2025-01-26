@@ -86,7 +86,7 @@ $stats = $statsStmt->get_result()->fetch_object();
                         <td><?php echo $activity->isPractice ? 'Practice' : 'Test'; ?></td>
                         <td><?php echo date('Y-m-d H:i', strtotime($activity->StartTime)); ?></td>
                         <td>
-                            <button class="btn btn-sm btn-info view-details" 
+                            <button class="btn btn-sm btn-info view-details" <?php echo $activity->FinalScore>0 ? '' : 'disabled'; ?>
                                     data-activity-id="<?php echo $activity->ActivityID; ?>">
                                 View Details
                             </button>

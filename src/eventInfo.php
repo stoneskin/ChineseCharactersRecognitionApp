@@ -99,7 +99,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         <td><?php echo $row->isPractice ? 'Practice' : 'Test'; ?></td>
                         <td><?php echo date('Y-m-d H:i', strtotime($row->StartTime)); ?></td>
                         <td>
-                            <button class="btn btn-sm btn-info view-details" 
+                            <button class="btn btn-sm btn-info view-details" <?php echo $row->FinalScore>0 ? '' : 'disabled'; ?>
                                     data-activity-id="<?php echo $row->ActivityID; ?>">
                                 View Details
                             </button>
