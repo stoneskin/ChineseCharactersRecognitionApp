@@ -41,6 +41,7 @@
         <div>
             <ul class="adminMenu">
                 <li><a href="admin.php">Events</a></li>
+                <li><a href="useradmin.php">Users</a></li>
                 <li><a href="adminWords.php">Words</a></li>
             </ul>
         </div>
