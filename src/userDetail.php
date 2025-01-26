@@ -46,7 +46,7 @@ if($stmt = $conn->prepare($sql)){
                 </div>
             </div>
 
-            <?php include 'includes/activityDetails.php'; ?>
+            <?php include 'includes/_activityDetails.php'; ?>
 
             <div class="mt-3">
                 <a href="useradmin.php" class="btn btn-secondary">Back to User List</a>

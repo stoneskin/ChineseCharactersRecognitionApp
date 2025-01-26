@@ -45,7 +45,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 } else {
     // Default query to show test activities
-    $activitySql = "SELECT StudentName, StudentID, ActivityID, g.GradeName, FinalScore, TimeSpent, isPractice FROM activities a join grade g on g.GradeId=a.level WHERE EventID = ? AND isPractice = 0 ORDER BY ActivityID DESC";
+    $activitySql = "SELECT StudentName, StudentID, ActivityID, g.GradeName, FinalScore, TimeSpent,StartTime, isPractice FROM activities a join grade g on g.GradeId=a.level WHERE EventID = ? AND isPractice = 0 ORDER BY ActivityID DESC";
     if ($stmtActivity = $conn->prepare($activitySql)) {
         $stmtActivity->bind_param("i", $eventID);
         $stmtActivity->execute();
@@ -80,29 +80,38 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         <th class="text-center p-1">Student ID</th>
                         <th class="text-center p-1">Activity #</th>
                         <th class="text-center p-1">Grade Level</th>
-                        <th class="text-center p-1">Score</th>
+
                         <th class="text-center p-1">Time Spent</th>
+                        <th class="text-center p-1">Score</th>
                         <th class="text-center p-1">IsPractice</th>
+                        <th class="text-center p-1">DateTime</th>
+                        <th class="text-center p-1">View Details</th>
                     </tr>
-                    <?php
-                    while (isset($resultActivity) && $row = $resultActivity->fetch_assoc()) {
-                        echo '<tr>';
-                        echo '<td>' . $row["StudentName"] . '</td>';
-                        echo '<td>' . $row["StudentID"] . '</td>';
-                        echo '<td>' . $row["ActivityID"] . '</td>';                     
-                        echo '<td>' . $row["GradeName"] . '</td>';
-                        echo '<td>' . $row["FinalScore"] . '</td>';
-                        echo '<td>' . $row["TimeSpent"] . '</td>';
-                        echo '<td>' . $row["isPractice"] . '</td>';
-                        echo '</tr>';
-                    }
-                    ?>
+            
+                    <?php while (isset($resultActivity) && $row = $resultActivity->fetch_object()): ?>
+                    <tr class="<?php echo $row->isPractice ? 'practice-row' : 'test-row'; ?></tr>">
+                        <td><?php echo htmlspecialchars($row->StudentName); ?></td>
+                        <td><?php echo htmlspecialchars($row->StudentID); ?></td>
+                        <td><?php echo $row->ActivityID; ?></td>
+                        <td><?php echo $row->GradeName; ?></td>
+                        <td><?php echo $row->TimeSpent; ?></td>
+                        <td><?php echo $row->FinalScore; ?></td>
+                        <td><?php echo $row->isPractice ? 'Practice' : 'Test'; ?></td>
+                        <td><?php echo date('Y-m-d H:i', strtotime($row->StartTime)); ?></td>
+                        <td>
+                            <button class="btn btn-sm btn-info view-details" 
+                                    data-activity-id="<?php echo $row->ActivityID; ?>">
+                                View Details
+                            </button>
+                        </td>
+                    </tr>
+                    <?php endwhile; ?>
                 </table>
             </div>
         </div>
     </div>
 </div>
-
+<?php include 'includes/_activityDetailsModal.php'; ?>
 <script>
 function showError(message) {
     if(!!message){
