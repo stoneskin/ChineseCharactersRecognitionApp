@@ -28,8 +28,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         foreach($words as $word){
             
-            $word = ltrim($word, " ");
-            $word = rtrim($word, " ");
+            $word = trim($word);
+          
             $msg = $msg. $word ."|";
             if (empty($word))
             {

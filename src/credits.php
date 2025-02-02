@@ -24,6 +24,7 @@
                         - Leo Sun (<a href='https://github.com/lsun0547'>lsun0547</a>), 11th Student of Donwlingtown Eash High shchol (2023-2034)<br />
                         - Ethon Guo (<a href='https://github.com/magicArc'>mgicArc</a>), 11th Student of Conestoga High School (2023-2024)<br />
                         - Eric Sun(<a href='https://github.com/esun366'>esun366</a>), 11th Student of Conestoge High School (2023-2024) <br />
+			- Mary Wolters (<a href='https://github.com/MaryW8'>MaryW8</a>),11th Student of  Conestoge High School (2024-2025) <br />
                     </p>
                 </div>
 

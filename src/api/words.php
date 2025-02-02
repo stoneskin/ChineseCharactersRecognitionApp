@@ -1,4 +1,5 @@
 <?php
+require "_needSession.php";
 require "../connect.php";
 //require "../_needSession.php";
 

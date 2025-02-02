@@ -12,5 +12,15 @@ require_once '_incFunctions.php';
     }
    ?>
    </div>
+
+
+   
+   <div class=" row" style="width:90%">
+                        <div class="frame-button2">
+                            <div class="button " onclick="(()=>{window.location.assign('index.php')})()">
+                                <div class="submit">Back</div>
+                            </div>
+                        </div>
+                    </div>
 </div>
 <?php require "_footer.php"; ?>

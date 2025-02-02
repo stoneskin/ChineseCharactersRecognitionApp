@@ -8,22 +8,28 @@ $result = $conn->query($sql);
 $row = $result->fetch_object();
 if ($row==null)
     {
-        $error = "There are no users with the email $myEmail. ";
+        $error = "There are no users data for  [$myEmail]. ";
         header("Location: error.php?error=" . urlencode($error));
     }
 $ID = $row->ID;
 $grade = "0";
+$gradeName  = "N/A";
 if ($row != null && $row->GradeID != null) {
     $grade = $row->GradeID;
+    if($userType == "student")
+    {
+        $gradeName=$row->GradeName;
+        
+    }
 }
-$levelSql = "SELECT GradeName FROM grade WHERE GradeId = '$grade'";
-$result = $conn->query($levelSql);
-$levelRow = $result->fetch_object();
-$level = ($userType == "student") ? $levelRow->GradeName : "N/A";
-//get activity list by StudentID or JudgeName
+// $levelSql = "SELECT GradeName FROM grade WHERE GradeId = '$grade'";
+// $result = $conn->query($levelSql);
+// $levelRow = $result->fetch_object();
+// $level = ($userType == "student") ? $levelRow->GradeName : "N/A";
+// //get activity list by StudentID or JudgeName
 if ($userType == "student")
 {
-    $activitySql = "SELECT EventName, Level, FinalScore, StartTime, TimeSpent FROM activities INNER JOIN event on activities.EventID=event.ID WHERE StudentID = ? ORDER BY ActivityID DESC LIMIT 50";
+    $activitySql = "SELECT ActivityId, EventName, Level, FinalScore, StartTime, TimeSpent,isPractice FROM activities INNER JOIN event on activities.EventID=event.ID WHERE StudentID = ? ORDER BY ActivityID DESC LIMIT 50";
     if($stmtActivity = $conn->prepare($activitySql)){
         $stmtActivity->bind_param("i", $ID);
         $stmtActivity->execute();
@@ -34,7 +40,7 @@ if ($userType == "student")
 }
 else
 {
-    $activitySql = "SELECT EventName, Level, FinalScore,  StartTime, TimeSpent, StudentName FROM activities INNER JOIN event on activities.EventID=event.ID WHERE JudgeName = ? ORDER BY ActivityID DESC";
+    $activitySql = "SELECT ActivityId, EventName, Level, FinalScore,  StartTime, TimeSpent, StudentName ,isPractice FROM activities INNER JOIN event on activities.EventID=event.ID WHERE JudgeName = ? ORDER BY ActivityID DESC";
     if($stmtActivity = $conn->prepare($activitySql)){
         $stmtActivity->bind_param("s", $myEmail);
         $stmtActivity->execute();
@@ -82,9 +88,68 @@ $(document).ready(function () {
             });
         });
     });
+
+    // Add click handler for details links
+    $('.details-link').click(function(e) {
+        e.preventDefault();
+        const activityId = $(this).data('activity-id');
+        loadWordDetails(activityId);
+    });
+
+    // Add change handler for checkbox
+    $('#showFailedOnly').change(function() {
+        const showFailedOnly = $(this).is(':checked');
+        $('.word-block').each(function() {
+            const passed = $(this).data('passed') === 1;
+            $(this).toggle(!showFailedOnly || !passed);
+        });
+    });
+
+    function loadWordDetails(activityId) {
+        $.ajax({
+            url: 'api/getWordDetails.php',
+            method: 'GET',
+            data: { activityId: activityId },
+            success: function(response) {
+                const words = JSON.parse(response);
+                displayWords(words);
+                $('#wordDetailsModal').modal('show');
+            },
+            error: function(xhr, status, error) {
+                alert('Error loading word details: ' + error);
+            }
+        });
+    }
+
+    function displayWords(words) {
+        const wordList = $('#wordList');
+        wordList.empty();
+        
+        words.forEach(word => {
+            const wordBlock = $(`
+                <div class="col-md-4 col-sm-6 mb-3 word-block" data-passed="${word.Passed}">
+                    <div class="card ${word.Passed == 1 ? 'border-success' : 'border-danger'}">
+                        <div class="card-body">
+                            <h4 class="card-title">${word.Words}</h4>
+                            <p class="card-text">
+                                Time: ${word.TimeElapsed} seconds<br>
+                            
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            `);
+            wordList.append(wordBlock);
+        });
+    }
 });
 
 </script>
+
+<style>
+
+</style>
+
 <div class="container">
     <div class="row">
         <div class="frame-main col-md-12 col-sm-12">
@@ -106,7 +171,7 @@ $(document).ready(function () {
                 </div>
                 <div class="col-md-9 col-sm-9">
                     <div class="label">
-                        <?php echo $level?>
+                        <?php echo $gradeName?>
                     </div>
                 </div>
             </div>
@@ -137,11 +202,12 @@ $(document).ready(function () {
                             <th class="text-center p-1 sortableHeader">Score</th>
                             <th class="text-center p-1 sortableHeader">Start Time</th>
                             <th class="text-center p-1 sortableHeader">Time Spent</th>
+                            <th class="text-center p-1 sortableHeader">details</th>
                         </tr>
                         <?php
                         while ($row = $resultActivity->fetch_object()) {
                             echo '<tr>';
-                            echo '<td>' . $row->EventName . '</td>';
+                            echo '<td>' . $row->EventName .($row->isPractice==0?'':' (practice)' ). '</td>';
                             if ($userType == "parent")
                             {
                                 echo '<td>' . $row->StudentName . '</td>';
@@ -155,10 +221,35 @@ $(document).ready(function () {
                             echo '<td>' . $row->FinalScore . '</td>';
                             echo '<td>' . $row->StartTime . '</td>';
                             echo '<td>' . $row->TimeSpent . '</td>';
+                            echo '<td><a href="#" class="details-link" data-activity-id="' . $row->ActivityId . '">View Details</a></td>';
                             echo '</tr>';
                         }
                         ?>
                     </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Add modal popup for word details -->
+<div class="modal fade" id="wordDetailsModal" tabindex="-1" role="dialog" aria-labelledby="wordDetailsModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h3 class="modal-title" id="wordDetailsModalLabel">Word Details</h3>
+            </div>
+            <div class="modal-body">
+                <div class="form-check mb-3">
+                    <input type="checkbox" class="form-check-input" id="showFailedOnly">
+                    <label class="form-check-label" for="showFailedOnly">Show incorrect words only</label>
+                </div>
+                <div id="wordList" class="row">
+                    <!-- Word blocks will be inserted here -->
                 </div>
             </div>
         </div>

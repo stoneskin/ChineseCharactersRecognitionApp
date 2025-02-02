@@ -133,6 +133,7 @@
   display: flex;
   align-items: center;
   justify-content: flex-start;
+  margin-bottom: 2vw;
 }
 .input-component {
   padding: 25px 0px 25px 0px;
@@ -205,7 +206,7 @@
   align-self: stretch;
   flex-shrink: 0;
   position: relative;
-  margin-top: 3vw;
+  margin-top: 2vw;
 }
 .frame-button2 {
   display: flex;
@@ -322,7 +323,13 @@
   height: 1em;
   /* margin-top: .25em;
   vertical-align: top; */
+  appearance: none;-webkit-appearance: none;border-radius: 50%; background: #FF572233;border: 3px solid #FFF;  box-shadow: 0 0 0 1px #FF5722;
 }
+.form-check-input:checked  {
+  background: #d06060;
+}
+
+
 .textbox-frame2 {
   background: var(--error-input-alert, rgba(255, 148, 148, 0.15));
   border-radius: 10px;
@@ -511,7 +518,40 @@ vertical-align: middle;
   cursor:default;
 }
 
+.d-block{
+  display: block;
+  height: 25px;
+  color: #666;
+  line-height: 20px;
+  padding-left: 10px;
+}
+.show {
+  display: block!important;
 
+  margin-top:-20px;
+  
+}
+.modal-body{  
+  color: #aa3737;
+  padding-left: 10%;
+  padding-bottom: 5%;
+}
+.forgotPassword-label{
+  font-size: 1.2em; height: 1em;
+}
+.forgotPassword-button{
+  margin-left: 15%;
+  font-size: 1.5em;
+}
+.forgot-password-link {
+  margin-top: 10px;
+}
+#forgotPasswordMessage {
+  margin-bottom: 15px;
+  display: none;
+  margin-right: 10%;
+  margin-left: 10%;  
+}
 
 .time-block{
   display:flex;
@@ -533,6 +573,14 @@ vertical-align: middle;
 .test-word{
   text-align: center;
   width: 100%;
+
+}
+
+.translate-word{
+  text-align: center;
+  font-size: 2em;
+  color: blue;
+  margin-top: 2%;
 }
 
 /* Style the table */
@@ -590,7 +638,35 @@ li a:hover {
 }
 
 
+.word-block .card {
+  height: 5em;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  transition: box-shadow 0.3s ease;
+}
 
+.word-block .card:hover {
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.word-block .card[class*="border-success"] {
+  background-color: #bcedc0;  /* light green */
+  border-width: 2px;
+}
+
+.word-block .card[class*="border-danger"] {
+  background-color: #efbfc6;  /* light red */
+  border-width: 2px;
+}
+
+.word-block .card-body {
+  padding: 1rem;
+}
+
+.details-link {
+  color: #007bff;
+  text-decoration: underline;
+  cursor: pointer;
+}
 
 @media only screen and (max-width: 2800px) {
   .frame-main>.label{
@@ -716,6 +792,15 @@ li a:hover {
   border-radius: 20px;
   font-size: 30px;
   width: 150px;
+}
+.show {
+  display: block!important;
+  margin-left: 25px;
+  margin-top:-20px;
+  
+}
+.forgotPassword-label{
+  font-size: 1.2em; height: 4em;
 }
 
 }

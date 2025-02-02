@@ -17,4 +17,6 @@ CREATE TABLE `activities` (
     PRIMARY KEY (`ActivityID`)
     ) 
 
-
+-- add new column isPractice
+ALTER TABLE `activities`
+ADD COLUMN `isPractice` TINYINT NOT NULL DEFAULT 0;
