@@ -1,8 +1,25 @@
 <?php require "_sessionHeader.php" ?>
 <?php
 require_once '_incFunctions.php';
+require 'vendor/autoload.php';
+
+use OpenAI\Client;
 
 $timeLimit = isset($_COOKIE['timeLimit']) ? sanitizeHTML($_COOKIE['timeLimit']) : 'default_value';
+
+function gradeAnswer($recognizedText, $correctAnswer) {
+    $client = new Client('YOUR_OPENAI_API_KEY');
+    $prompt = "Grade the recognized text based on tone. If the tone is not correct for one character, take off 0.2 of the 1 point. If both are wrong, the score is 0.6. If the word is completely wrong, it is 0 points. Return the recognized text, correct answer, and score.\n\nRecognized text: \"$recognizedText\"\nCorrect answer: \"$correctAnswer\"";
+
+    $response = $client->completions()->create([
+        'model' => 'text-davinci-003',
+        'prompt' => $prompt,
+        'max_tokens' => 50,
+    ]);
+
+    $result = $response['choices'][0]['text'];
+    return json_decode($result, true);
+}
 ?>
 
 <script>
@@ -87,7 +104,7 @@ $timeLimit = isset($_COOKIE['timeLimit']) ? sanitizeHTML($_COOKIE['timeLimit']) 
         }
     }
 
-    function checkAnswer(recognizedText) {
+    async function checkAnswer(recognizedText) {
         console.log("checkAnswer called with:", recognizedText); // Debugging statement
         if (!testList || testList.length === 0) {
             console.error("testList is empty or not defined.");
@@ -96,27 +113,40 @@ $timeLimit = isset($_COOKIE['timeLimit']) ? sanitizeHTML($_COOKIE['timeLimit']) 
 
         let correctAnswer = testList[current].word;
         let resultElement = document.getElementById('result');
-        let result = recognizedText.trim() === correctAnswer.trim() ? 'correct' : 'incorrect';
         
         console.log("Correct answer:", correctAnswer); // Debugging statement
         console.log("Recognized text:", recognizedText); // Debugging statement
-        console.log("Result:", result); // Debugging statement
+
+        // Call the PHP function to grade the answer
+        let response = await fetch('gradeAnswer.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ recognizedText, correctAnswer })
+        });
+
+        let result = await response.json();
+        console.log("Grading result:", result); // Debugging statement
+
+        let score = result.score;
+        console.log("Score:", score); // Debugging statement
 
         console.log("Updating result element..."); // Debugging statement
-        if (result === 'correct') {
+        if (score === 1) {
             resultElement.innerHTML = '<h2 class="form-title" style="color: #18b740de;">Correct!</h2>';
         } else {
-            resultElement.innerHTML = '<h2 class="form-title" style="color: #ba4040;">Incorrect!</h2>';
+            resultElement.innerHTML = `<h2 class="form-title" style="color: #ba4040;">Incorrect! Score: ${score}</h2>`;
         }
         console.log("Updated result element:", resultElement.innerHTML); // Debugging statement
 
         // Update the testList with the result
-        testList[current].result = result;
+        testList[current].result = score;
         // Save the updated testList to session storage
         sessionStorage.setItem("wordlist", JSON.stringify(testList));
 
         // Move to the next item
-        nextItem(result === 'correct');
+        nextItem(score === 1);
     }
 
     function previousItem(){
@@ -210,8 +240,8 @@ $timeLimit = isset($_COOKIE['timeLimit']) ? sanitizeHTML($_COOKIE['timeLimit']) 
                     <div class="time-block" id="boxTimer">[time]</div>
                 </div>
                 <div style="display: inline-block; vertical-align: top; margin-left: 15px;">
-                    <button id="mic-btn" style="width: 80px;">
-                        <img src="https://static.vecteezy.com/system/resources/previews/014/391/889/original/microphone-icon-on-transparent-background-microphone-icon-free-png.png" height="50px" width="50px" alt="Microphone">
+                    <button id="mic-btn">
+                        <img src="https://static.vecteezy.com/system/resources/previews/014/391/889/original/microphone-icon-on-transparent-background-microphone-icon-free-png.png" height="50px" width="80px" alt="Microphone">
                     </button>
                 </div>
             </div>
